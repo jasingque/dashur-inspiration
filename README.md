@@ -1,75 +1,141 @@
-# React + TypeScript + Vite
+# Dashur AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An innovative tech company dedicated to shaping the future through cutting-edge AI solutions and exceptional service.
 
-Currently, two official plugins are available:
+## 🚀 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Dashur AI is a modern React-based web application showcasing AI-powered solutions for various industries including healthcare, hospitality, manufacturing, defense, and aerospace. Our platform demonstrates the transformative power of artificial intelligence in business automation and innovation.
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Modern UI/UX**: Built with React 19, TypeScript, and Tailwind CSS
+- **Responsive Design**: Fully responsive across all devices
+- **Smooth Animations**: Powered by Framer Motion for engaging interactions
+- **Component Architecture**: Modular and maintainable code structure
+- **AI Integration**: Showcases AI capabilities across multiple industries
 
-Note: This will impact Vite dev & build performances.
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: React 19, TypeScript, Vite
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Build Tool**: Vite
+- **Package Manager**: npm
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📦 Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd dashurai
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+2. Install dependencies:
+```bash
+npm install
+yarn install
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+yarn dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## 🏗️ Project Structure
+
+```
+src/
+├── assets/          # Static assets (images, videos)
+├── components/       # Reusable UI components
+│   ├── footer.tsx
+│   ├── navbar.tsx
+│   ├── serviceCard.tsx
+│   ├── solutioncard.tsx
+│   ├── careerCard.tsx
+│   ├── capabilitiesCard.tsx
+│   └── floatBot.tsx
+├── pages/           # Page components
+│   ├── home.tsx
+│   ├── hero.tsx
+│   ├── questions.tsx
+│   ├── solution.tsx
+│   ├── careers.tsx
+│   ├── services.tsx
+│   ├── capabilities.tsx
+│   └── contactform.tsx
+├── App.tsx          # Main app component
+├── index.tsx        # Entry point
+└── index.css        # Global styles
+```
+
+## 🎯 Key Components
+
+### Homepage Sections
+- **Hero**: Eye-catching introduction with video background
+- **Problem Section**: Interactive scroll-based question cards
+- **Solutions**: Industry-specific AI solutions showcase
+- **Case Studies**: Career opportunities and success stories
+- **Services**: Animated service cards carousel
+- **Tech Stack**: Technology capabilities overview
+- **Contact**: Lead generation form
+
+### Features
+- **Responsive Navigation**: Auto-hiding navbar with scroll effects
+- **Interactive Animations**: Scroll-triggered animations and transitions
+- **Modern Design**: Gradient effects, glass morphism, and contemporary styling
+- **Accessibility**: Semantic HTML and keyboard navigation support
+
+## 🚀 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## 🎨 Design System
+
+The application uses a modern design system with:
+- **Color Palette**: Dark theme with cyan/blue accents
+- **Typography**: Plus Jakarta Sans font family
+- **Spacing**: Consistent spacing scale
+- **Components**: Reusable component library
+
+## 🌐 Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## 📱 Responsive Breakpoints
+
+- Mobile: < 768px
+- Tablet: 768px - 1024px
+- Desktop: > 1024px
+
+## 🔧 Development
+
+### Adding New Components
+
+1. Create component in `src/components/`
+2. Follow existing naming conventions
+3. Use TypeScript for type safety
+4. Include responsive design considerations
+
+### Styling Guidelines
+
+- Use Tailwind CSS classes
+- Follow mobile-first approach
+- Maintain consistent spacing and colors
+- Use semantic HTML elements
+
+## 📝 License
+
+This project is proprietary to Dashur AI, LLC.
+
+---
+
+© 2026 Dashur AI. All rights reserved.
