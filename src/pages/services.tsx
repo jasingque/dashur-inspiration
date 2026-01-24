@@ -1,87 +1,109 @@
-import { TrustCard } from "../components/serviceCard";
+import { TechStackCard } from "../components/serviceCard";
 import graphicDesign from "../assets/graphicdesign.png";
 
-const TRUST_CARDS_DATA = [
+const STACK_DATA = [
   {
-    id: 1,
-    label: "[ Graphic Design ]",
-    title: "Defining your brand",
+    id: "Card 1",
+    number: "[01]",
+    title: "Graphic Design",
     imageUrl: graphicDesign,
+    variant: "md:left-0 md:top-[160px] md:z-0",
+    description: "Elevate your brand with our creative graphic design service. We transform ideas into captivating visuals that leave a lasting impression.",
   },
   {
-    id: 2,
-    label: "[ UI/UX Design ]",
-    title: "Defining your brand",
-    imageUrl: "https://example.com/11.avif",
+    id: "Card 2",
+    number: "[02]",
+    title: "UI/UX Design",
+    imageUrl: "https://example.com",
+    variant: "md:left-[160px] md:top-[120px] md:z-10",
+    description: "Unlock the power of exceptional user experiences with our UI/UX design service. We ensure your product stands out and delights users.",
   },
   {
-    id: 3,
-    label: "[ APP DEVELOPMENT ]",
-    title: "Defining your brand",
-    imageUrl: "https://example.com/8.avif",
+    id: "Card 3",
+    number: "[03]",
+    title: "APP DEVELOPMENT",
+    imageUrl: "https://example.com",
+    variant: "md:left-[320px] md:top-[80px] md:z-20",
+    description: "Transform your ideas into exceptional mobile experiences with our cutting-edge app development services.",
   },
   {
-    id: 4,
-    label: "[ WEB DEVELOPMENT ]",
-    title: "Defining your brand",
-    imageUrl: "https://example.com/10.avif",
+    id: "Card 4",
+    number: "[04]",
+    title: "WEB DEVELOPMENT",
+    imageUrl: "https://example.com",
+    variant: "md:left-[480px] md:top-[40px] md:z-30",
+    description: "Revolutionize your online presence with our web development services. Our skilled team creates websites that captivate users.",
   },
   {
-    id: 5,
-    label: "[ Digital Marketing ]",
-    title: "Defining your brand",
-    imageUrl: "https://example.com/11.avif",
+    id: "Card 5",
+    number: "[05]",
+    title: "Digital Marketing",
+    imageUrl: "https://example.com",
+    variant: "md:left-[640px] md:top-0 md:z-40",
+    description: "Elevate your brand's online visibility and reach new heights with our comprehensive digital marketing services.",
   },
   {
-    id: 6,
-    label: "[ SEO ]",
-    title: "Defining your brand",
-    imageUrl: "https://example.com/14.avif",
+    id: "Card 6",
+    number: "[06]",
+    title: "SEO",
+    imageUrl: "https://example.com",
+    variant: "md:left-[800px] md:top-[-40px] md:z-50",
+    description: "Boost your online presence and climb search engine rankings with our SEO expertise. Our tailored strategies focus on traffic.",
   },
 ];
 
 export const SERVICES = () => {
   return (
-    <section className="relative w-full overflow-hidden pt-[70px] pb-20 md:py-[135px]">
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee-infinite {
-          animation: marquee 30s linear infinite;
-        }
-      `}</style>
-
-      <div className="mx-auto flex flex-col gap-12 md:gap-16">
+    <section className="flex w-full flex-col items-center justify-center overflow-hidden px-6 py-[100px] md:overflow-visible md:py-[200px]">
+      <div className="flex w-full max-w-[1200px] flex-col gap-12">
         
         {/* Header */}
-        <div className="w-full px-6 md:px-0 max-w-[1120px] mx-auto">
-          <h2 className="font-plus_jakarta_sans_variable text-[32px] leading-[38.4px] tracking-[-0.96px] md:text-[56px] md:leading-[67.2px] md:tracking-[-1.68px]">
-            <span className="bg-[linear-gradient(276deg,#00D4FF_0%,#ffffff_66%)] bg-clip-text text-transparent">
-              Our Services
-            </span>
-          </h2>
-        </div>
-        <div className="relative flex w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-        
-          <div className="flex w-max">
-            <div className="flex shrink-0 animate-marquee-infinite items-stretch">
-              {TRUST_CARDS_DATA.map((card) => (
-                <div key={`a-${card.id}`} className="w-[300px] shrink-0 mr-6 h-full">
-                  <TrustCard {...card} />
-                </div>
-              ))}
-            </div>
-            <div className="flex shrink-0 animate-marquee-infinite items-stretch">
-              {TRUST_CARDS_DATA.map((card) => (
-                <div key={`b-${card.id}`} className="w-[300px] shrink-0 mr-6 h-full">
-                  <TrustCard {...card} />
-                </div>
-              ))}
-            </div>
+        <h2 className="font-plus_jakarta_sans_variable break-words text-[40px] font-bold leading-[1.1] tracking-tight md:text-[64px]">
+          <span className="bg-gradient-to-br from-white to-[#4988C4] bg-clip-text text-transparent">
+            Our Services
+          </span>
+        </h2>
 
-          </div>
+        {/* Cards Container */}
+        <div className="relative flex flex-col gap-4 md:h-[500px] md:w-full md:block mt-8">
+          {STACK_DATA.map((card) => (
+            <div
+              key={card.id}
+              className={`
+                static w-full max-w-[300px] h-[350px]
+                transition-all duration-500 ease-out 
+                md:absolute ${card.variant}
+                group [perspective:1000px]
+                hover:z-[100] md:hover:z-[100]
+              `}
+            >
+              {/* Inner Flipper Container */}
+              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                
+                {/* --- FRONT FACE --- */}
+                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
+                  <TechStackCard
+                    cardName={card.id}
+                    number={card.number}
+                    imageUrl={card.imageUrl}
+                    imageClassName="h-24 w-24 object-contain"
+                    title={card.title}
+                    cardVariant="group"
+                  />
+                </div>
+
+                {/* --- BACK FACE --- */}
+                <div className="absolute inset-0 h-full w-full rounded-3xl bg-[#111] border border-white/10 px-6 py-8 text-center  [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-center justify-center gap-4 shadow-xl">
+                    <div className="text-sm font-bold text-[#4988C4]">{card.number}</div>
+                    <h3 className="text-xl font-bold text-white">{card.title}</h3>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      {card.description}
+                    </p>
+                </div>
+
+              </div>
+            </div>
+          ))}
         </div>
 
       </div>

@@ -37,7 +37,7 @@ export const HomePage = () => {
           ctaUrl="#contact"
           ctaText="Get Started"
         />
-        <QUESTIONS text={""} />
+        <QUESTIONS/>
         <SOLUTIONS />
         <CAREERS />
         <SERVICES />

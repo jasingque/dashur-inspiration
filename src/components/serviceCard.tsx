@@ -1,33 +1,53 @@
-export type TrustCardProps = {
-  label: string;
-  imageUrl: string;
+interface TechStackCardProps {
+  number: string;
   title: string;
+  imageUrl?: string;
+  cardName?: string;
   imageClassName?: string;
-};
+  cardVariant?: string;
+}
 
-export const TrustCard = ({ label, imageUrl, title, imageClassName = "" }: TrustCardProps) => {
+export const TechStackCard = ({
+  number,
+  title,
+  imageUrl,
+  imageClassName,
+  cardVariant,
+}: TechStackCardProps) => {
   return (
-    <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-b from-[#191c30] to-[#0b0e23] p-6 transition-transform hover:-translate-y-1">
-      
-      {/* Label */}
-      <p className="relative z-10 font-plus_jakarta_sans text-xs font-semibold tracking-wider text-zinc-400 uppercase">
-        {label}
-      </p>
+    <div
+      className={`
+        relative flex h-[300px] w-[260px] flex-col justify-between 
+        rounded-3xl border border-white/10 bg-[#0F111A]/90 
+        p-6 backdrop-blur-xl transition-transform duration-300 
+        hover:-translate-y-2 hover:border-[#9f92ff]/50 hover:shadow-2xl hover:shadow-cyan-600/20
+        ${cardVariant}
+      `}
+    >
+      {/* Card Number */}
+      <div className="text-sm font-semibold text-gray-500 font-mono">{number}</div>
 
-      {/* Image Container */}
-      <div className="absolute top-[15%] -right-[15%] w-[120%] h-[65%] z-0 pointer-events-none select-none">
-        <img
-          src={imageUrl}
-          alt=""
-          loading="lazy"
-          className={`h-full w-full object-contain object-center ${imageClassName}`}
-        />
+      {/* Icon Image */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={title}
+            className={`opacity-30 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0 ${imageClassName}`}
+          />
+        ) : (
+          <div className="h-24 w-24 rounded-full bg-white/5" />
+        )}
       </div>
 
       {/* Title */}
-      <h3 className="relative z-10 font-plus_jakarta_sans_variable text-2xl leading-tight text-white mt-[140px]">
-        {title}
-      </h3>
+      <div className="z-10 text-right">
+        <span className="text-sm font-bold tracking-[0.2em] text-gray-300 uppercase">
+          {title}
+        </span>
+      </div>
+      
+      <div className="absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-cyan-600/20 blur-2xl transition-all duration-500 hover:bg-purple-600/40" />
     </div>
   );
 };
