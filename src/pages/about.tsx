@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -46,6 +47,10 @@ const capabilities = [
 ];
 
 export const AboutPage = () => {
+    useEffect(() => {
+        // start from top
+        window.scrollTo(0, 0);
+    }, []);
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Hero Section */}

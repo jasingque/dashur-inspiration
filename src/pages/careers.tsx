@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SoftwareEngineer from "../assets/softwareEngineer.png";
@@ -42,6 +42,10 @@ const CASE_STUDIES = [
 ];
 
 export const CAREERS = () => {
+    useEffect(() => {
+          // start from top
+          window.scrollTo(0, 0);
+      }, []);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,

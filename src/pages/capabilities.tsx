@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 
 // --- Types ---
@@ -84,6 +85,10 @@ const MarqueeRow = ({ row }: { row: RowConfig }) => (
 // --- Main Component ---
 
 export const CAPABILITIES = () => {
+    useEffect(() => {
+          // start from top
+          window.scrollTo(0, 0);
+      }, []);
   return (
     <section className="relative w-full overflow-hidden pb-20 pt-[70px] md:py-[135px]">
       <style>{`

@@ -20,7 +20,7 @@ export const Hero = (props: HeroProps) => {
   if (props.variant === "empty") return null;
 
   return (
-    <section className="relative w-full min-h-screen lg:min-h-[90vh] flex items-center justify-center overflow-hidden px-3 sm:px-4 md:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-8 sm:pb-12 md:pb-16 lg:pb-20">
+    <section className="relative w-full min-h-screen lg:min-h-[90vh] flex items-center justify-center overflow-hidden px-3 sm:px-4 md:px-6 lg:px-8 pt-2 sm:pt-2 md:pt-16 lg:pt-36 pb-4 sm:pb-4 md:pb-8 lg:pb-20">
       {/* 3D video */}
       <div className="absolute inset-0 z-0 flex justify-center pointer-events-none hidden lg:block">
         <div className="absolute right-[-5%] sm:right-[-2%] w-[85%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-full [mask-image:radial-gradient(circle_at_center,black_30%,transparent_70%)]">
@@ -31,11 +31,11 @@ export const Hero = (props: HeroProps) => {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col">
         {/* Slogan & Description */}
         <div className="flex flex-col max-w-4xl text-center lg:text-left">
-          <div className="flex flex-col -space-y-1 sm:-space-y-0.5"> 
-            <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent">
+          <div className="flex flex-col "> 
+            <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent word-break:break-all">
               {props.titleLine1}
             </h1>
-            <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-1">
+            <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-1 word-break:break-all">
               {props.titleLine2}
             </h1>
           </div>
