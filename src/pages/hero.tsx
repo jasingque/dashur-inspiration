@@ -20,35 +20,35 @@ export const Hero = (props: HeroProps) => {
   if (props.variant === "empty") return null;
 
   return (
-    <section className="relative w-full min-h-[800px] flex items-center justify-center overflow-hidden px-6 py-20">
+    <section className="relative w-full min-h-screen lg:min-h-[90vh] flex items-center justify-center overflow-hidden px-3 sm:px-4 md:px-6 lg:px-8 pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-8 sm:pb-12 md:pb-16 lg:pb-20">
       {/* 3D video */}
-      <div className="absolute inset-0 z-0 flex justify-center pointer-events-none">
-        <div className="absolute right-[-15%] w-[70%] h-full md:w-[60%] [mask-image:radial-gradient(circle_at_center,black_30%,transparent_70%)]">
+      <div className="absolute inset-0 z-0 flex justify-center pointer-events-none hidden lg:block">
+        <div className="absolute right-[-5%] sm:right-[-2%] w-[85%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-full [mask-image:radial-gradient(circle_at_center,black_30%,transparent_70%)]">
           <video src={props.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-contain" />
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-[1120px] flex flex-col">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col">
         {/* Slogan & Description */}
-        <div className="flex flex-col max-w-3xl mt-[-5%] md:mt-[-10%]">
-          <div className="flex flex-col -space-y-1"> 
-            <h1 className="font-bold text-[40px] md:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent">
+        <div className="flex flex-col max-w-4xl text-center lg:text-left">
+          <div className="flex flex-col -space-y-1 sm:-space-y-0.5"> 
+            <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent">
               {props.titleLine1}
             </h1>
-            <h1 className="font-bold text-[40px] md:text-7xl tracking-tight leading-[1.1] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-1">
+            <h1 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-1">
               {props.titleLine2}
             </h1>
           </div>
-          <p className="mt-8 max-w-lg text-zinc-400 text-lg font-medium leading-relaxed">
+          <p className="mt-4 sm:mt-6 max-w-2xl lg:max-w-lg text-zinc-400 text-base sm:text-lg lg:text-xl font-medium leading-relaxed">
             {props.description}
           </p>
         </div>
 
         {/* BUTTON */}
-        <div className="mt-20 md:mt-32 flex flex-row gap-6">
+        <div className="mt-8 sm:mt-12 lg:mt-16 flex flex-row gap-3 sm:gap-4 md:gap-6 justify-center lg:justify-start">
           <a 
             href="/contact" 
-            className="group relative inline-flex items-center justify-center px-10 py-4 font-semibold text-white bg-black/20 backdrop-blur-md rounded-xl overflow-hidden"
+            className="group relative inline-flex items-center justify-center px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold text-white bg-black/20 backdrop-blur-md rounded-xl overflow-hidden"
           >
             <svg className="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
               <rect x="0" y="0" width="100%" height="100%" rx="12" className="fill-none stroke-zinc-800 stroke-1" />
@@ -57,19 +57,9 @@ export const Hero = (props: HeroProps) => {
                 style={{ filter: 'drop-shadow(0 0 10px #22d3ee)' }}
               />
             </svg>
-            <span className="relative z-10 text-sm md:text-base">Get Started</span>
+            <span className="relative z-10 text-sm sm:text-base md:text-lg">Get Started</span>
           </a>
 
-          <a href="/about" className="group relative inline-block w-[12rem] h-12 cursor-pointer outline-none border-0 align-middle bg-transparent p-0">
-            <span className="relative block m-0 w-12 h-12 bg-cyan-700 rounded-[1.625rem] transition-all duration-500 ease-[cubic-bezier(0.65,0,0.076,1)] group-hover:w-full">
-              <span className="absolute top-0 bottom-0 left-[0.625rem] m-auto w-[1.125rem] h-[0.125rem] bg-none transition-all duration-500 ease-[cubic-bezier(0.65,0,0.076,1)] group-hover:bg-white group-hover:translate-x-4">
-                <span className="absolute -top-[0.29rem] right-[0.0625rem] w-[0.625rem] h-[0.625rem] border-t-2 border-r-2 border-white rotate-45"></span>
-              </span>
-            </span>
-            <span className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center ml-[1rem] text-white transition-all duration-500 ease-[cubic-bezier(0.65,0,0.076,1)] group-hover:text-white">
-              <span className="font-semibold text-sm md:text-base">Learn More</span>
-            </span>
-          </a>
         </div>
       </div>
 

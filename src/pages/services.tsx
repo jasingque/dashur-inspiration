@@ -59,8 +59,8 @@ const STACK_DATA = [
 
 export const SERVICES = () => {
   return (
-    <section className="flex w-full flex-col items-center justify-center overflow-hidden px-6 py-[100px] md:overflow-visible md:py-[200px]">
-      <div className="flex w-full max-w-[1200px] flex-col gap-12">
+    <section className="flex w-full flex-col items-center justify-center overflow-hidden px-0 py-[100px] md:overflow-visible md:px-6 md:py-[200px]">
+      <div className="flex w-full max-w-[1200px] flex-col gap-12 px-4 md:px-0">
         
         {/* Header */}
         <h2 className="font-plus_jakarta_sans_variable break-words text-[40px] font-bold leading-[1.1] tracking-tight md:text-[64px]">
@@ -75,9 +75,9 @@ export const SERVICES = () => {
             <div
               key={card.id}
               className={`
-                static w-full max-w-[300px] h-[350px]
+                static w-full h-[350px]
                 transition-all duration-500 ease-out 
-                md:absolute ${card.variant}
+                md:absolute md:max-w-[300px] ${card.variant}
                 group [perspective:1000px]
                 hover:z-[100] md:hover:z-[100]
               `}

@@ -22,7 +22,7 @@ const Field: React.FC<FieldProps> = ({ label, id, isTextArea, ...props }) => (
 
 export const Contact: React.FC = () => {
   return (
-    <section id="contact" className="relative w-full px-6 py-20 overflow-hidden flex justify-center items-center">
+    <section id="contact" className="relative w-full px-6 pt-32 pb-20 overflow-hidden flex justify-center items-center">
 
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-600/20 blur-[120px] rounded-full pointer-events-none" />
 
