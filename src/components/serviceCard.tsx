@@ -17,7 +17,7 @@ export const TechStackCard = ({
   return (
     <div
       className={`
-        relative flex h-[300px] w-[260px] flex-col justify-between 
+        relative flex h-[300px] w-full md:w-[260px] flex-col justify-between 
         rounded-3xl border border-white/10 bg-[#0F111A]/90 
         p-6 backdrop-blur-xl transition-transform duration-300 
         hover:-translate-y-2 hover:border-[#9f92ff]/50 hover:shadow-2xl hover:shadow-cyan-600/20
