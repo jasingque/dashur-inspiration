@@ -96,7 +96,7 @@ export const CAPABILITIES = () => {
       <div className="mx-auto flex max-w-[1400px] flex-col gap-12 px-0 md:gap-16 md:px-6">
         <div className="mx-auto mb-8 w-full max-w-[1120px] px-6 text-center md:px-0">
           <h2 className="font-plus_jakarta_sans_variable break-words text-[40px] font-bold leading-[1.1] tracking-tight md:text-[64px]">
-            <span className="bg-gradient-to-r from-[#4988C4] via-white/66 to-white bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
               Our Capabilities
             </span>
           </h2>

@@ -1,5 +1,10 @@
 import { TechStackCard } from "../components/serviceCard";
 import graphicDesign from "../assets/graphicdesign.png";
+import uiuxDesign from "../assets/uiUxDesign.png";
+import appDevelopment from "../assets/appDevelopment.png";
+import webDevelopment from "../assets/webDevelopment.png";
+import digitalMarketing from "../assets/digitalMarketing.png";
+import seo from "../assets/seo.png";
 
 const STACK_DATA = [
   {
@@ -14,7 +19,7 @@ const STACK_DATA = [
     id: "Card 2",
     number: "[02]",
     title: "UI/UX Design",
-    imageUrl: "https://example.com",
+    imageUrl: uiuxDesign,
     variant: "md:left-[160px] md:top-[120px] md:z-10",
     description: "Unlock the power of exceptional user experiences with our UI/UX design service. We ensure your product stands out and delights users.",
   },
@@ -22,7 +27,7 @@ const STACK_DATA = [
     id: "Card 3",
     number: "[03]",
     title: "APP DEVELOPMENT",
-    imageUrl: "https://example.com",
+    imageUrl: appDevelopment,
     variant: "md:left-[320px] md:top-[80px] md:z-20",
     description: "Transform your ideas into exceptional mobile experiences with our cutting-edge app development services.",
   },
@@ -30,7 +35,7 @@ const STACK_DATA = [
     id: "Card 4",
     number: "[04]",
     title: "WEB DEVELOPMENT",
-    imageUrl: "https://example.com",
+    imageUrl: webDevelopment,
     variant: "md:left-[480px] md:top-[40px] md:z-30",
     description: "Revolutionize your online presence with our web development services. Our skilled team creates websites that captivate users.",
   },
@@ -38,7 +43,7 @@ const STACK_DATA = [
     id: "Card 5",
     number: "[05]",
     title: "Digital Marketing",
-    imageUrl: "https://example.com",
+    imageUrl: digitalMarketing,
     variant: "md:left-[640px] md:top-0 md:z-40",
     description: "Elevate your brand's online visibility and reach new heights with our comprehensive digital marketing services.",
   },
@@ -46,7 +51,7 @@ const STACK_DATA = [
     id: "Card 6",
     number: "[06]",
     title: "SEO",
-    imageUrl: "https://example.com",
+    imageUrl: seo,
     variant: "md:left-[800px] md:top-[-40px] md:z-50",
     description: "Boost your online presence and climb search engine rankings with our SEO expertise. Our tailored strategies focus on traffic.",
   },
@@ -77,9 +82,8 @@ export const SERVICES = () => {
                 hover:z-[100] md:hover:z-[100]
               `}
             >
-              {/* Inner Flipper Container */}
               <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                
+
                 {/* --- FRONT FACE --- */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
                   <TechStackCard

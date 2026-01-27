@@ -68,10 +68,10 @@ export const Footer = () => {
             <div className="flex flex-col items-start md:items-start">
               <SectionHeader> MAIL US </SectionHeader>
               <a href="mailto:contact@dashurai.com" className="group relative text-3xl font-bold md:text-4xl">
-                <span className="bg-gradient-to-r from-white to-[#9F92FF] bg-clip-text text-transparent group-hover:opacity-0 transition-opacity">
+                <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent group-hover:opacity-0 transition-opacity">
                   contact@dashurai.com
                 </span>
-                <span className="absolute left-0 top-0 bg-gradient-to-r from-[#9F92FF] to-white bg-clip-text text-transparent opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="absolute left-0 top-0 bg-gradient-to-r from-[#4988C4] to-white bg-clip-text text-transparent opacity-0 transition-opacity group-hover:opacity-100">
                    contact@dashurai.com
                 </span>
               </a>
@@ -108,10 +108,7 @@ export const Footer = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <span>MADE BY</span>
-            <a className="block w-[126px]">
-              <img src="../assets/logo.png" alt="Dashur AI" />
-            </a>
+            <span>MADE BY <span className="text-[#4988C4]">Dashur AI</span></span>
           </div>
         </div>
       </div>

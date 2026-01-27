@@ -33,7 +33,7 @@ export const TechStackCard = ({
           <img
             src={imageUrl}
             alt={title}
-            className={`opacity-30 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0 ${imageClassName}`}
+            className={`h-32 w-32 opacity-30 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0 ${imageClassName}`}
           />
         ) : (
           <div className="h-24 w-24 rounded-full bg-white/5" />

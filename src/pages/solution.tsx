@@ -1,4 +1,5 @@
 import { SolutionCard } from "../components/solutioncard";
+import { motion } from "framer-motion";
 import Hospitality from '../assets/hospitality.png';
 import Healthcare from '../assets/healthcare.png';
 import Manufacturing from '../assets/manufacturing.png';
@@ -10,15 +11,15 @@ const TOP_SOLUTIONS = [
     title: "Healthcare",
     description: "We revolutionize patient care through robotic surgical assistance and AI diagnostics, simultaneously automating administrative workflows to maximize hospital efficiency.",
     imageUrl: Healthcare,
-    variant: "md:col-span-3", // Takes up 60% width
-    aspect: "md:aspect-[1802/662]"
+    className: "md:col-span-3",
+    aspect: "aspect-[16/9] md:aspect-[21/9]"
   },
   {
     title: "Hospitality & Entertainment",
     description: "We elevate guest experiences by deploying automated check-in systems and robotic concierges, while optimizing entertainment venues with smart, adaptive equipment.",
     imageUrl: Hospitality,
-    variant: "md:col-span-2", // Takes up 40% width
-    aspect: "md:aspect-[1283/595]"
+    className: "md:col-span-2",
+    aspect: "aspect-[16/9] md:aspect-[3/2]"
   },
 ];
 
@@ -40,61 +41,98 @@ const BOTTOM_SOLUTIONS = [
   },
 ];
 
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  },
+};
+
 export const SOLUTIONS = () => {
   return (
-    <section className="relative flex flex-col items-center justify-center w-full overflow-hidden px-6 py-[70px] md:px-0 md:py-[135px]">
-      <div className="relative flex flex-col gap-8 w-full max-w-[1120px] z-[2]">
-        
-        <div className="absolute top-[-206px] left-[19%] w-[966px] -translate-x-1/2 z-0 opacity-50 pointer-events-none">
+    <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-6 py-[70px] md:px-0 md:py-[135px]">
+      <motion.div 
+        className="relative z-[2] flex w-full max-w-[1120px] flex-col gap-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+      >
+
+        <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-50">
           <img src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
-          <div className="md:w-[190px] shrink-0">
-            <p className="text-zinc-400 font-semibold tracking-wide text-sm font-plus_jakarta_sans">
-              [ OUR SOLUTIONS ]
+        {/* Header Section */}
+        <motion.div variants={itemVariants} className="flex w-full flex-col gap-4 md:flex-row md:gap-6">
+          <div className="shrink-0 md:w-[190px]">
+            <p className="font-plus_jakarta_sans text-sm font-semibold tracking-wide text-zinc-400">
+              [ OUR MARKETS ]
             </p>
           </div>
           
-          <div className="flex flex-col md:flex-row gap-6 grow">
-            <h2 className="text-3xl md:text-5xl font-plus_jakarta_sans_variable tracking-tight leading-tight md:w-1/2">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-[#00D4FF]">
+          <div className="flex grow flex-col gap-6 md:flex-row">
+            <h2 className="font-plus_jakarta_sans_variable font-bold text-[40px] leading-tight tracking-tight md:w-1/2 md:text-[50px]">
+              <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
                 Industries We Serve
               </span>
             </h2>
-            <p className="text-gray-400 text-base leading-6 md:max-w-[360px] md:w-1/2">
+            <p className="text-base leading-6 text-gray-400 md:w-1/2 md:max-w-[360px]">
              Our intelligent systems eliminate operational friction, automate complex workflows, and accelerate industrial growth, ensuring you stay ahead of the curve.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col gap-4 z-[2]">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        {/* Grid Section */}
+        <div className="z-[2] flex flex-col gap-4">
+          
+          {/* Top Row */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
             {TOP_SOLUTIONS.map((item, idx) => (
-              <SolutionCard
-                key={idx}
-                title={item.title}
-                description={item.description}
-                imageUrl={item.imageUrl}
-                cardVariant={`w-full ${item.variant}`}
-                imageVariant={`w-full object-cover ${item.aspect}`} imageSizes={""}              />
+              <motion.div 
+                key={idx} 
+                variants={itemVariants} 
+                className={item.className}
+              >
+                <SolutionCard
+                  title={item.title}
+                  description={item.description}
+                  imageUrl={item.imageUrl}
+                  aspectRatio={item.aspect}
+                />
+              </motion.div>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Bottom Row */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {BOTTOM_SOLUTIONS.map((item, idx) => (
-              <SolutionCard
-                key={idx}
-                title={item.title}
-                description={item.description}
-                imageUrl={item.imageUrl}
-                cardVariant="w-full h-auto min-h-[320px]"
-                imageVariant="aspect-[1014/596] w-full object-cover" imageSizes={""}              />
+              <motion.div key={idx} variants={itemVariants}>
+                <SolutionCard
+                  title={item.title}
+                  description={item.description}
+                  imageUrl={item.imageUrl}
+                  aspectRatio="aspect-[4/3] md:aspect-[16/10]"
+                />
+              </motion.div>
             ))}
           </div>
           
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

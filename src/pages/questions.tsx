@@ -47,7 +47,7 @@ export const QUESTIONS = () => {
     <section className="relative w-full">
       <div className="sticky top-0 z-10 flex items-center justify-center h-screen pointer-events-none">
         <h2 className="text-[46px] md:text-[80px] font-bold tracking-tighter text-center leading-tight drop-shadow-2xl">
-          <span className="text-transparent bg-clip-text bg-gradient-to-br from-white to-[#00D4FF]">
+          <span className="text-transparent bg-clip-text bg-gradient-to-br from-white to-[#4988C4]">
             Is This You?
           </span>
         </h2>

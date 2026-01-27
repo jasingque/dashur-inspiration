@@ -30,10 +30,10 @@ export const CaseStudyCard = ({
   return (
     <a
       href={href}
-      className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#191C30] to-[#0B0E23] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] md:flex-row md:items-stretch md:gap-8 md:p-6"
+      className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#191C30] to-[#0B0E23] p-4 transition-all duration-300 hover:-translate-y-5 hover:border-[#4988C4] hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] md:flex-row md:items-stretch md:gap-8 md:p-6"
     >
       {/* Hover Gradient Effect Layer */}
-      <div className="absolute inset-0 z-0 bg-violet-400/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="absolute inset-0 z-0 bg-blue-400/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       {/* Content Section */}
       <div className="relative z-10 flex flex-1 flex-col justify-between gap-6 py-2">

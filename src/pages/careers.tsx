@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
-import SoftwareEngineer from "../assets/SoftwareEngineer.png";
-import QAEngineer from "../assets/QAEngineer.png";
-import MobileEngineer from "../assets/MobileEngineer.png";
+import SoftwareEngineer from "../assets/softwareEngineer.png";
+import QAEngineer from "../assets/qaEngineer.png";
+import MobileDeveloper from "../assets/mobileDeveloper.png";
 
 const CASE_STUDIES = [
   {
@@ -32,7 +32,7 @@ const CASE_STUDIES = [
     href: "./case-studies/ai-powered-customer-support-e-commerce-brand",
     title: "Mobile Developer",
     tags: ["Onsite", "Open"],
-    imageUrl: MobileEngineer,
+    imageUrl: MobileDeveloper,
     description: (
       <>
         Dashur AI, LLC is an emerging tech firm in the Las Vegas metropolitan area. We are looking to hire an experienced Mobile Developer to help us keep growing. If you're hard-working and dedicated, Dashur AI is an excellent place to grow your career.
@@ -64,7 +64,7 @@ export const CAREERS = () => {
           className="flex flex-col items-center"
         >
           <h2 className="text-center font-plus_jakarta_sans_variable text-[46px] font-bold leading-tight tracking-tight md:text-[80px]">
-            <span className="bg-[linear-gradient(276deg,#00D4FF_0%,#FFFFFF_66%)] bg-clip-text text-transparent">
+            <span className="bg-[linear-gradient(276deg,#4988C4_0%,#FFFFFF_66%)] bg-clip-text text-transparent">
               Join Our Innovative Team
             </span>
           </h2>
