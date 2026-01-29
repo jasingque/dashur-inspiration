@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export const MobileNavbar = () => {
@@ -36,6 +36,17 @@ export const MobileNavbar = () => {
     };
   }, [isOpen]);
 
+  const handleNavClick = (e: React.MouseEvent, path: string) => {
+    setIsOpen(false);
+    if (location.pathname === path) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <>
       {/* Mobile Navbar */}
@@ -47,7 +58,7 @@ export const MobileNavbar = () => {
         }`}>
           <div className="flex items-center justify-between px-4 py-4">
             {/* Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/" onClick={(e) => handleNavClick(e, "/")} className="flex items-center">
               <img src={logo} alt="logo" className="h-10 w-auto object-contain" />
             </Link>
 
@@ -97,11 +108,9 @@ export const MobileNavbar = () => {
                 <Link
                   key={link.name}
                   to={link.path}
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.path)}
                   className={`group relative text-2xl font-medium transition-all duration-300 ${
-                    location.pathname === link.path
-                      ? "text-cyan-400"
-                      : "text-white hover:text-cyan-400"
+                    location.pathname === link.path ? "text-cyan-400" : "text-white"
                   }`}
                   style={{
                     animationDelay: isOpen ? `${index * 100}ms` : '0ms'

@@ -1,10 +1,11 @@
 import { SolutionCard } from "../components/solutioncard";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import Hospitality from '../assets/hospitality.png';
 import Healthcare from '../assets/healthcare.png';
 import Manufacturing from '../assets/manufacturing.png';
 import Defense from '../assets/defense.png';
-import Aerospace from '../assets/aerospace.png';
+import Aerospace from '../assets/aerospace.webp';
 
 const TOP_SOLUTIONS = [
   {
@@ -61,6 +62,10 @@ const itemVariants = {
 };
 
 export const MarketPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">

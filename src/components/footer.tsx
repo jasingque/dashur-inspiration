@@ -2,17 +2,19 @@ import React from "react";
 
 // --- Data & Config ---
 const NAV_LINKS = [
-  { label: "About", href: "./?utm_source=veloxthemes&utm_campaign=saaspo#services" },
-  { label: "Capabilities", href: "./case-studies" },
-  { label: "Market", href: "./?utm_source=veloxthemes&utm_campaign=saaspo#pricing" },
-  { label: "Career", href: "./?utm_source=veloxthemes&utm_campaign=saaspo#contact" },
-  { label: "Contact", href: "./blog" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Capabilities", href: "capabilities" },
+  { label: "Market", href: "/market" },
+  { label: "Career", href: "/careers" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const SOCIAL_LINKS = [
-  { label: "X/Twitter", href: "https://x.com" },
-  { label: "Instagram", href: "https://instagram.com/" },
-  { label: "LinkedIn", href: "https://www.linkedin.com" },
+  { label: "Threads", href: "https://www.threads.net/@dashur_ai" },
+  { label: "X/Twitter", href: "https://twitter.com/dashur_ai" },
+  { label: "Instagram", href: "https://www.instagram.com/dashur_ai/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/dashur-ai/about/" },
 ];
 
 const LEGAL_LINKS = [
@@ -38,7 +40,7 @@ const FooterLink = ({ href, label }: { href: string; label: string }) => (
 const DashurLogo = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 500 150" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
      <text x="50%" y="75%" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="900" fontSize="100" letterSpacing="-6">
-       DashurAI
+       Dashur AI
      </text>
   </svg>
 );
@@ -97,7 +99,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="flex flex-col items-center justify-between gap-4 border-t border-zinc-800 pt-8 text-sm text-zinc-400 md:flex-row">
-          <p>© 2025 Dashur AI. All rights reserved.</p>
+          <p>© 2026 Dashur AI. All rights reserved.</p>
           <div className="flex items-center gap-2">
             {LEGAL_LINKS.map((link, i) => (
               <React.Fragment key={link.href}>

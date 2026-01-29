@@ -9,8 +9,8 @@ const FocusCard = ({ text, className }: { text: string; className?: string }) =>
     offset: ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [0.2, 1, 0.2]);
-  const blurAmount = useTransform(scrollYProgress, [0.2, 0.5, 0.8], [8, 0, 8]);
+  const opacity = useTransform(scrollYProgress, [0.2, 0.53, 0.73, 0.8], [0, 1, 1, 0]);
+  const blurAmount = useTransform(scrollYProgress, [0.2, 0.53, 0.73, 0.8], [10, 0, 0, 10]);
   const filter = useMotionTemplate`blur(${blurAmount}px)`;
   const bracketOpacity = useTransform(scrollYProgress, [0.35, 0.5, 0.65], [0, 1, 0]);
   const bracketScale = useTransform(scrollYProgress, [0.35, 0.5, 0.65], [0.9, 1, 0.9]);

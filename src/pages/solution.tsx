@@ -4,7 +4,7 @@ import Hospitality from '../assets/hospitality.png';
 import Healthcare from '../assets/healthcare.png';
 import Manufacturing from '../assets/manufacturing.png';
 import Defense from '../assets/defense.png';
-import Aerospace from '../assets/aerospace.png';
+import Aerospace from '../assets/aerospace.webp';
 
 const TOP_SOLUTIONS = [
   {

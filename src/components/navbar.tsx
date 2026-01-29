@@ -38,6 +38,16 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
+  
+const handleNavClick = (e: React.MouseEvent, path: string) => {
+  if (location.pathname === path) {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+};
 
   return (
     <div
@@ -54,7 +64,7 @@ export const Navbar = () => {
           
           {/* Logo */}
           <div className="shrink-0 w-40 md:w-64">
-            <Link to="/" className="w-full h-full inline-block">
+            <Link to="/" onClick={(e) => handleNavClick(e, "/")} className="w-full h-full inline-block">
               <img src={logo} alt="logo" className="h-12 md:h-24 w-full object-contain" />
             </Link>
           </div>
@@ -65,6 +75,7 @@ export const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
+                onClick={(e) => handleNavClick(e, link.path)}
                 className={`group relative flex h-min items-center justify-center gap-2.5 py-1 text-base font-plus_jakarta_sans transition-colors ${
                   location.pathname === link.path 
                     ? "text-cyan-400" 
