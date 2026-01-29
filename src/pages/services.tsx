@@ -1,10 +1,10 @@
 import { TechStackCard } from "../components/serviceCard";
-import graphicDesign from "../assets/graphicdesign.png";
-import uiuxDesign from "../assets/uiUxDesign.png";
-import appDevelopment from "../assets/appDevelopment.png";
-import webDevelopment from "../assets/webDevelopment.png";
-import digitalMarketing from "../assets/digitalMarketing.png";
-import seo from "../assets/seo.png";
+import graphicDesign from "../assets/graphicdesign.webp";
+import uiuxDesign from "../assets/uiUxDesign.webp";
+import appDevelopment from "../assets/appDevelopment.webp";
+import webDevelopment from "../assets/webDevelopment.webp";
+import digitalMarketing from "../assets/digitalMarketing.webp";
+import seo from "../assets/seo.webp";
 
 const STACK_DATA = [
   {
