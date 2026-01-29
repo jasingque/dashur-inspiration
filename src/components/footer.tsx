@@ -59,12 +59,12 @@ export const Footer = () => {
           <div className="flex flex-col gap-10 md:w-1/2">
             
             {/* Call */}
-            <div className="flex flex-col items-start md:items-start">
+            {/* <div className="flex flex-col items-start md:items-start">
               <SectionHeader> CALL US </SectionHeader>
               <a href="tel:+123456789" className="text-xl font-semibold text-white hover:text-blue-700">
                 (702) 960-4800
               </a>
-            </div>
+            </div> */}
 
             {/* Mail */}
             <div className="flex flex-col items-start md:items-start">

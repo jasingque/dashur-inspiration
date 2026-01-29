@@ -8,6 +8,7 @@ import { Contact } from "./pages/contactform";
 import { Navbar } from "./components/navbar";
 import { MobileNavbar } from "./components/mobile-navbar";
 import { Footer } from "./components/footer";
+import Applyform from "./pages/applyform";
 
 export const App = () => {
   return (
@@ -24,6 +25,7 @@ export const App = () => {
               <Route path="/market" element={<MarketPage />} />
               <Route path="/careers" element={<CAREERS />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path ="/job/:id" element={<Applyform />} />
             </Routes>
             <div className="box-border caret-transparent"></div>
             <div className="relative box-border caret-transparent grow h-0 w-0 bg-[position:0px_0px]"></div>

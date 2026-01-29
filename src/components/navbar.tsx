@@ -91,7 +91,7 @@ const handleNavClick = (e: React.MouseEvent, path: string) => {
           {/* Button */}
           <div>
             <button onClick={() => navigate("/contact")} className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-8 py-3 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]">
-              <span className="relative z-10 transition-all duration-500">Join with us</span>
+              <span className="relative z-10 transition-all duration-500">Join Dashur Team</span>
               
               <span className="absolute left-0 top-[-100%] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
               <span className="absolute right-[-100%] top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />

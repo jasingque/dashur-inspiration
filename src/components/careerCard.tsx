@@ -1,7 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export type CaseStudyCardProps = {
-  href: string;
+  route: string;
   indexFirst: string;
   indexSecond: string;
   title: string;
@@ -14,7 +15,7 @@ export type CaseStudyCardProps = {
 };
 
 export const CaseStudyCard = ({
-  href,
+  route,
   indexFirst,
   indexSecond,
   title,
@@ -27,9 +28,10 @@ export const CaseStudyCard = ({
 }: CaseStudyCardProps) => {
   const tags = [tag1, tag2];
 
+ const navigate = useNavigate()
   return (
-    <a
-      href={href}
+    <div
+     onClick={()=>navigate(route)}
       className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#191C30] to-[#0B0E23] p-4 transition-all duration-300 hover:-translate-y-5 hover:border-[#4988C4] hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] md:flex-row md:items-stretch md:gap-8 md:p-6"
     >
       {/* Hover Gradient Effect Layer */}
@@ -86,6 +88,6 @@ export const CaseStudyCard = ({
         {/* Inner Border for Image (Optional, matches design fidelity) */}
         <div className="pointer-events-none absolute inset-0 rounded-xl border border-white/10" />
       </div>
-    </a>
+    </div>
   );
 };

@@ -7,7 +7,7 @@ import MobileDeveloper from "../assets/mobileDeveloper.png";
 
 const CASE_STUDIES = [
   {
-    href: "./case-studies/ai-for-lead-qualification-saas-company",
+    route:"/job/software",
     title: "Software Developer",
     tags: ["Onsite", "Open"],
     imageUrl: SoftwareEngineer,
@@ -18,7 +18,7 @@ const CASE_STUDIES = [
     ),
   },
   {
-    href: "./case-studies/ai-workflow-automation-finance-firm",
+    route:"/job/qa",
     title: "QA Engineer",
     tags: ["Onsite", "Open"],
     imageUrl: QAEngineer,
@@ -29,13 +29,24 @@ const CASE_STUDIES = [
     ),
   },
   {
-    href: "./case-studies/ai-powered-customer-support-e-commerce-brand",
+    route:"/job/mobile",
     title: "Mobile Developer",
     tags: ["Onsite", "Open"],
     imageUrl: MobileDeveloper,
     description: (
       <>
         Dashur AI, LLC is an emerging tech firm in the Las Vegas metropolitan area. We are looking to hire an experienced Mobile Developer to help us keep growing. If you're hard-working and dedicated, Dashur AI is an excellent place to grow your career.
+      </>
+    ),
+  },
+  {
+    route:"/job/devops",
+    title: "DevOps Engineer",
+    tags: ["Onsite", "Open"],
+    imageUrl: MobileDeveloper,
+    description: (
+      <>  
+        Dashur AI, LLC is an emerging tech firm in the Las Vegas metropolitan area. We are looking to hire an experienced DevOps Engineer to help us keep growing. If you're hard-working and dedicated, Dashur AI is an excellent place to grow your career.
       </>
     ),
   },
@@ -80,7 +91,7 @@ export const CAREERS = () => {
         {CASE_STUDIES.map((study, index) => (
           <CaseStudyCard
             key={index}
-            href={study.href}
+            route = {study.route}
             indexFirst="0"
             indexSecond={String(index + 1)}
             title={study.title}
@@ -91,22 +102,8 @@ export const CAREERS = () => {
           />
         ))}
 
-        {/* Button */}
-        <div className="mt-8 flex justify-center">
-          <a
-            href="./case-studies"
-            className="group relative flex items-center gap-2.5 rounded-[30px] border border-white/20 bg-slate-900/50 px-6 py-3 text-white backdrop-blur-md transition-all hover:bg-slate-800 hover:scale-105"
-          >
-            <span className="font-plus_jakarta_sans_variable text-base font-medium">
-              More Details
-            </span>
-            <img
-              src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-4.svg"
-              alt="Arrow Icon"
-              className="h-3 w-3 transition-transform group-hover:translate-x-1"
-            />
-          </a>
-        </div>
+        
+        
       </div>
     </section>
   );
