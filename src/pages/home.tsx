@@ -37,7 +37,7 @@ export const HomePage = () => {
         />
         <QUESTIONS/>
         <SOLUTIONS />
-        <CAREERS />
+        <CAREERS limit={3} isHomePage={true} />
         <SERVICES />
         <CAPABILITIES />
         <Contact />
