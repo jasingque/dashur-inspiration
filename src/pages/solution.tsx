@@ -72,10 +72,6 @@ export const SOLUTIONS = () => {
         viewport={{ once: false, amount: 0.2 }}
       >
 
-        <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-50">
-          <img src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
-        </div>
-
         {/* Header Section */}
         <motion.div variants={itemVariants} className="flex w-full flex-col gap-4 md:flex-row md:gap-6">
           <div className="shrink-0 md:w-[190px]">
