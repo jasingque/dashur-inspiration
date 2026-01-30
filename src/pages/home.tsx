@@ -40,6 +40,7 @@ export const HomePage = () => {
         <QUESTIONS/>
         <SOLUTIONS />
         <CAREERS />
+        <button className="text-white  text-2xl" onClick={() => window.location.href = "/careers"}>Go To Apply</button>
         <SERVICES />
         <CAPABILITIES />
         <Contact />
