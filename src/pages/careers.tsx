@@ -1,9 +1,12 @@
 import { useEffect, useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { Helmet } from "react-helmet";
 import SoftwareEngineer from "../assets/softwareEngineer.webp";
 import QAEngineer from "../assets/qaEngineer.webp";
 import MobileDeveloper from "../assets/mobileDeveloper.webp";
+import IOSDeveloper from "../assets/mobileDeveloper.webp";
+import DevOpsEngineer from "../assets/softwareEngineer.webp";
 
 const CASE_STUDIES = [
   {
@@ -81,6 +84,13 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
   const displayedStudies = limit ? CASE_STUDIES.slice(0, limit) : CASE_STUDIES;
 
   return (
+    <>
+      {!isHomePage && (
+        <Helmet>
+          <title>Careers - Dashurai</title>
+          <meta name="description" content="Join our team at Dashurai - Explore career opportunities in AI, software development, and technology innovation" />
+        </Helmet>
+      )}
     <section 
       ref={containerRef} 
       className="relative flex flex-col items-center w-full px-6 md:px-0"
@@ -128,5 +138,6 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
         )}
       </div>
     </section>
+    </>
   );
 };

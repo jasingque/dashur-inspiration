@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { Helmet } from 'react-helmet';
 import { JobDetails } from '../components/JobDetails';
 import { ApplicationForm } from '../components/ApplicationForm';
 
@@ -21,6 +22,10 @@ export default function ApplyForm() {
 
   return (
     <div className="min-h-screen text-white px-6 py-12 lg:py-24 font-plus_jakarta_sans_variable">
+      <Helmet>
+        <title>Apply for {id?.replace(/-/g, ' ')} - Dashurai</title>
+        <meta name="description" content="Apply for the {id?.replace(/-/g, ' ')} position at Dashurai - Join our innovative AI team" />
+      </Helmet>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
         
         {/* LEFT: STICKY SIDEBAR */}

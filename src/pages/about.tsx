@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -53,6 +54,10 @@ export const AboutPage = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
+      <Helmet>
+        <title>About Us - Dashurai</title>
+        <meta name="description" content="Learn more about Dashurai - Our mission, vision, and the team behind innovative AI solutions" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
         <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-30 hidden lg:block">
