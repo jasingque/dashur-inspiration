@@ -21,7 +21,7 @@ const itemVariants = {
 };
 
 const stats = [
-  { label: "Years of AI Innovation", value: "15+" },
+  { label: "Years of AI Innovation", value: "2+" },
   { label: "Complex Challenges Solved", value: "500+" },
   { label: "AI Systems Deployed", value: "200+" },
   { label: "Global Markets Served", value: "50+" },
@@ -47,16 +47,16 @@ const capabilities = [
 ];
 
 export const AboutPage = () => {
-    useEffect(() => {
-        // start from top
-        window.scrollTo(0, 0);
-    }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
         <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-30 hidden lg:block">
-          <img src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
+          <img src="https://c.dashurai.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
         </div>
         
         <motion.div 

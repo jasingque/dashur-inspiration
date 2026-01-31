@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 export type CaseStudyCardProps = {
-  route: string;
+  id: string; // Changed from route: string
   indexFirst: string;
   indexSecond: string;
   title: string;
@@ -15,7 +15,7 @@ export type CaseStudyCardProps = {
 };
 
 export const CaseStudyCard = ({
-  route,
+  id, // Destructure id
   indexFirst,
   indexSecond,
   title,
@@ -27,12 +27,13 @@ export const CaseStudyCard = ({
   imageAlt = "",
 }: CaseStudyCardProps) => {
   const tags = [tag1, tag2];
+  const navigate = useNavigate();
 
- const navigate = useNavigate()
   return (
     <div
-     onClick={()=>navigate(route)}
-      className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#191C30] to-[#0B0E23] p-4 transition-all duration-300 hover:-translate-y-5 hover:border-[#4988C4] hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] md:flex-row md:items-stretch md:gap-8 md:p-6"
+      // Navigate to the ID path (e.g., /software-developer)
+      onClick={() => navigate(`/job/${id}`)} 
+      className="group relative flex cursor-pointer w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#191C30] to-[#0B0E23] p-4 transition-all duration-300 hover:-translate-y-5 hover:border-[#4988C4] hover:shadow-[0_10px_30px_rgba(0,0,0,0.25)] md:flex-row md:items-stretch md:gap-8 md:p-6"
     >
       {/* Hover Gradient Effect Layer */}
       <div className="absolute inset-0 z-0 bg-blue-400/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

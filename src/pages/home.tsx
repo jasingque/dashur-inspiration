@@ -15,8 +15,6 @@ export const HomePage = () => {
           <div className="absolute box-border caret-transparent inset-0">
             <img
               sizes="1038px"
-              src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/39.png"
-              alt=""
               className="aspect-[auto_1868_/_1838] box-border caret-transparent h-full object-cover w-full"
             />
           </div>
@@ -39,7 +37,7 @@ export const HomePage = () => {
         />
         <QUESTIONS/>
         <SOLUTIONS />
-        <CAREERS />
+        <CAREERS limit={3} isHomePage={true} />
         <SERVICES />
         <CAPABILITIES />
         <Contact />
