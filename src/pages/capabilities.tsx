@@ -350,7 +350,7 @@ export const CAPABILITIES = () => {
         <meta name="twitter:title" content="Our Capabilities - Dashurai | AI, Mobile, Backend & Frontend Development" />
         <meta name="twitter:description" content="Explore Dashurai's comprehensive capabilities in mobile, backend, frontend development, and AI solutions." />
       </Helmet>
-    <section className="relative w-full overflow-hidden pb-20 pt-[70px] md:py-[135px]">
+    <section className="relative w-full overflow-hidden pb-20 pt-20 md:pt-[135px] md:pb-[135px]">
       <style>{`
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         @keyframes marquee-reverse { 0% { transform: translateX(-100%); } 100% { transform: translateX(0); } }
@@ -362,7 +362,7 @@ export const CAPABILITIES = () => {
 
       <div className="mx-auto flex max-w-[1400px] flex-col gap-12 px-0 md:gap-16 md:px-6">
         <div className="mx-auto mb-8 w-full max-w-[1120px] px-6 text-center md:px-0">
-          <h2 className="font-plus_jakarta_sans_variable break-words text-[40px] font-bold leading-[1.1] tracking-tight md:text-[64px]">
+          <h2 className="font-plus_jakarta_sans_variable break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
             <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
               Our Capabilities
             </span>

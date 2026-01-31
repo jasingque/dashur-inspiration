@@ -49,8 +49,9 @@ export const HomePage = () => {
         <Hero
           variant="full"
           videoUrl={videoUrl}
-          titleLine1="Empowering,Innovation,"
-          titleLine2="Connecting the Future."
+          titleLine1="Empowering, "
+          titleLine2="Innovation, "
+          titleLine3="Connecting the Future."
           description="An innovative tech company dedicated to shaping the future through cutting-edge solutions and exceptional service."
           descriptionHighlight1="cutting-edge solutions"
           descriptionHighlight2="exceptional service"

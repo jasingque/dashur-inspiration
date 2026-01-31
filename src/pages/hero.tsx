@@ -5,6 +5,7 @@ export type HeroProps = {
   videoUrl?: string;
   titleLine1?: string;
   titleLine2?: string;
+  titleLine3?: string;
   description?: string;
   descriptionHighlight1?: string;
   descriptionHighlight2?: string;
@@ -50,6 +51,9 @@ export const Hero = (props: HeroProps) => {
             </h1>
             <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-1 word-break:break-all">
               {props.titleLine2}
+            </h1>
+            <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent word-break:break-all">
+              {props.titleLine3}
             </h1>
           </div>
           <p className="mt-4 sm:mt-6 max-w-2xl lg:max-w-lg text-zinc-400 text-base sm:text-lg lg:text-xl font-medium leading-relaxed">

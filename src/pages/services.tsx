@@ -63,7 +63,7 @@ export const SERVICES = () => {
       <div className="flex w-full max-w-[1200px] flex-col gap-12 px-4 md:px-0">
         
         {/* Header */}
-        <h2 className="font-plus_jakarta_sans_variable break-words text-[40px] font-bold leading-[1.1] tracking-tight md:text-[64px]">
+        <h2 className="font-plus_jakarta_sans_variable break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
           <span className="bg-gradient-to-br from-white to-[#4988C4] bg-clip-text text-transparent">
             Our Services
           </span>

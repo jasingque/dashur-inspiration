@@ -81,7 +81,7 @@ export const SOLUTIONS = () => {
           </div>
           
           <div className="flex grow flex-col gap-6 md:flex-row">
-            <h2 className="font-plus_jakarta_sans_variable font-bold text-[40px] leading-tight tracking-tight md:w-1/2 md:text-[50px]">
+            <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[50px] leading-tight tracking-tight md:w-1/2 break-words">
               <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
                 Industries We Serve
               </span>

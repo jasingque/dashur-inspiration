@@ -87,7 +87,7 @@ export const AboutPage = () => {
             </div>
             
             <div className="flex grow flex-col gap-8 lg:gap-12">
-              <h1 className="font-plus_jakarta_sans_variable font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight tracking-tight">
+              <h1 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-tight break-words">
                 <span className="bg-gradient-to-r from-white via-cyan-400 to-blue-600 bg-clip-text text-transparent">
                   Transforming Business Through AI Innovation
                 </span>
@@ -121,7 +121,7 @@ export const AboutPage = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-blue-600/10"></div>
             <div className="relative z-10">
-              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight">
+              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight break-words">
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
                   Our Mission
                 </span>
@@ -168,7 +168,7 @@ export const AboutPage = () => {
           viewport={{ once: false, amount: 0.2 }}
         >
           <motion.div variants={itemVariants} className="mb-12 sm:mb-16 text-center">
-            <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-tight">
+            <h2 className="font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight break-words">
               <span className="bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
                 Our Core Capabilities
               </span>
@@ -208,7 +208,7 @@ export const AboutPage = () => {
           >
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="relative z-10">
-              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-tight">
+              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight break-words">
                 Ready to Transform Your Business?
               </h2>
               <p className="mb-8 sm:mb-10 text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl mx-auto">
