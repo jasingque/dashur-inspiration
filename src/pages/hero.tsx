@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 export type HeroProps = {
   variant: "full" | "empty";
   videoUrl?: string;
@@ -17,6 +19,8 @@ export type HeroProps = {
 };
 
 export const Hero = (props: HeroProps) => {
+  const navigate = useNavigate();
+  
   if (props.variant === "empty") return null;
 
   return (
@@ -45,21 +49,20 @@ export const Hero = (props: HeroProps) => {
         </div>
 
         {/* BUTTON */}
-        <div className="mt-8 sm:mt-12 lg:mt-16 flex flex-row gap-3 sm:gap-4 md:gap-6 justify-center lg:justify-start">
-          <a 
-            href="/contact" 
-            className="group relative inline-flex items-center justify-center px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 font-semibold text-white bg-black/20 backdrop-blur-md rounded-xl overflow-hidden"
-          >
-            <svg className="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
-              <rect x="0" y="0" width="100%" height="100%" rx="12" className="fill-none stroke-zinc-800 stroke-1" />
-              <rect x="0" y="0" width="100%" height="100%" rx="12" 
-                className="fill-none stroke-cyan-400 stroke-[3px] [stroke-dasharray:60_180] [animation:border-spin_3s_linear_infinite]"
-                style={{ filter: 'drop-shadow(0 0 10px #22d3ee)' }}
-              />
-            </svg>
-            <span className="relative z-10 text-sm sm:text-base md:text-lg">Get Started</span>
-          </a>
-
+        <div className="mt-8 sm:mt-10 flex justify-center lg:justify-start">
+        <button 
+          onClick={() => navigate("/contact")} 
+          className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-10 py-4 text-base font-extrabold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
+        >
+          <span className="relative z-10 transition-all duration-500 tracking-wide">
+            Get Started
+          </span>
+          
+          <span className="absolute left-0 -top-full h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+          <span className="absolute right-[-100%] top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+          <span className="absolute left-[-100%] top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+          <span className="absolute bottom-[-100%] left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+        </button>
         </div>
       </div>
 

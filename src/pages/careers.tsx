@@ -1,9 +1,13 @@
 import { useEffect, useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import IOSDeveloper from "../assets/iosEngineer.png";
+import DevOpsEngineer from "../assets/DevOpsEngineer.png";
 import SoftwareEngineer from "../assets/softwareEngineer.webp";
 import QAEngineer from "../assets/qaEngineer.webp";
 import MobileDeveloper from "../assets/mobileDeveloper.webp";
+
 
 const CASE_STUDIES = [
   {
@@ -64,6 +68,7 @@ const CASE_STUDIES = [
 ];
 
 export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomePage?: boolean }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     if (!isHomePage) {
       window.scrollTo(0, 0);
@@ -76,8 +81,8 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
     offset: ["start start", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.9]);
   const displayedStudies = limit ? CASE_STUDIES.slice(0, limit) : CASE_STUDIES;
 
   return (
@@ -115,16 +120,22 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
         ))}
 
         {limit && (
-          <div className="mt-8 flex justify-center">
-            <a
-              href="/careers"
-              className="group relative flex items-center gap-2.5 rounded-[30px] border border-white/20 bg-slate-900/50 px-6 py-3 text-white backdrop-blur-md transition-all hover:bg-slate-800 hover:scale-105"
-            >
-              <span className="font-plus_jakarta_sans_variable text-base font-medium">
-                More Details
-              </span>
-            </a>
-          </div>
+<div className="flex justify-center lg:justify-start">
+  <button 
+    onClick={() => navigate("/careers")} 
+    className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent w-full py-3.5 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
+  >
+    <span className="relative z-10 transition-all duration-500 tracking-[0.3em]">
+      More Details
+    </span>
+    
+    {/* Background Slats - Percentage based so they cover the extra width perfectly */}
+    <span className="absolute left-0 -top-full h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+    <span className="absolute right-[-100%] top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+    <span className="absolute left-[-100%] top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+    <span className="absolute bottom-[-100%] left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+  </button>
+</div>
         )}
       </div>
     </section>
