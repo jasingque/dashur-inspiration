@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation} from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 export const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);

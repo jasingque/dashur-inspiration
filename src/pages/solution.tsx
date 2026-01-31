@@ -1,9 +1,9 @@
 import { SolutionCard } from "../components/solutioncard";
 import { motion } from "framer-motion";
-import Hospitality from '../assets/hospitality.png';
-import Healthcare from '../assets/healthcare.png';
-import Manufacturing from '../assets/manufacturing.png';
-import Defense from '../assets/defense.png';
+import Hospitality from '../assets/hospitality.webp';
+import Healthcare from '../assets/healthcare.webp';
+import Manufacturing from '../assets/manufacturing.webp';
+import Defense from '../assets/defense.webp';
 import Aerospace from '../assets/aerospace.webp';
 
 const TOP_SOLUTIONS = [
