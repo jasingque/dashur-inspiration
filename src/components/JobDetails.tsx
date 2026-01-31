@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 // --- Types ---
 interface Responsibility {
@@ -41,7 +42,7 @@ const JOB_CONTENT: Record<string, JobRole> = {
     ]
   },
   "ios-engineer": {
-    overview: "Focusing exclusively on the Apple ecosystem, you'll leverage Swift and SwiftUI to create premium, fluid experiences that define our mobile standard.",
+    overview: "As an iOS Engineer at Dashur AI, LLC, you will be the primary architect of our premium mobile experience. We are looking for a specialist who masters the balance between elegant Apple design and powerful backend integration. From rapid prototyping to deploying secure, encrypted applications, you will ensure our iOS presence is fast, fluid, and visually stunning.",
     responsibilities: [
       { title: "Swift Excellence", desc: "Develop robust and scalable native applications using Swift and SwiftUI." },
       { title: "UI/UX Fidelity", desc: "Implement pixel-perfect designs and fluid animations tailored for iOS." },
@@ -71,6 +72,7 @@ const THEME_MAP: Record<string, { border: string; icon: string }> = {
 };
 
 export const JobDetails = ({ id }: { id?: string }) => {
+  const navigate = useNavigate();
   const content = (id && JOB_CONTENT[id]) ? JOB_CONTENT[id] : JOB_CONTENT["software-developer"];
   const theme = (id && THEME_MAP[id]) ? THEME_MAP[id] : THEME_MAP["default"];
 
@@ -81,6 +83,22 @@ export const JobDetails = ({ id }: { id?: string }) => {
       animate={{ opacity: 1, y: 0 }}
       className="space-y-12"
     >
+
+      <button 
+        onClick={() => navigate(-1)} 
+        className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest group"
+      >
+        <svg 
+          className="w-4 h-4 transition-transform group-hover:-translate-x-1" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Careers
+      </button>
+
       <div className="prose prose-invert max-w-none">
         <h3 className="text-2xl font-bold text-white mb-4">Role Overview</h3>
         <p className={`text-slate-400 text-lg leading-relaxed border-l-4 ${theme.border} pl-6 py-2`}>
