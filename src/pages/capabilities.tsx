@@ -339,8 +339,16 @@ export const CAPABILITIES = () => {
   return (
     <>
       <Helmet>
-        <title>Our Capabilities - Dashurai</title>
-        <meta name="description" content="Discover Dashurai's capabilities - AI automation, machine learning, and intelligent solutions for your business" />
+        <title>Our Capabilities - Dashurai | AI, Mobile, Backend & Frontend Development</title>
+        <meta name="description" content="Explore Dashurai's comprehensive capabilities: iOS & Android development, Python & Django backend, React & Next.js frontend, cloud certifications (AWS, GCP), and cutting-edge AI solutions." />
+        <meta name="keywords" content="AI capabilities, mobile development, iOS Android, Python Django, React Next.js, cloud solutions AWS GCP, full stack development, tech capabilities" />
+        <link rel="canonical" href="https://www.dashurai.com/capabilities" />
+        <meta property="og:title" content="Our Capabilities - Dashurai | AI, Mobile, Backend & Frontend Development" />
+        <meta property="og:description" content="Explore Dashurai's comprehensive capabilities in mobile, backend, frontend development, and AI solutions." />
+        <meta property="og:url" content="https://www.dashurai.com/capabilities" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Our Capabilities - Dashurai | AI, Mobile, Backend & Frontend Development" />
+        <meta name="twitter:description" content="Explore Dashurai's comprehensive capabilities in mobile, backend, frontend development, and AI solutions." />
       </Helmet>
     <section className="relative w-full overflow-hidden pb-20 pt-[70px] md:py-[135px]">
       <style>{`

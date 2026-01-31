@@ -55,14 +55,22 @@ export const AboutPage = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <Helmet>
-        <title>About Us - Dashurai</title>
-        <meta name="description" content="Learn more about Dashurai - Our mission, vision, and the team behind innovative AI solutions" />
+        <title>About Us - Dashurai | AI Innovation & Automation Experts</title>
+        <meta name="description" content="Learn about Dashurai's mission to shape the future through cutting-edge AI solutions. 2+ years of innovation, 500+ challenges solved, 200+ AI systems deployed globally." />
+        <meta name="keywords" content="about Dashurai, AI innovation, automation experts, AI company, machine learning solutions, tech innovation company" />
+        <link rel="canonical" href="https://www.dashurai.com/about" />
+        <meta property="og:title" content="About Us - Dashurai | AI Innovation & Automation Experts" />
+        <meta property="og:description" content="Learn about Dashurai's mission to shape the future through cutting-edge AI solutions. 2+ years of innovation, 500+ challenges solved, 200+ AI systems deployed globally." />
+        <meta property="og:url" content="https://www.dashurai.com/about" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="About Us - Dashurai | AI Innovation & Automation Experts" />
+        <meta name="twitter:description" content="Learn about Dashurai's mission to shape the future through cutting-edge AI solutions." />
       </Helmet>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
-        <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-30 hidden lg:block">
-          <img src="https://c.dashurai.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
-        </div>
+        {/* Hero Section */}
+        <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
+          <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-30 hidden lg:block">
+            <img src="https://c.dashurai.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
+          </div>
         
         <motion.div 
           className="relative z-[2] mx-auto max-w-7xl"

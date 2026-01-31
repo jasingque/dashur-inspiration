@@ -37,8 +37,16 @@ export const Contact: React.FC = () => {
   return (
     <>
       <Helmet>
-        <title>Contact Us - Dashurai</title>
-        <meta name="description" content="Get in touch with Dashurai - Contact us for AI solutions, partnerships, and business inquiries" />
+        <title>Contact Us - Dashurai | Get in Touch for AI Solutions</title>
+        <meta name="description" content="Contact Dashurai for AI solutions, automation services, partnerships, and business inquiries. Transform your business with cutting-edge technology. Reach out today!" />
+        <meta name="keywords" content="contact Dashurai, AI solutions inquiry, business partnerships, automation services, get in touch, AI consultation" />
+        <link rel="canonical" href="https://www.dashurai.com/contact" />
+        <meta property="og:title" content="Contact Us - Dashurai | Get in Touch for AI Solutions" />
+        <meta property="og:description" content="Contact Dashurai for AI solutions, automation services, partnerships, and business inquiries." />
+        <meta property="og:url" content="https://www.dashurai.com/contact" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Contact Us - Dashurai | Get in Touch for AI Solutions" />
+        <meta name="twitter:description" content="Contact Dashurai for AI solutions, automation services, and business inquiries." />
       </Helmet>
     <section id="contact" className="relative w-full px-6 pt-32 pb-20 overflow-hidden flex justify-center items-center">
 

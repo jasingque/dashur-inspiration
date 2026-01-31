@@ -4,7 +4,6 @@ import { FloatingAI } from "../components/floatBot";
 import { Helmet } from "react-helmet";
 import videoUrl from "../assets/opt_3DLogo.mp4";
 
-// Lazy load heavy components for better initial page load
 const QUESTIONS = lazy(() => import("./questions").then(m => ({ default: m.QUESTIONS })));
 const SOLUTIONS = lazy(() => import("./solution").then(m => ({ default: m.SOLUTIONS })));
 const CAREERS = lazy(() => import("./careers").then(m => ({ default: m.CAREERS })));
@@ -20,8 +19,16 @@ export const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>Home - Dashurai</title>
-        <meta name="description" content="Welcome to Dashurai - Your trusted partner for innovative AI and automation solutions" />
+        <title>Dashurai - Empowering Innovation, Connecting the Future | AI & Automation Solutions</title>
+        <meta name="description" content="Dashurai is an innovative tech company shaping the future through cutting-edge AI solutions, automation, and exceptional service. Transform your business with intelligent technology." />
+        <meta name="keywords" content="Dashurai, AI solutions, automation, machine learning, artificial intelligence, tech innovation, digital transformation, business automation, intelligent systems" />
+        <link rel="canonical" href="https://www.dashurai.com/" />
+        <meta property="og:title" content="Dashurai - Empowering Innovation, Connecting the Future" />
+        <meta property="og:description" content="An innovative tech company dedicated to shaping the future through cutting-edge AI solutions, automation, and exceptional service." />
+        <meta property="og:url" content="https://www.dashurai.com/" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content="Dashurai - Empowering Innovation, Connecting the Future" />
+        <meta name="twitter:description" content="An innovative tech company dedicated to shaping the future through cutting-edge AI solutions." />
       </Helmet>
       <div className="absolute box-border caret-transparent shrink-0 container order-[-1000] pointer-events-none z-0 overflow-hidden top-0 inset-x-0">
         <div className="absolute aspect-[1.01632_/_1] box-border caret-transparent shrink-0 top-[-141px] translate-x-[-50.0%] w-[1038px] left-[32%]">

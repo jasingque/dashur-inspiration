@@ -28,7 +28,16 @@ export const Hero = (props: HeroProps) => {
       {/* 3D video */}
       <div className="absolute inset-0 z-0 flex justify-center pointer-events-none hidden lg:block">
         <div className="absolute right-[-5%] sm:right-[-2%] w-[85%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-full [mask-image:radial-gradient(circle_at_center,black_30%,transparent_70%)]">
-          <video src={props.videoUrl} autoPlay loop muted playsInline className="w-full h-full object-contain" />
+          <video 
+            src={props.videoUrl} 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            preload="metadata"
+            className="w-full h-full object-contain"
+            aria-hidden="true"
+          />
         </div>
       </div>
 
