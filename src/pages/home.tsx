@@ -1,17 +1,19 @@
+import { lazy, Suspense, useEffect } from "react";
 import { Hero } from "./hero";
-import { QUESTIONS } from "./questions";
-import { SOLUTIONS } from "./solution";
-import { CAREERS } from "./careers";
-import { SERVICES } from "./services";
-import { CAPABILITIES } from "./capabilities";
-import { Contact } from "../pages/contactform";
 import { FloatingAI } from "../components/floatBot";
 import { Helmet } from "react-helmet";
-import { useEffect } from "react";
 import videoUrl from "../assets/opt_3DLogo.mp4";
+
+// Lazy load heavy components for better initial page load
+const QUESTIONS = lazy(() => import("./questions").then(m => ({ default: m.QUESTIONS })));
+const SOLUTIONS = lazy(() => import("./solution").then(m => ({ default: m.SOLUTIONS })));
+const CAREERS = lazy(() => import("./careers").then(m => ({ default: m.CAREERS })));
+const SERVICES = lazy(() => import("./services").then(m => ({ default: m.SERVICES })));
+const CAPABILITIES = lazy(() => import("./capabilities").then(m => ({ default: m.CAPABILITIES })));
+const Contact = lazy(() => import("../pages/contactform").then(m => ({ default: m.Contact })));
+
 export const HomePage = () => {
   useEffect(() => {
-    // Fallback: manually update document title
     document.title = "Home - Dashurai";
   }, []);
   
@@ -27,6 +29,8 @@ export const HomePage = () => {
             <img
               sizes="1038px"
               className="aspect-[auto_1868_/_1838] box-border caret-transparent h-full object-cover w-full"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -46,12 +50,24 @@ export const HomePage = () => {
           ctaUrl="#contact"
           ctaText="Get Started"
         />
-        <QUESTIONS/>
-        <SOLUTIONS />
-        <CAREERS limit={3} isHomePage={true} />
-        <SERVICES />
-        <CAPABILITIES />
-        <Contact />
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <QUESTIONS/>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <SOLUTIONS />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <CAREERS limit={3} isHomePage={true} />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <SERVICES />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <CAPABILITIES />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <Contact />
+        </Suspense>
       </div>
       <FloatingAI />
     </>

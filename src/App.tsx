@@ -1,14 +1,17 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomePage } from "./pages/home";
-import { AboutPage } from "./pages/about";
-import { CAPABILITIES } from "./pages/capabilities";
-import { MarketPage } from "./pages/market";
-import { CAREERS } from "./pages/careers";
-import { Contact } from "./pages/contactform";
 import { Navbar } from "./components/navbar";
 import { MobileNavbar } from "./components/mobile-navbar";
 import { Footer } from "./components/footer";
-import Applyform from "./pages/applyform";
+
+// Lazy load pages for better performance
+const HomePage = lazy(() => import("./pages/home").then(m => ({ default: m.HomePage })));
+const AboutPage = lazy(() => import("./pages/about").then(m => ({ default: m.AboutPage })));
+const CAPABILITIES = lazy(() => import("./pages/capabilities").then(m => ({ default: m.CAPABILITIES })));
+const MarketPage = lazy(() => import("./pages/market").then(m => ({ default: m.MarketPage })));
+const CAREERS = lazy(() => import("./pages/careers").then(m => ({ default: m.CAREERS })));
+const Contact = lazy(() => import("./pages/contactform").then(m => ({ default: m.Contact })));
+const Applyform = lazy(() => import("./pages/applyform"));
 
 export const App = () => {
   return (
@@ -18,79 +21,28 @@ export const App = () => {
           <div className="relative content-center items-center bg-slate-950 box-border caret-transparent gap-x-0 flex flex-col h-min justify-start min-h-screen gap-y-0">
             <Navbar />
             <MobileNavbar />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/capabilities" element={<CAPABILITIES />} />
-              <Route path="/market" element={<MarketPage />} />
-              <Route path="/careers" element={<CAREERS />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path ="/job/:id" element={<Applyform />} />
-            </Routes>
+            <Suspense fallback={
+              <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-400"></div>
+              </div>
+            }>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/capabilities" element={<CAPABILITIES />} />
+                <Route path="/market" element={<MarketPage />} />
+                <Route path="/careers" element={<CAREERS />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/job/:id" element={<Applyform />} />
+              </Routes>
+            </Suspense>
             <div className="box-border caret-transparent"></div>
             <div className="relative box-border caret-transparent grow h-0 w-0 bg-[position:0px_0px]"></div>
             <Footer />
           </div>
           <div className="box-border caret-transparent"></div>
         </div>
-        <div className="absolute box-border caret-transparent h-0 w-0 z-0 overflow-hidden left-0 bottom-0">
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-14.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-[18px] w-[18px]"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-15.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-3 w-3"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-16.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-3 w-3"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-17.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-3 w-3"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-18.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-[18px] w-[18px]"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-19.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-4 w-4"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-20.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-4 w-4"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-21.svg"
-            alt="Icon"
-            className="box-border caret-transparent h-[25px] w-[126px]"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-22.svg"
-            alt="Icon"
-            className="box-border caret-transparent"
-          />
-          <img
-            src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/icon-23.svg"
-            alt="Icon"
-            className="box-border caret-transparent"
-          />
-        </div>
-        <iframe
-          src="https://dashurai.com/"
-          className="fixed box-border caret-transparent hidden h-[1000px] w-screen z-[2147483647] left-0 top-0"
-        ></iframe>
       </div>
     </Router>
-          
   );
 };

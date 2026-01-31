@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo, useCallback } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -66,7 +66,7 @@ const CAPABILITY_ROWS: RowConfig[] = [
 
 // --- Sub-Components ---
 
-const TypewriterText = () => {
+const TypewriterText = memo(() => {
   const [displayedText, setDisplayedText] = useState('');
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -141,14 +141,14 @@ const TypewriterText = () => {
       </div>
     </motion.div>
   );
-};
+});
 
-const CallToAction = () => {
+const CallToAction = memo(() => {
   const navigate = useNavigate();
   
-  const handleGetStarted = () => {
+  const handleGetStarted = useCallback(() => {
     navigate('/contact');
-  };
+  }, [navigate]);
   
   return (
     <motion.section
@@ -192,9 +192,9 @@ const CallToAction = () => {
       </div>
     </motion.section>
   );
-};
+});
 
-const CertificationCard = ({ imageUrl, title }: { imageUrl: string; title: string }) => {
+const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: string }) => {
   return (
     <div className="group relative flex h-full w-[280px] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-cyan-500/10 bg-gradient-to-br from-slate-900/60 via-slate-800/40 to-slate-900/60 backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
       {/* Decorative corner elements - subtle when not hovered */}
@@ -211,7 +211,7 @@ const CertificationCard = ({ imageUrl, title }: { imageUrl: string; title: strin
         <div className="relative mb-6 h-16 w-16">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
           <div className="relative h-full w-full rounded-xl bg-gradient-to-br from-slate-800/20 to-slate-700/20 p-3 flex items-center justify-center transition-all duration-500 group-hover:from-cyan-100/10 group-hover:to-purple-100/10">
-            <img src={imageUrl} alt="" className="h-full w-full object-contain filter brightness-75 opacity-60 transition-all duration-500 group-hover:brightness-125 group-hover:opacity-100" loading="lazy" />
+            <img src={imageUrl} alt={title} className="h-full w-full object-contain filter brightness-75 opacity-60 transition-all duration-500 group-hover:brightness-125 group-hover:opacity-100" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -227,9 +227,9 @@ const CertificationCard = ({ imageUrl, title }: { imageUrl: string; title: strin
       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
     </div>
   );
-};
+});
 
-const MarqueeTrack = ({ items, reverse, duration, isCertifications = false }: { items: CapabilityItem[]; reverse: boolean; duration: string; isCertifications?: boolean }) => {
+const MarqueeTrack = memo(({ items, reverse, duration, isCertifications = false }: { items: CapabilityItem[]; reverse: boolean; duration: string; isCertifications?: boolean }) => {
   const animationClass = reverse ? "animate-marquee-reverse" : "animate-marquee-infinite";
   
   return (
@@ -242,9 +242,9 @@ const MarqueeTrack = ({ items, reverse, duration, isCertifications = false }: { 
       ))}
     </div>
   );
-};
+});
 
-const MarqueeRow = ({ row }: { row: RowConfig }) => {
+const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
   const isCertifications = row.title === "Certifications";
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -327,7 +327,7 @@ const MarqueeRow = ({ row }: { row: RowConfig }) => {
       </div>
     </div>
   );
-};
+});
 
 // --- Main Component ---
 
