@@ -1,8 +1,8 @@
 export type CapabilityItem = {
   id: number;
-  label: string;
   title: string;
   imageUrl: string;
+  label?: string;
 };
 
 export const TrustCard = ({ label, imageUrl, title }: Omit<CapabilityItem, "id">) => {

@@ -6,10 +6,21 @@ import { SERVICES } from "./services";
 import { CAPABILITIES } from "./capabilities";
 import { Contact } from "../pages/contactform";
 import { FloatingAI } from "../components/floatBot";
+import { Helmet } from "react-helmet";
+import { useEffect } from "react";
 import videoUrl from "../assets/opt_3DLogo.mp4";
 export const HomePage = () => {
+  useEffect(() => {
+    // Fallback: manually update document title
+    document.title = "Home - Dashurai";
+  }, []);
+  
   return (
     <>
+      <Helmet>
+        <title>Home - Dashurai</title>
+        <meta name="description" content="Welcome to Dashurai - Your trusted partner for innovative AI and automation solutions" />
+      </Helmet>
       <div className="absolute box-border caret-transparent shrink-0 container order-[-1000] pointer-events-none z-0 overflow-hidden top-0 inset-x-0">
         <div className="absolute aspect-[1.01632_/_1] box-border caret-transparent shrink-0 top-[-141px] translate-x-[-50.0%] w-[1038px] left-[32%]">
           <div className="absolute box-border caret-transparent inset-0">
