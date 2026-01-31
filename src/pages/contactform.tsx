@@ -70,10 +70,16 @@ export const Contact: React.FC = () => {
               <a href="#" className="text-white hover:underline">Terms</a> and <a href="#" className="text-white hover:underline">Privacy Policy</a>.
             </p>
             <button 
-              type="submit" 
-              className="w-full sm:w-auto px-8 py-3 bg-gradient-to-br from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-violet-600 text-white font-medium rounded-full transition-all shadow-lg shadow-violet-900/20"
+              className="group relative overflow-hidden rounded border-2 border-blue-950 bg-transparent px-6 py-2 text-xs font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
+              type="submit"
             >
-              Submit
+              <span className="relative z-10 transition-all duration-500 tracking-wider">
+                Submit
+              </span>
+              <span className="absolute left-0 -top-full h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+              <span className="absolute right-[-100%] top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+              <span className="absolute left-[-100%] top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+              <span className="absolute bottom-[-100%] left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
             </button>
           </div>
         </form>
