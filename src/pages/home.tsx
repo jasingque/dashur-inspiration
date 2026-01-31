@@ -6,7 +6,7 @@ import { SERVICES } from "./services";
 import { CAPABILITIES } from "./capabilities";
 import { Contact } from "../pages/contactform";
 import { FloatingAI } from "../components/floatBot";
-import videoUrl from "../assets/3DLogo.mp4";
+import videoUrl from "../assets/opt_3DLogo.mp4";
 export const HomePage = () => {
   return (
     <>

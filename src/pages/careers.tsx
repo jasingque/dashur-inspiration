@@ -1,11 +1,9 @@
 import { useEffect, useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
-import SoftwareEngineer from "../assets/softwareEngineer.png";
-import QAEngineer from "../assets/qaEngineer.png";
-import MobileDeveloper from "../assets/mobileDeveloper.png";
-import IOSDeveloper from "../assets/iosEngineer.png";
-import DevOpsEngineer from "../assets/DevOpsEngineer.png";
+import SoftwareEngineer from "../assets/softwareEngineer.webp";
+import QAEngineer from "../assets/qaEngineer.webp";
+import MobileDeveloper from "../assets/mobileDeveloper.webp";
 
 const CASE_STUDIES = [
   {
