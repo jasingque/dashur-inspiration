@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, memo, useCallback } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 
 // --- Types ---
 type RowConfig = {
@@ -74,10 +74,10 @@ const TypewriterText = memo(() => {
   const sectionRef = useRef<HTMLDivElement>(null);
   
   const words = [
-    "We don't just use technologies.",
-    "We design systems that scale,",
-    "adapt,",
-    "and endure."
+    "We don't just deploy tech;",
+    "we architect legacies.",
+    "We build systems designed to outpace the present",
+    "and scale into the future."
   ];
   
   useEffect(() => {
@@ -335,6 +335,8 @@ export const CAPABILITIES = () => {
     useEffect(() => {
           // start from top
           window.scrollTo(0, 0);
+          // Force title update
+          document.title = "Our Capabilities - Dashurai";
       }, []);
   return (
     <>

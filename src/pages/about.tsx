@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -50,6 +50,8 @@ const capabilities = [
 export const AboutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Force title update
+    document.title = "About Us - Dashurai";
   }, []);
 
   return (

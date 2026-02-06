@@ -1,7 +1,7 @@
 import { SolutionCard } from "../components/solutioncard";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 import Hospitality from '../assets/hospitality.webp';
 import Healthcare from '../assets/healthcare.webp';
 import Manufacturing from '../assets/manufacturing.webp';
@@ -65,8 +65,7 @@ const itemVariants = {
 export const MarketPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    // Fallback: manually update document title
+    // Force title update
     document.title = "Our Markets - Dashurai";
   }, []);
 
