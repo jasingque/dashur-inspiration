@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { Hero } from "./hero";
 import { FloatingAI } from "../components/floatBot";
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 import videoUrl from "../assets/opt_3DLogo.mp4";
 
 const QUESTIONS = lazy(() => import("./questions").then(m => ({ default: m.QUESTIONS })));
@@ -13,13 +13,14 @@ const Contact = lazy(() => import("../pages/contactform").then(m => ({ default: 
 
 export const HomePage = () => {
   useEffect(() => {
-    document.title = "Home - Dashurai";
+    // Force title update
+    document.title = "DASHUR AI HOME";
   }, []);
   
   return (
     <>
       <Helmet>
-        <title>Dashurai - Empowering Innovation, Connecting the Future | AI & Automation Solutions</title>
+        <title>DASHUR AI HOME</title>
         <meta name="description" content="Dashurai is an innovative tech company shaping the future through cutting-edge AI solutions, automation, and exceptional service. Transform your business with intelligent technology." />
         <meta name="keywords" content="Dashurai, AI solutions, automation, machine learning, artificial intelligence, tech innovation, digital transformation, business automation, intelligent systems" />
         <link rel="canonical" href="https://www.dashurai.com/" />

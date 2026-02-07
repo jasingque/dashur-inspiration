@@ -1,10 +1,11 @@
 import { SolutionCard } from "../components/solutioncard";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import Hospitality from '../assets/hospitality.png';
-import Healthcare from '../assets/healthcare.png';
-import Manufacturing from '../assets/manufacturing.png';
-import Defense from '../assets/defense.png';
+import { Helmet } from 'react-helmet-async';
+import Hospitality from '../assets/hospitality.webp';
+import Healthcare from '../assets/healthcare.webp';
+import Manufacturing from '../assets/manufacturing.webp';
+import Defense from '../assets/defense.webp';
 import Aerospace from '../assets/aerospace.webp';
 
 const TOP_SOLUTIONS = [
@@ -64,6 +65,8 @@ const itemVariants = {
 export const MarketPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Force title update
+    document.title = "Our Markets - Dashurai";
   }, []);
 
   return (
