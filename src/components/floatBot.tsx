@@ -8,7 +8,7 @@ export const FloatingAI = () => {
   ];
 
   return (
-    <div className="group fixed bottom-15 left-15 z-50 w-16 h-16 flex items-center justify-center cursor-pointer">
+    <div className="group fixed bottom-15 left-4 xs:bottom-6 xs:left-6 sm:bottom-8 sm:left-8 z-50 w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer">
       {/* Background Glows */}
       <div className="absolute inset-0 rounded-xl bg-blue-500/20 blur-lg animate-pulse" />
       <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-blue-900 animate-spin blur-sm" />

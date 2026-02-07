@@ -118,7 +118,9 @@ const TypewriterText = memo(() => {
       }, 300);
       return () => clearTimeout(timeout);
     } else {
-      setIsTyping(false);
+      setTimeout(() => {
+        setIsTyping(false);
+      }, 0);
     }
   }, [displayedText, currentWordIndex, isTyping, words]);
   

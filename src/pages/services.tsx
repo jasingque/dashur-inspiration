@@ -12,7 +12,7 @@ const STACK_DATA = [
     number: "[01]",
     title: "Graphic Design",
     imageUrl: graphicDesign,
-    variant: "md:left-0 md:top-[160px] md:z-0",
+    variant: "lg:left-0 lg:top-[120px] lg:z-0",
     description: "Elevate your brand with our creative graphic design service. We transform ideas into captivating visuals that leave a lasting impression.",
   },
   {
@@ -20,7 +20,7 @@ const STACK_DATA = [
     number: "[02]",
     title: "UI/UX Design",
     imageUrl: uiuxDesign,
-    variant: "md:left-[160px] md:top-[120px] md:z-10",
+    variant: "lg:left-[140px] lg:top-[90px] lg:z-10",
     description: "Unlock the power of exceptional user experiences with our UI/UX design service. We ensure your product stands out and delights users.",
   },
   {
@@ -28,7 +28,7 @@ const STACK_DATA = [
     number: "[03]",
     title: "APP DEVELOPMENT",
     imageUrl: appDevelopment,
-    variant: "md:left-[320px] md:top-[80px] md:z-20",
+    variant: "lg:left-[280px] lg:top-[60px] lg:z-20",
     description: "Transform your ideas into exceptional mobile experiences with our cutting-edge app development services.",
   },
   {
@@ -36,7 +36,7 @@ const STACK_DATA = [
     number: "[04]",
     title: "WEB DEVELOPMENT",
     imageUrl: webDevelopment,
-    variant: "md:left-[480px] md:top-[40px] md:z-30",
+    variant: "lg:left-[420px] lg:top-[30px] lg:z-30",
     description: "Revolutionize your online presence with our web development services. Our skilled team creates websites that captivate users.",
   },
   {
@@ -44,7 +44,7 @@ const STACK_DATA = [
     number: "[05]",
     title: "Digital Marketing",
     imageUrl: digitalMarketing,
-    variant: "md:left-[640px] md:top-0 md:z-40",
+    variant: "lg:left-[560px] lg:top-0 lg:z-40",
     description: "Elevate your brand's online visibility and reach new heights with our comprehensive digital marketing services.",
   },
   {
@@ -52,7 +52,7 @@ const STACK_DATA = [
     number: "[06]",
     title: "SEO",
     imageUrl: seo,
-    variant: "md:left-[800px] md:top-[-40px] md:z-50",
+    variant: "lg:left-[700px] lg:top-[-40px] lg:z-50",
     description: "Boost your online presence and climb search engine rankings with our SEO expertise. Our tailored strategies focus on traffic.",
   },
 ];
@@ -70,19 +70,25 @@ export const SERVICES = () => {
         </h2>
 
         {/* Cards Container */}
-        <div className="relative flex flex-col gap-4 md:h-[500px] md:w-full md:block mt-8">
-          {STACK_DATA.map((card) => (
-            <div
-              key={card.id}
-              className={`
-                static w-full h-[350px]
-                transition-all duration-500 ease-out 
-                md:absolute md:max-w-[300px] ${card.variant}
-                group [perspective:1000px]
-                hover:z-[100] md:hover:z-[100]
-              `}
-            >
-              <div className="relative h-full w-full transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:block lg:relative lg:h-[450px]">
+          {STACK_DATA.map((card, index) => {
+            const leftPosition = index * 14;
+            const topPosition = 150 - (index * 35);
+            return(
+              <div
+                key={card.id}
+                style={{ 
+                  '--left-pos': `${leftPosition}%`, 
+                  '--top-pos': `${topPosition}px`,
+                  '--z-index': index
+                } as React.CSSProperties}
+                className={`
+                  relative w-full h-[320px] transition-all duration-500 ease-in-out group [perspective:1000px]
+                  lg:absolute lg:w-[260px] lg:left-[var(--left-pos)] lg:top-[var(--top-pos)] lg:z-[var(--z-index)]
+                  hover:z-[100] hover:-translate-y-8
+                `}
+              >
+              <div className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
 
                 {/* --- FRONT FACE --- */}
                 <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
@@ -90,24 +96,25 @@ export const SERVICES = () => {
                     cardName={card.id}
                     number={card.number}
                     imageUrl={card.imageUrl}
-                    imageClassName="h-24 w-24 object-contain"
+                    imageClassName="h-16 w-16 md:h-20 md:w-20 object-contain"
                     title={card.title}
                     cardVariant="group"
                   />
                 </div>
 
                 {/* --- BACK FACE --- */}
-                <div className="absolute inset-0 h-full w-full rounded-3xl bg-[#111] border border-white/10 px-6 py-8 text-center  [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-center justify-center gap-4 shadow-xl">
-                    <div className="text-sm font-bold text-[#4988C4]">{card.number}</div>
-                    <h3 className="text-xl font-bold text-white">{card.title}</h3>
-                    <p className="text-sm text-gray-300 leading-relaxed">
+                <div className="absolute inset-0 h-full w-full rounded-[2rem] bg-[#111] border border-white/10 px-6 py-8 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-center justify-center gap-4 shadow-2xl">
+                    <div className="text-xs font-bold text-[#4988C4]">{card.number}</div>
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider">{card.title}</h3>
+                    <p className="text-xs text-gray-400 leading-relaxed">
                       {card.description}
                     </p>
                 </div>
 
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

@@ -42,18 +42,15 @@ export const Hero = (props: HeroProps) => {
         </div>
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col">
+      <div className="relative z-10 w-full flex flex-col">
         {/* Slogan & Description */}
-        <div className="flex flex-col max-w-4xl text-center lg:text-left">
+        <div className="flex flex-col max-w-4xl text-center lg:text-left mx-auto lg:mx-0 px-4 sm:px-6 md:px-8 lg:px-8">
           <div className="flex flex-col "> 
-            <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent word-break:break-all">
+            <h1 className="flex flex-col font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.3] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent word-break:break-all">
               {props.titleLine1}
             </h1>
-            <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-1 word-break:break-all">
+            <h1 className="flex flex-col font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.3] bg-gradient-to-r from-white via-[#00D4FF] to-[#102A75] bg-clip-text text-transparent py-2 word-break:break-all">
               {props.titleLine2}
-            </h1>
-            <h1 className="font-bold text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl tracking-tight leading-[1.1] bg-gradient-to-b from-zinc-400 to-white bg-clip-text text-transparent word-break:break-all">
-              {props.titleLine3}
             </h1>
           </div>
           <p className="mt-4 sm:mt-6 max-w-2xl lg:max-w-lg text-zinc-400 text-base sm:text-lg lg:text-xl font-medium leading-relaxed">
@@ -62,10 +59,10 @@ export const Hero = (props: HeroProps) => {
         </div>
 
         {/* BUTTON */}
-        <div className="mt-8 sm:mt-10 flex justify-center lg:justify-start">
+        <div className="mt-8 sm:mt-10 flex justify-center lg:justify-start px-4 sm:px-6 md:px-8 lg:px-8">
         <button 
           onClick={() => navigate("/contact")} 
-          className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-10 py-4 text-base font-extrabold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
+          className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-6 sm:px-8 md:px-10 py-3 sm:py-4 text-sm sm:text-base font-extrabold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
         >
           <span className="relative z-10 transition-all duration-500 tracking-wide">
             Get Started

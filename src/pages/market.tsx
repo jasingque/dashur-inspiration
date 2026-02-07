@@ -1,11 +1,10 @@
 import { SolutionCard } from "../components/solutioncard";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
-import Hospitality from '../assets/hospitality.webp';
-import Healthcare from '../assets/healthcare.webp';
-import Manufacturing from '../assets/manufacturing.webp';
-import Defense from '../assets/defense.webp';
+import Hospitality from '../assets/hospitality.png';
+import Healthcare from '../assets/healthcare.png';
+import Manufacturing from '../assets/manufacturing.png';
+import Defense from '../assets/defense.png';
 import Aerospace from '../assets/aerospace.webp';
 
 const TOP_SOLUTIONS = [
@@ -65,17 +64,10 @@ const itemVariants = {
 export const MarketPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    // Fallback: manually update document title
-    document.title = "Our Markets - Dashurai";
   }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
-      <Helmet>
-        <title>Our Markets - Dashurai</title>
-        <meta name="description" content="Industries We Serve - Healthcare, Hospitality, Manufacturing, Defense, and Aerospace solutions by Dashurai" />
-      </Helmet>
       <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
         <motion.div 
           className="relative z-[2] flex w-full max-w-7xl flex-col gap-8 lg:gap-12"
@@ -84,10 +76,6 @@ export const MarketPage = () => {
           whileInView="visible"
           viewport={{ once: false, amount: 0.2 }}
         >
-
-          <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-50 hidden lg:block">
-            <img src="https://c.animaapp.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
-          </div>
 
           {/* Header Section */}
           <motion.div variants={itemVariants} className="flex w-full flex-col gap-4 sm:gap-6 lg:flex-row lg:gap-8">
