@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const inputStyles = "w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all";
 const labelStyles = "block text-white text-sm font-medium mb-2";
@@ -25,14 +25,8 @@ export const Contact: React.FC = () => {
     useEffect(() => {
           // start from top
           window.scrollTo(0, 0);
-          
-          // Fallback: manually update document title
+          // Force title update
           document.title = "Contact Us - Dashurai";
-          
-          return () => {
-              // Cleanup: reset title when unmounting (optional)
-              // document.title = "Dashurai";
-          };
       }, []);
   return (
     <>

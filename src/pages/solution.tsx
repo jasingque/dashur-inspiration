@@ -5,6 +5,8 @@ import Healthcare from '../assets/healthcare.webp';
 import Manufacturing from '../assets/manufacturing.webp';
 import Defense from '../assets/defense.webp';
 import Aerospace from '../assets/aerospace.webp';
+import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 const TOP_SOLUTIONS = [
   {
@@ -62,7 +64,22 @@ const itemVariants = {
 };
 
 export const SOLUTIONS = () => {
+  useEffect(() => {
+    // Force title update
+    document.title = "Industries We Serve - Dashurai";
+  }, []);
   return (
+    <>
+      <Helmet>
+        <title>Industries We Serve - Dashurai | Healthcare, Hospitality, Manufacturing & More</title>
+        <meta name="description" content="Dashurai serves diverse industries including Healthcare, Hospitality & Entertainment, Manufacturing, Defense, and Aerospace with cutting-edge AI and automation solutions." />
+        <meta name="keywords" content="healthcare AI, hospitality automation, manufacturing solutions, defense technology, aerospace innovation, industry solutions" />
+        <link rel="canonical" href="https://www.dashurai.com/#solutions" />
+        <meta property="og:title" content="Industries We Serve - Dashurai | Healthcare, Hospitality, Manufacturing & More" />
+        <meta property="og:description" content="Dashurai serves diverse industries with cutting-edge AI and automation solutions." />
+        <meta property="og:url" content="https://www.dashurai.com/#solutions" />
+        <meta property="og:type" content="website" />
+      </Helmet>
     <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-6 py-[70px] md:px-0 md:py-[135px]">
       <motion.div 
         className="relative z-[2] flex w-full max-w-[1120px] flex-col gap-8"
@@ -130,5 +147,6 @@ export const SOLUTIONS = () => {
         </div>
       </motion.div>
     </section>
+    </>
   );
 };

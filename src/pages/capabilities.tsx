@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, memo, useCallback } from "react";
+import { useEffect, useRef, useState, memo, useCallback, useMemo } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 
 // --- Types ---
 type RowConfig = {
@@ -73,12 +73,12 @@ const TypewriterText = memo(() => {
   const [hasStarted, setHasStarted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   
-  const words = [
-    "We don't just use technologies.",
-    "We design systems that scale,",
-    "adapt,",
-    "and endure."
-  ];
+  const words = useMemo(() => [
+    "We don't just deploy tech;",
+    "we architect legacies.",
+    "We build systems designed to outpace the present",
+    "and scale into the future."
+  ], []);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -91,13 +91,14 @@ const TypewriterText = memo(() => {
       { threshold: 0.3 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentSection = sectionRef.current;
+    if (currentSection) {
+      observer.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, [hasStarted]);
@@ -118,7 +119,11 @@ const TypewriterText = memo(() => {
       }, 300);
       return () => clearTimeout(timeout);
     } else {
-      setIsTyping(false);
+      // Use setTimeout to avoid synchronous state update
+      const timeout = setTimeout(() => {
+        setIsTyping(false);
+      }, 0);
+      return () => clearTimeout(timeout);
     }
   }, [displayedText, currentWordIndex, isTyping, words]);
   
@@ -259,13 +264,14 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentSection = sectionRef.current;
+    if (currentSection) {
+      observer.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, []);
@@ -335,6 +341,8 @@ export const CAPABILITIES = () => {
     useEffect(() => {
           // start from top
           window.scrollTo(0, 0);
+          // Force title update
+          document.title = "Our Capabilities - Dashurai";
       }, []);
   return (
     <>

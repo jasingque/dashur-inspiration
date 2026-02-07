@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from "react-router-dom";
 import SoftwareEngineer from "../assets/softwareEngineer.webp";
 import QAEngineer from "../assets/qaEngineer.webp";
 import MobileDeveloper from "../assets/mobileDeveloper.webp";
-import IOSDeveloper from "../assets/mobileDeveloper.webp";
-import DevOpsEngineer from "../assets/softwareEngineer.webp";
+import IOSDeveloper from "../assets/iosEngineer.webp";
+import DevOpsEngineer from "../assets/DevOpsEngineer.webp";
 
 
 const CASE_STUDIES = [
@@ -73,6 +73,8 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
   useEffect(() => {
     if (!isHomePage) {
       window.scrollTo(0, 0);
+      // Force title update
+      document.title = "Careers - Dashurai";
     }
   }, [isHomePage]);
       
@@ -88,12 +90,10 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
 
   return (
     <>
-      {!isHomePage && (
-        <Helmet>
-          <title>Careers - Dashurai</title>
-          <meta name="description" content="Join our team at Dashurai - Explore career opportunities in AI, software development, and technology innovation" />
-        </Helmet>
-      )}
+      <Helmet>
+        <title>{isHomePage ? "Careers - Dashurai" : "Careers - Dashurai"}</title>
+        <meta name="description" content="Join our team at Dashurai - Explore career opportunities in AI, software development, and technology innovation" />
+      </Helmet>
     <section 
       ref={containerRef} 
       className="relative flex flex-col items-center w-full px-6 md:px-0"
