@@ -107,16 +107,18 @@ const TypewriterText = memo(() => {
     if (!isTyping) return;
     
     const currentFullText = words.slice(0, currentWordIndex + 1).join(' ');
+    const totalCharacters = words.join(' ').length;
+    const timePerCharacter = 3000 / totalCharacters; // 3 seconds total
     
     if (displayedText.length < currentFullText.length) {
       const timeout = setTimeout(() => {
         setDisplayedText(prev => currentFullText.slice(0, prev.length + 1));
-      }, 50);
+      }, Math.max(10, timePerCharacter)); // Minimum 10ms for smoothness
       return () => clearTimeout(timeout);
     } else if (currentWordIndex < words.length - 1) {
       const timeout = setTimeout(() => {
         setCurrentWordIndex(prev => prev + 1);
-      }, 300);
+      }, 50); // Quick word transition
       return () => clearTimeout(timeout);
     } else {
       // Use setTimeout to avoid synchronous state update
@@ -140,7 +142,9 @@ const TypewriterText = memo(() => {
         <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight">
           <span className="bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
             {displayedText}
-            {isTyping && <span className="animate-pulse">|</span>}
+            {isTyping && (
+              <span className="inline-block w-0.5 h-6 sm:h-7 md:h-8 lg:h-9 bg-gradient-to-b from-cyan-400 to-purple-400 ml-1 animate-pulse" />
+            )}
           </span>
         </h2>
       </div>
@@ -190,9 +194,14 @@ const CallToAction = memo(() => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleGetStarted}
-          className="bg-white text-gray-900 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-gray-200 transition duration-300"
+          className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-8 py-3 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
         >
-          Get Started
+          <span className="relative z-10 transition-all duration-500">Get Started</span>
+          
+          <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+          <span className="absolute right-[-100%] top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+          <span className="absolute left-[-100%] top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+          <span className="absolute bottom-[-100%] left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
         </motion.button>
       </div>
     </motion.section>
@@ -281,8 +290,10 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
       <div ref={sectionRef} className="flex flex-col items-center gap-8 border-t border-cyan-500/20 py-24 first:border-t-0 md:py-32">
         {/* Centered Title */}
         <div className="w-full text-center px-6">
-          <h3 className="font-plus_jakarta_sans text-xl font-bold uppercase leading-snug tracking-wide bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent md:text-2xl">
-            {row.title}
+          <h3 className="font-plus_jakarta_sans_variable break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
+            <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
+              {row.title}
+            </span>
           </h3>
         </div>
 

@@ -1,32 +1,104 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Helmet } from 'react-helmet-async';
+import { DashurGlobe } from '../components/DashurGlobe';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, y: 80 },
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.8} 
+    transition: { duration: 1 } 
+  },
+};
+
+const slideInLeft = {
+  hidden: { opacity: 0, x: -100 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    transition: { duration: 0.8 } 
+  },
+};
+
+const slideInRight = {
+  hidden: { opacity: 0, x: 100 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    transition: { duration: 0.8 } 
   },
 };
 
 const stats = [
-  { label: "Years of AI Innovation", value: "2+" },
-  { label: "Complex Challenges Solved", value: "500+" },
-  { label: "AI Systems Deployed", value: "200+" },
-  { label: "Global Markets Served", value: "50+" },
+  { label: "Years of AI Innovation", value: "2+", count: 2 },
+  { label: "Complex Challenges Solved", value: "500+", count: 500 },
+  { label: "AI Systems Deployed", value: "200+", count: 200 },
+  { label: "Global Markets Served", value: "50+", count: 50 },
 ];
+
+// Counting Animation Component
+const AnimatedCounter = ({ target, suffix = "", duration = 2000 }: { target: number; suffix?: string; duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [isVisible]);
+  
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const increment = target / (duration / 16); // 60fps
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, 16);
+    
+    return () => clearInterval(timer);
+  }, [isVisible, target, duration]);
+  
+  return (
+    <div ref={ref} className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-cyan-400 tabular-nums">
+      {count}{suffix}
+    </div>
+  );
+};
 
 const capabilities = [
   {
@@ -68,43 +140,82 @@ export const AboutPage = () => {
         <meta name="twitter:title" content="About Us - Dashurai | AI Innovation & Automation Experts" />
         <meta name="twitter:description" content="Learn about Dashurai's mission to shape the future through cutting-edge AI solutions." />
       </Helmet>
-        {/* Hero Section */}
-        <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
-          <div className="pointer-events-none absolute left-[19%] top-[-206px] z-0 w-[966px] -translate-x-1/2 opacity-30 hidden lg:block">
-            <img src="https://c.dashurai.com/mkh1fbpd0ZtFWA/assets/24.png" alt="" className="w-full object-cover" />
-          </div>
+        {/* Hero Section - Stokt Inspired */}
+      <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* Background Grid Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        </div>
         
-        <motion.div 
-          className="relative z-[2] mx-auto max-w-7xl"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: false, amount: 0.2 }}
-        >
-          <motion.div variants={itemVariants} className="flex flex-col gap-6 lg:gap-12">
-            <div className="shrink-0 lg:w-[200px]">
-              <p className="font-plus_jakarta_sans text-xs sm:text-sm font-semibold tracking-wider text-zinc-400 uppercase">
-                [ About Us ]
-              </p>
-            </div>
-            
-            <div className="flex grow flex-col gap-8 lg:gap-12">
-              <h1 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-tight break-words">
-                <span className="bg-gradient-to-r from-white via-cyan-400 to-blue-600 bg-clip-text text-transparent">
-                  Transforming Business Through AI Innovation
-                </span>
-              </h1>
+        <div className="relative z-10 w-full max-w-7xl mx-auto">
+          <motion.div 
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-screen"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Left Column - Text Content */}
+            <motion.div 
+              variants={slideInLeft}
+              className="lg:col-span-5 space-y-6 lg:space-y-8"
+            >
+              <div className="space-y-4 lg:space-y-6">
+                <motion.p 
+                  className="font-mono text-xs sm:text-sm font-semibold tracking-widest text-cyan-400 uppercase"
+                  variants={itemVariants}
+                >
+                  [ About Dashurai ]
+                </motion.p>
+                
+                <motion.h1 
+                  className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.9] tracking-tight"
+                  variants={itemVariants}
+                >
+                  <span className="block bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
+                    Transforming
+                  </span>
+                  <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+                    Business
+                  </span>
+                  <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Through AI
+                  </span>
+                </motion.h1>
+              </div>
               
-              <div className="space-y-4 sm:space-y-6 text-base sm:text-lg lg:text-xl leading-7 lg:leading-8 text-gray-300 lg:max-w-4xl">
-                <p>
+              <motion.div 
+                className="space-y-4 lg:space-y-6 text-lg sm:text-xl lg:text-2xl leading-relaxed text-gray-300 max-w-2xl"
+                variants={itemVariants}
+              >
+                <p className="font-light">
                   While dedicated to the development of advanced automated solutions, our goal is to imbue these systems with a nuanced form of reasoning reminiscent of human cognition, thereby enhancing individual talents and capabilities.
                 </p>
-                <p>
-                  Our specialization lies in addressing intricate challenges within demanding environments, fostering a reliance on AI for decision-making that compliments human expertise. Acknowledging the widespread demand across diverse markets, we aim to provide cutting-edge solutions with real-time situational awareness, predictive analytics, and human-like acumen.
+                <p className="font-light">
+                  Our specialization lies in addressing intricate challenges within demanding environments, fostering a reliance on AI for decision-making that compliments human expertise.
                 </p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Right Column - Globe */}
+            <motion.div 
+              variants={slideInRight}
+              className="lg:col-span-7 relative flex items-center justify-center"
+            >
+              <DashurGlobe />
+            </motion.div>
           </motion.div>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2, duration: 0.8 }}
+        >
+          <div className="w-6 h-10 border-2 border-cyan-400/30 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-cyan-400 rounded-full mt-2 animate-bounce" />
+          </div>
         </motion.div>
       </section>
 
@@ -152,8 +263,13 @@ export const AboutPage = () => {
                 variants={itemVariants}
                 className="text-center"
               >
-                <div className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-cyan-400">{stat.value}</div>
-                <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-400">{stat.label}</div>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-radial from-cyan-500/20 to-transparent rounded-full blur-xl group-hover:from-cyan-400/30 transition-all duration-500" />
+                  <AnimatedCounter target={stat.count} suffix={stat.value.includes('+') ? '+' : ''} duration={2000} />
+                </div>
+                <div className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-400 font-medium max-w-[150px] mx-auto">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -216,10 +332,18 @@ export const AboutPage = () => {
               <p className="mb-8 sm:mb-10 text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl mx-auto">
                 Partner with us to leverage cutting-edge AI solutions that enhance human capabilities and drive exceptional results.
               </p>
-              <button className="group relative overflow-hidden rounded-lg bg-white px-6 sm:px-8 lg:px-10 py-3 sm:py-4 font-semibold text-slate-950 transition-all duration-300 hover:bg-gray-100 hover:scale-105">
-                <span className="relative z-10 text-sm sm:text-base">Get Started Today</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-600 opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              </button>
+              <motion.button 
+                className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-8 py-3 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="relative z-10 transition-all duration-500">Get Started Today</span>
+                
+                <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+                <span className="absolute right-[-100%] top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+                <span className="absolute left-[-100%] top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+                <span className="absolute bottom-[-100%] left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+              </motion.button>
             </div>
           </motion.div>
         </motion.div>
