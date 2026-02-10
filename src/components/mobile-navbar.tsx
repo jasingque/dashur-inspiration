@@ -50,7 +50,7 @@ export const MobileNavbar = () => {
   return (
     <>
       {/* Mobile Navbar */}
-      <div className="md:hidden fixed top-0 left-0 w-full z-[1003] transition-all duration-300">
+      <div className="lg:hidden fixed top-0 left-0 w-full z-[1003] transition-all duration-300">
         <div className={`transition-all duration-300 ${
           isScrolled 
             ? "bg-slate-950/95 backdrop-blur-lg shadow-lg border-b border-slate-800/50" 
@@ -82,7 +82,7 @@ export const MobileNavbar = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`md:hidden fixed inset-0 z-[1002] transition-all duration-300 ${
+      <div className={`lg:hidden fixed inset-0 z-[1002] transition-all duration-300 ${
         isOpen 
           ? "opacity-100 visible" 
           : "opacity-0 invisible pointer-events-none"
