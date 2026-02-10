@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import { Navbar } from "./components/navbar";
 import { MobileNavbar } from "./components/mobile-navbar";
 import { Footer } from "./components/footer";
@@ -15,8 +14,7 @@ const Applyform = lazy(() => import("./pages/applyform"));
 
 export const App = () => {
   return (
-    <HelmetProvider>
-      <Router>
+    <Router>
       <div className="text-black text-xs not-italic normal-nums font-normal accent-auto bg-slate-950 box-border caret-transparent block tracking-[normal] leading-[normal] list-outside list-disc pointer-events-auto text-start indent-[0px] normal-case visible border-separate font-sans_serif overflow-x-hidden">
         <div className="box-border caret-transparent">
           <div className="relative content-center items-center bg-slate-950 box-border caret-transparent gap-x-0 flex flex-col justify-start gap-y-0 min-h-screen">
@@ -45,6 +43,5 @@ export const App = () => {
         </div>
       </div>
     </Router>
-    </HelmetProvider>
   );
 };

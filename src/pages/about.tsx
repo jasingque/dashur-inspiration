@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { DashurGlobe } from '../components/DashurGlobe';
 
 const containerVariants = {
