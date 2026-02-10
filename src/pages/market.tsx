@@ -1,7 +1,6 @@
 import { SolutionCard } from "../components/solutioncard";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { Helmet } from 'react-helmet-async';
 import Hospitality from '../assets/hospitality.webp';
 import Healthcare from '../assets/healthcare.webp';
 import Manufacturing from '../assets/manufacturing.webp';
