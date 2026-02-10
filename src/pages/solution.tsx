@@ -86,7 +86,7 @@ export const SOLUTIONS = () => {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.4 }}
       >
 
         {/* Header Section */}
