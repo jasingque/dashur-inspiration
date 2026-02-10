@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { JobDetails } from '../components/JobDetails';
 import { ApplicationForm } from '../components/ApplicationForm';
 
