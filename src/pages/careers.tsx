@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { useNavigate } from "react-router-dom";
 import SoftwareEngineer from "../assets/softwareEngineer.webp";
 import QAEngineer from "../assets/qaEngineer.webp";

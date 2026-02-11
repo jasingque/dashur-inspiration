@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, memo, useCallback, useMemo } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 // --- Types ---
 type RowConfig = {
@@ -209,6 +209,11 @@ const CallToAction = memo(() => {
 });
 
 const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: string }) => {
+  // Check if this is one of the logos that should be white
+  const isWhiteLogo = imageUrl.includes('Amazon_Web_Services_Logo') || 
+                      imageUrl.includes('apple-original') || 
+                      imageUrl.includes('github-original');
+  
   return (
     <div className="group relative flex h-full w-[280px] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-cyan-500/10 bg-linear-to-br from-slate-900/60 via-slate-800/40 to-slate-900/60 backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
       {/* Decorative corner elements - subtle when not hovered */}
@@ -223,9 +228,9 @@ const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: 
       <div className="relative z-10">
         {/* Icon with subtle effect when not hovered */}
         <div className="relative mb-6 h-16 w-16">
-          <div className="absolute inset-0 bg-linear-to-r from-cyan-500/10 to-purple-500/10 rounded-xl blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
-          <div className="relative h-full w-full rounded-xl bg-linear-to-br from-slate-800/20 to-slate-700/20 p-3 flex items-center justify-center transition-all duration-500 group-hover:from-cyan-100/10 group-hover:to-purple-100/10">
-            <img src={imageUrl} alt={title} className="h-full w-full object-contain filter brightness-75 opacity-60 transition-all duration-500 group-hover:brightness-125 group-hover:opacity-100" loading="lazy" decoding="async" />
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
+          <div className="relative h-full w-full rounded-xl bg-gradient-to-br from-slate-800/20 to-slate-700/20 p-3 flex items-center justify-center transition-all duration-500 group-hover:from-cyan-100/10 group-hover:to-purple-100/10">
+            <img src={imageUrl} alt={title} className={`h-full w-full object-contain filter brightness-75 opacity-60 transition-all duration-500 group-hover:brightness-125 group-hover:opacity-100 ${isWhiteLogo ? 'brightness-0 invert' : ''}`} loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -298,7 +303,7 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
         </div>
 
         {/* Centered Grid for Certifications */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full max-w-6xl px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-20 w-full max-w-6xl px-6">
           {row.items.map((card, index) => {
             const isFirstHalf = index < 4;
             const isSecondHalf = index >= 4;
@@ -306,14 +311,14 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
             return (
               <div
                 key={card.id}
-                className={`transition-all duration-3000 ease-out ${
+                className={`transition-all duration-2000 ease-out ${
                   isVisible ? 'opacity-100 translate-x-0' : ''
                 } ${
                   isFirstHalf ? (isVisible ? 'translate-x-0' : '-translate-x-[200px] opacity-0') : 
                   isSecondHalf ? (isVisible ? 'translate-x-0' : 'translate-x-[200px] opacity-0') : ''
                 }`}
                 style={{ 
-                  transitionDelay: `${index * 250}ms`,
+                  transitionDelay: `${index * 200}ms`,
                   transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                 }}
               >

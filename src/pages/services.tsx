@@ -5,7 +5,7 @@ import appDevelopment from "../assets/appDevelopment.webp";
 import webDevelopment from "../assets/webDevelopment.webp";
 import digitalMarketing from "../assets/digitalMarketing.webp";
 import seo from "../assets/seo.webp";
-import { Helmet } from "react-helmet-async";
+import { Helmet } from 'react-helmet';
 import { useEffect } from "react";
 
 const STACK_DATA = [

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import { DashurGlobe } from '../components/DashurGlobe';
 
 const containerVariants = {
@@ -169,7 +169,7 @@ export const AboutPage = () => {
                 </motion.p>
                 
                 <motion.h1 
-                  className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.9] tracking-tight"
+                  className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.3] tracking-tight"
                   variants={itemVariants}
                 >
                   <span className="block bg-linear-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">

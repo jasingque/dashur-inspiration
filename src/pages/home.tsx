@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { Hero } from "./hero";
 import { FloatingAI } from "../components/floatBot";
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 import videoUrl from "../assets/opt_3DLogo.mp4";
 
 const QUESTIONS = lazy(() => import("./questions").then(m => ({ default: m.QUESTIONS })));

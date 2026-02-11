@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import { Navbar } from "./components/navbar";
 import { MobileNavbar } from "./components/mobile-navbar";
 import { Footer } from "./components/footer";
@@ -15,34 +14,32 @@ const Applyform = lazy(() => import("./pages/applyform"));
 
 export const App = () => {
   return (
-    <HelmetProvider>
-      <Router>
-        <div className="text-black text-xs not-italic normal-nums font-normal accent-auto bg-slate-950 box-border caret-transparent block tracking-[normal] leading-[normal] list-outside list-disc pointer-events-auto text-start indent-0 normal-case visible border-separate font-sans_serif h-full">
-          <div className="relative bg-slate-950 min-h-full">
-            <Navbar />
-            <MobileNavbar />
-            <Suspense fallback={
-              <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-400"></div>
-              </div>
-            }>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/capabilities" element={<CAPABILITIES />} />
-                <Route path="/market" element={<MarketPage />} />
-                <Route path="/careers" element={<CAREERS />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/job/:id" element={<Applyform />} />
-              </Routes>
-            </Suspense>
-            <div className="box-border caret-transparent"></div>
-            <div className="relative box-border caret-transparent grow h-0 w-0 bg-position-0px_0px"></div>
-            <Footer />
-          </div>
+    <Router>
+      <div className="text-black text-xs not-italic normal-nums font-normal accent-auto bg-slate-950 box-border caret-transparent block tracking-[normal] leading-[normal] list-outside list-disc pointer-events-auto text-start indent-[0px] normal-case visible border-separate font-sans_serif h-full">
+        <div className="relative bg-slate-950 min-h-full">
+          <Navbar />
+          <MobileNavbar />
+          <Suspense fallback={
+            <div className="flex items-center justify-center min-h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-400"></div>
+            </div>
+          }>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/capabilities" element={<CAPABILITIES />} />
+              <Route path="/market" element={<MarketPage />} />
+              <Route path="/careers" element={<CAREERS />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/job/:id" element={<Applyform />} />
+            </Routes>
+          </Suspense>
           <div className="box-border caret-transparent"></div>
+          <div className="relative box-border caret-transparent grow h-0 w-0 bg-[position:0px_0px]"></div>
+          <Footer />
         </div>
-      </Router>
-    </HelmetProvider>
+        <div className="box-border caret-transparent"></div>
+      </div>
+    </Router>
   );
 };
