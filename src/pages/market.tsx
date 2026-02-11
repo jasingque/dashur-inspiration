@@ -72,7 +72,7 @@ export const MarketPage = () => {
     <div className="min-h-screen bg-slate-950 text-white">
       <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 xl:py-32">
         <motion.div 
-          className="relative z-[2] flex w-full max-w-7xl flex-col gap-8 lg:gap-12"
+          className="relative z-2 flex w-full max-w-7xl flex-col gap-8 lg:gap-12"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -89,7 +89,7 @@ export const MarketPage = () => {
             
             <div className="flex grow flex-col gap-4 sm:gap-6 lg:flex-row">
               <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-tight">
-                <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
                   Industries We Serve
                 </span>
               </h2>
@@ -100,7 +100,7 @@ export const MarketPage = () => {
           </motion.div>
 
           {/* Grid Section */}
-          <div className="z-[2] flex flex-col gap-4 sm:gap-6">
+          <div className="z-2 flex flex-col gap-4 sm:gap-6">
             
             {/* Top Row */}
             <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-5">

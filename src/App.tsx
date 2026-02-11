@@ -17,7 +17,7 @@ export const App = () => {
   return (
     <HelmetProvider>
       <Router>
-        <div className="text-black text-xs not-italic normal-nums font-normal accent-auto bg-slate-950 box-border caret-transparent block tracking-[normal] leading-[normal] list-outside list-disc pointer-events-auto text-start indent-[0px] normal-case visible border-separate font-sans_serif h-full">
+        <div className="text-black text-xs not-italic normal-nums font-normal accent-auto bg-slate-950 box-border caret-transparent block tracking-[normal] leading-[normal] list-outside list-disc pointer-events-auto text-start indent-0 normal-case visible border-separate font-sans_serif h-full">
           <div className="relative bg-slate-950 min-h-full">
             <Navbar />
             <MobileNavbar />
@@ -37,7 +37,7 @@ export const App = () => {
               </Routes>
             </Suspense>
             <div className="box-border caret-transparent"></div>
-            <div className="relative box-border caret-transparent grow h-0 w-0 bg-[position:0px_0px]"></div>
+            <div className="relative box-border caret-transparent grow h-0 w-0 bg-position-0px_0px"></div>
             <Footer />
           </div>
           <div className="box-border caret-transparent"></div>

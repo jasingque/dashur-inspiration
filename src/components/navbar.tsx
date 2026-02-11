@@ -51,7 +51,7 @@ const handleNavClick = (e: React.MouseEvent, path: string) => {
 
   return (
     <div
-      className={`hidden lg:block fixed top-0 left-0 w-full z-[1002] transition-transform duration-300 ease-in-out ${
+      className={`hidden lg:block fixed top-0 left-0 w-full z-1002 transition-transform duration-300 ease-in-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
@@ -94,9 +94,9 @@ const handleNavClick = (e: React.MouseEvent, path: string) => {
               <span className="relative z-10 transition-all duration-500">Join Team Dashur</span>
               
               <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-              <span className="absolute right-[-100%] top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-              <span className="absolute left-[-100%] top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-              <span className="absolute bottom-[-100%] left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+              <span className="absolute right-full top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+              <span className="absolute left-full top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+              <span className="absolute bottom-full left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
             </button>
           </div>
           

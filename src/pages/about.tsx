@@ -63,13 +63,14 @@ const AnimatedCounter = ({ target, suffix = "", duration = 2000 }: { target: num
       { threshold: 0.3 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const currentRef = ref.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [isVisible]);
@@ -143,8 +144,8 @@ export const AboutPage = () => {
         {/* Hero Section - Stokt Inspired */}
       <section className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         {/* Background Grid Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        <div className="absolute inset-0 bg-linear-to-br from-slate-950 via-slate-900 to-slate-950">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
         </div>
         
         <div className="relative z-10 w-full max-w-7xl mx-auto">
@@ -171,13 +172,13 @@ export const AboutPage = () => {
                   className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[0.9] tracking-tight"
                   variants={itemVariants}
                 >
-                  <span className="block bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
+                  <span className="block bg-linear-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
                     Transforming
                   </span>
-                  <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+                  <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
                     Business
                   </span>
-                  <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <span className="block bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     Through AI
                   </span>
                 </motion.h1>
@@ -230,12 +231,12 @@ export const AboutPage = () => {
         >
           <motion.div 
             variants={itemVariants}
-            className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900/50 to-slate-800/30 p-6 sm:p-8 lg:p-12 backdrop-blur-sm"
+            className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-800 bg-linear-to-br from-slate-900/50 to-slate-800/30 p-6 sm:p-8 lg:p-12 backdrop-blur-sm"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-blue-600/10"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-cyan-600/10 to-blue-600/10"></div>
             <div className="relative z-10">
-              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight break-words">
-                <span className="bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
+              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight wrap-break-words">
+                <span className="bg-linear-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
                   Our Mission
                 </span>
               </h2>
@@ -286,8 +287,8 @@ export const AboutPage = () => {
           viewport={{ once: false, amount: 0.2 }}
         >
           <motion.div variants={itemVariants} className="mb-12 sm:mb-16 text-center">
-            <h2 className="font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight break-words">
-              <span className="bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight wrap-break-words">
+              <span className="bg-linear-to-r from-white to-cyan-400 bg-clip-text text-transparent">
                 Our Core Capabilities
               </span>
             </h2>
@@ -300,7 +301,7 @@ export const AboutPage = () => {
                 variants={itemVariants}
                 className="group rounded-xl sm:rounded-2xl border border-slate-800 bg-slate-900/30 p-6 sm:p-8 backdrop-blur-sm transition-all duration-500 hover:border-cyan-600/50 hover:bg-slate-900/60 hover:shadow-2xl hover:shadow-cyan-600/10"
               >
-                <div className="mb-4 sm:mb-6 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+                <div className="mb-4 sm:mb-6 h-px bg-linear-to-r from-transparent via-cyan-400 to-transparent"></div>
                 <h3 className="mb-3 sm:mb-4 text-xl sm:text-2xl font-semibold text-white group-hover:text-cyan-400 transition-colors">
                   {capability.title}
                 </h3>
@@ -322,11 +323,11 @@ export const AboutPage = () => {
         >
           <motion.div 
             variants={itemVariants}
-            className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-cyan-600 via-blue-600 to-slate-900 p-8 sm:p-12 lg:p-16 text-center"
+            className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-linear-to-br from-cyan-600 via-blue-600 to-slate-900 p-8 sm:p-12 lg:p-16 text-center"
           >
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="relative z-10">
-              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight break-words">
+              <h2 className="mb-4 sm:mb-6 font-plus_jakarta_sans_variable font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-tight tracking-tight wrap-break-words">
                 Ready to Transform Your Business?
               </h2>
               <p className="mb-8 sm:mb-10 text-base sm:text-lg lg:text-xl text-white/90 max-w-2xl mx-auto">
@@ -340,9 +341,9 @@ export const AboutPage = () => {
                 <span className="relative z-10 transition-all duration-500">Get Started Today</span>
                 
                 <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-                <span className="absolute right-[-100%] top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-                <span className="absolute left-[-100%] top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-                <span className="absolute bottom-[-100%] left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+                <span className="absolute right-full top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+                <span className="absolute left-full top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+                <span className="absolute bottom-full left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
               </motion.button>
             </div>
           </motion.div>

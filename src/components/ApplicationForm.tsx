@@ -12,7 +12,7 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
       <motion.div 
         initial={{ scale: 0.9, opacity: 0 }} 
         animate={{ scale: 1, opacity: 1 }} 
-        className="bg-[#0a0f1d]/60 backdrop-blur-xl border border-blue-500/30 rounded-[2rem] p-12 text-center text-white"
+        className="bg-[#0a0f1d]/60 backdrop-blur-xl border border-blue-500/30 rounded-4xl p-12 text-center text-white"
       >
         <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_20px_rgba(59,130,246,0.5)]">
           <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,16 +27,16 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
 
   return (
     <div className="relative group">
-      <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+      <div className="absolute -inset-1 bg-linear-to-r from-blue-600 to-cyan-500 rounded-[2.5rem] blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
       <div className="absolute -left-20 top-1/4 w-40 h-40 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none"></div>
 
       <motion.section 
         initial={{ opacity: 0, y: 40 }} 
         whileInView={{ opacity: 1, y: 0 }} 
         viewport={{ once: true }} 
-        className="relative bg-zinc-950/45 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 shadow-2xl text-white border border-white/10"
+        className="relative bg-zinc-950/45 backdrop-blur-xl rounded-4xl p-8 md:p-12 shadow-2xl text-white border border-white/10"
       >
-        <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-white to-zinc-500 bg-clip-text text-transparent">
           Application Form
         </h2>
         
@@ -89,6 +89,7 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
             </div>
           </div>
 
+          {/* BUTTON */}
           <div className="pt-4">
             <button 
               type="submit"
@@ -98,9 +99,9 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
                 Submit Application
               </span>
               <span className="absolute left-0 -top-full h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-              <span className="absolute right-[-100%] top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-              <span className="absolute left-[-100%] top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-              <span className="absolute bottom-[-100%] left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+              <span className="absolute right-full top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+              <span className="absolute left-full top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+              <span className="absolute bottom-full left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
             </button>
           </div>
         </form>
