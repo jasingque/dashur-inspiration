@@ -19,9 +19,9 @@ const CAPABILITY_ROWS: RowConfig[] = [
     duration: "30s",
     reverse: false,
     items: [
-      { id: 1, label: "[ Apple ]", title: "iOS", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg" },
-      { id: 2, label: "[ Google ]", title: "Android", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/android/android-plain.svg" },
-      { id: 3, label: "[ Cross Platform ]", title: "Flutter", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" },
+      { id: 1, label: "[ Apple ]", title: "iOS", imageUrl: "/src/assets/icons/apple.svg" },
+      { id: 2, label: "[ Google ]", title: "Android", imageUrl: "/src/assets/icons/android.svg" },
+      { id: 3, label: "[ Cross Platform ]", title: "Flutter", imageUrl: "/src/assets/icons/flutter.svg" },
     ],
   },
   {
@@ -29,11 +29,11 @@ const CAPABILITY_ROWS: RowConfig[] = [
     duration: "40s",
     reverse: true,
     items: [
-      { id: 5, label: "[ Language ]", title: "Python", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
-      { id: 6, label: "[ Framework ]", title: "Django", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" },
-      { id: 7, label: "[ Framework ]", title: "Laravel", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" },
-      { id: 8, label: "[ Language ]", title: "Go", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original.svg" },
-      { id: 9, label: "[ Language ]", title: "Java", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" },
+      { id: 5, label: "[ Language ]", title: "Python", imageUrl: "/src/assets/icons/python.svg" },
+      { id: 6, label: "[ Framework ]", title: "Django", imageUrl: "/src/assets/icons/django.svg" },
+      { id: 7, label: "[ Framework ]", title: "Laravel", imageUrl: "/src/assets/icons/laravel.svg" },
+      { id: 8, label: "[ Language ]", title: "Go", imageUrl: "/src/assets/icons/go.svg" },
+      { id: 9, label: "[ Language ]", title: "Java", imageUrl: "/src/assets/icons/java.svg" },
     ],
   },
   {
@@ -41,10 +41,10 @@ const CAPABILITY_ROWS: RowConfig[] = [
     duration: "30s",
     reverse: false,
     items: [
-      { id: 10, label: "[ Library ]", title: "React JS", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
-      { id: 11, label: "[ Runtime ]", title: "Node.js", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
-      { id: 12, label: "[ Language ]", title: "TypeScript", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" },
-      { id: 13, label: "[ Framework ]", title: "Next.js", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg" },
+      { id: 10, label: "[ Library ]", title: "React JS", imageUrl: "/src/assets/icons/react.svg" },
+      { id: 11, label: "[ Runtime ]", title: "Node.js", imageUrl: "/src/assets/icons/nodejs.svg" },
+      { id: 12, label: "[ Language ]", title: "TypeScript", imageUrl: "/src/assets/icons/typescript.svg" },
+      { id: 13, label: "[ Framework ]", title: "Next.js", imageUrl: "/src/assets/icons/nextjs.svg" },
     ],
   },
   {
@@ -52,14 +52,14 @@ const CAPABILITY_ROWS: RowConfig[] = [
     duration: "35s",
     reverse: true,
     items: [
-      { id: 14, title: "Ultimate AWS Cloud", imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" },
-      { id: 15, label: "[ Cloud ]", title: "GCP Associate Cloud", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" },
-      { id: 16, label: "[ System ]", title: "Mac OS Terminal", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg" },
-      { id: 17, label: "[ Language ]", title: "Python Intermediate", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
-      { id: 18, label: "[ Version Control ]", title: "Github / Git", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
-      { id: 19, label: "[ Development ]", title: "Frontend Development", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
-      { id: 20, label: "[ Development ]", title: "Full Stack Development", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" },
-      { id: 21, label: "[ Runtime ]", title: "Node JS", imageUrl: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" },
+      { id: 14, title: "Ultimate AWS Cloud", imageUrl: "/src/assets/icons/aws.svg" },
+      { id: 15, label: "[ Cloud ]", title: "GCP Associate Cloud", imageUrl: "/src/assets/icons/googlecloud.svg" },
+      { id: 16, label: "[ System ]", title: "Mac OS Terminal", imageUrl: "/src/assets/icons/apple.svg" },
+      { id: 17, label: "[ Language ]", title: "Python Intermediate", imageUrl: "/src/assets/icons/python.svg" },
+      { id: 18, label: "[ Version Control ]", title: "Github / Git", imageUrl: "/src/assets/icons/github.svg" },
+      { id: 19, label: "[ Development ]", title: "Frontend Development", imageUrl: "/src/assets/icons/javascript.svg" },
+      { id: 20, label: "[ Development ]", title: "Full Stack Development", imageUrl: "/src/assets/icons/react.svg" },
+      { id: 21, label: "[ Runtime ]", title: "Node JS", imageUrl: "/src/assets/icons/nodejs.svg" },
     ],
   },
 ];
@@ -210,9 +210,9 @@ const CallToAction = memo(() => {
 
 const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: string }) => {
   // Check if this is one of the logos that should be white
-  const isWhiteLogo = imageUrl.includes('Amazon_Web_Services_Logo') || 
-                      imageUrl.includes('apple-original') || 
-                      imageUrl.includes('github-original');
+  const isWhiteLogo = imageUrl.includes('aws.svg') || 
+                      imageUrl.includes('apple.svg') || 
+                      imageUrl.includes('github.svg');
   
   return (
     <div className="group relative flex h-full w-[280px] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-cyan-500/10 bg-gradient-to-br from-slate-900/60 via-slate-800/40 to-slate-900/60 backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
