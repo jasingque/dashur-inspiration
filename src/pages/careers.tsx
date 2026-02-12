@@ -139,9 +139,9 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
     
     {/* Background Slats - Percentage based so they cover the extra width perfectly */}
     <span className="absolute left-0 -top-full h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-    <span className="absolute right-[-100%] top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-    <span className="absolute left-[-100%] top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-    <span className="absolute bottom-[-100%] left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+    <span className="absolute -right-full top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+    <span className="absolute -left-full top-[50%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+    <span className="absolute -bottom-full left-0 h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
   </button>
 </div>
         )}

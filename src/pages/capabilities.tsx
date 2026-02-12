@@ -140,10 +140,10 @@ const TypewriterText = memo(() => {
     >
       <div className="text-center max-w-4xl">
         <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight">
-          <span className="bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent">
             {displayedText}
             {isTyping && (
-              <span className="inline-block w-0.5 h-6 sm:h-7 md:h-8 lg:h-9 bg-gradient-to-b from-cyan-400 to-purple-400 ml-1 animate-pulse" />
+              <span className="inline-block w-0.5 h-6 sm:h-7 md:h-8 lg:h-9 bg-linear-to-b from-cyan-400 to-purple-400 ml-1 animate-pulse" />
             )}
           </span>
         </h2>
@@ -199,9 +199,9 @@ const CallToAction = memo(() => {
           <span className="relative z-10 transition-all duration-500">Get Started</span>
           
           <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-          <span className="absolute right-[-100%] top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-          <span className="absolute left-[-100%] top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-          <span className="absolute bottom-[-100%] left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+          <span className="absolute right-full top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+          <span className="absolute left-full top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+          <span className="absolute bottom-full left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
         </motion.button>
       </div>
     </motion.section>
@@ -215,7 +215,7 @@ const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: 
                       imageUrl.includes('github.svg');
   
   return (
-    <div className="group relative flex h-full w-[280px] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-cyan-500/10 bg-gradient-to-br from-slate-900/60 via-slate-800/40 to-slate-900/60 backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
+    <div className="group relative flex h-full w-[280px] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-cyan-500/10 bg-linear-to-br from-slate-900/60 via-slate-800/40 to-slate-900/60 backdrop-blur-sm p-6 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
       {/* Decorative corner elements - subtle when not hovered */}
       <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-cyan-400/20 rounded-tl-lg transition-opacity duration-500 group-hover:border-cyan-400/50"></div>
       <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-purple-400/20 rounded-tr-lg transition-opacity duration-500 group-hover:border-purple-400/50"></div>
@@ -223,7 +223,7 @@ const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: 
       <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-indigo-400/20 rounded-br-lg transition-opacity duration-500 group-hover:border-indigo-400/50"></div>
       
       {/* Glowing background effect - only on hover */}
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/3 to-purple-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="absolute inset-0 bg-linear-to-r from-cyan-500/3 to-purple-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       
       <div className="relative z-10">
         {/* Icon with subtle effect when not hovered */}
@@ -235,7 +235,7 @@ const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: 
         </div>
       </div>
 
-      <h3 className="relative z-10 font-plus_jakarta_sans_variable text-xl font-bold leading-tight text-white/80 bg-gradient-to-r from-cyan-200/60 to-purple-200/60 bg-clip-text text-transparent transition-all duration-500 group-hover:text-white group-hover:from-cyan-200 group-hover:to-purple-200">
+      <h3 className="relative z-10 font-plus_jakarta_sans_variable text-xl font-bold leading-tight bg-linear-to-r from-cyan-200/60 to-purple-200/60 bg-clip-text text-transparent transition-all duration-500 group-hover:text-white group-hover:from-cyan-200 group-hover:to-purple-200">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-cyan-400/50 rounded-full transition-opacity duration-500 group-hover:bg-cyan-400 group-hover:animate-pulse"></div>
           <span>{title}</span>
@@ -243,7 +243,7 @@ const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: 
       </h3>
       
       {/* Bottom accent line - only visible on hover */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-linear-to-r from-transparent via-cyan-400/60 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
     </div>
   );
 });
@@ -295,8 +295,8 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
       <div ref={sectionRef} className="flex flex-col items-center gap-8 border-t border-cyan-500/20 py-24 first:border-t-0 md:py-32">
         {/* Centered Title */}
         <div className="w-full text-center px-6">
-          <h3 className="font-plus_jakarta_sans_variable break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
-            <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
+          <h3 className="font-plus_jakarta_sans_variable wrap-break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
+            <span className="bg-linear-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
               {row.title}
             </span>
           </h3>
@@ -341,7 +341,7 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
       </div>
 
       {/* Marquee Area */}
-      <div className="group relative flex w-full flex-1 overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
+      <div className="group relative flex w-full flex-1 overflow-hidden mask-[linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
         <div className="flex w-max gap-6">
           <MarqueeTrack items={row.items} reverse={row.reverse} duration={row.duration} isCertifications={isCertifications} />
           <MarqueeTrack items={row.items} reverse={row.reverse} duration={row.duration} isCertifications={isCertifications} />
@@ -386,8 +386,8 @@ export const CAPABILITIES = () => {
 
       <div className="mx-auto flex max-w-[1400px] flex-col gap-12 px-0 md:gap-16 md:px-6">
         <div className="mx-auto mb-8 w-full max-w-[1120px] px-6 text-center md:px-0">
-          <h2 className="font-plus_jakarta_sans_variable break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
-            <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
+          <h2 className="font-plus_jakarta_sans_variable wrap-break-word text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
+            <span className="bg-linear-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
               Our Capabilities
             </span>
           </h2>

@@ -82,7 +82,7 @@ export const SOLUTIONS = () => {
       </Helmet>
     <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-6 py-[70px] md:px-0 md:py-[135px]">
       <motion.div 
-        className="relative z-[2] flex w-full max-w-[1120px] flex-col gap-8"
+        className="relative z-2 flex w-full max-w-[1120px] flex-col gap-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -98,8 +98,8 @@ export const SOLUTIONS = () => {
           </div>
           
           <div className="flex grow flex-col gap-6 md:flex-row">
-            <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[50px] leading-tight tracking-tight md:w-1/2 break-words">
-              <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
+            <h2 className="font-plus_jakarta_sans_variable font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[50px] leading-tight tracking-tight md:w-1/2 wrap-break-word">
+              <span className="bg-linear-to-r from-white to-[#4988C4] bg-clip-text text-transparent">
                 Industries We Serve
               </span>
             </h2>
@@ -110,7 +110,7 @@ export const SOLUTIONS = () => {
         </motion.div>
 
         {/* Grid Section */}
-        <div className="z-[2] flex flex-col gap-4">
+        <div className="z-2 flex flex-col gap-4">
           
           {/* Top Row */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-5">

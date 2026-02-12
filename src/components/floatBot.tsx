@@ -11,7 +11,7 @@ export const FloatingAI = () => {
     <div className="group fixed bottom-15 left-4 xs:bottom-6 xs:left-6 sm:bottom-8 sm:left-8 z-50 w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 flex items-center justify-center cursor-pointer">
       {/* Background Glows */}
       <div className="absolute inset-0 rounded-xl bg-blue-500/20 blur-lg animate-pulse" />
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-blue-900 animate-spin blur-sm" />
+      <div className="absolute inset-0 rounded-xl bg-linear-to-r from-cyan-500 via-blue-500 to-blue-900 animate-spin blur-sm" />
 
       {/* Main Container */}
       <div className="absolute inset-0.5 bg-gray-900 rounded-lg flex items-center justify-center overflow-hidden z-10">
@@ -20,7 +20,7 @@ export const FloatingAI = () => {
             <div key={i} className={`w-1 h-6 ${color} rounded-full animate-bounce`} style={{ animationDelay: `${i * 100}ms` }} />
           ))}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-blue-500/10 to-transparent animate-pulse" />
+        <div className="absolute inset-0 bg-linear-to-t from-transparent via-blue-500/10 to-transparent animate-pulse" />
       </div>
 
       {/* dots */}

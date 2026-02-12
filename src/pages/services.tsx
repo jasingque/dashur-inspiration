@@ -80,8 +80,8 @@ export const SERVICES = () => {
       <div className="flex w-full max-w-[1200px] flex-col gap-12 px-4 md:px-0">
         
         {/* Header */}
-        <h2 className="font-plus_jakarta_sans_variable break-words text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
-          <span className="bg-gradient-to-br from-white to-[#4988C4] bg-clip-text text-transparent">
+        <h2 className="font-plus_jakarta_sans_variable wrap-break-word text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
+          <span className="bg-linear-to-br from-white to-[#4988C4] bg-clip-text text-transparent">
             Our Services
           </span>
         </h2>
@@ -100,15 +100,15 @@ export const SERVICES = () => {
                   '--z-index': index
                 } as React.CSSProperties}
                 className={`
-                  relative w-full h-[320px] transition-all duration-500 ease-in-out group [perspective:1000px]
-                  lg:absolute lg:w-[260px] lg:left-[var(--left-pos)] lg:top-[var(--top-pos)] lg:z-[var(--z-index)]
-                  hover:z-[100] hover:-translate-y-8
+                  relative w-full h-[320px] transition-all duration-500 ease-in-out group perspective-[1000px]
+                  lg:absolute lg:w-[260px] lg:left-(--left-pos) lg:top-(--top-pos)-lg:z-(--z-index)
+                  hover:z-100 hover:-translate-y-8
                 `}
               >
-              <div className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+              <div className="relative h-full w-full transition-all duration-700 transform-3d group-hover:transform-[rotateY(180deg)]">
 
                 {/* --- FRONT FACE --- */}
-                <div className="absolute inset-0 h-full w-full [backface-visibility:hidden]">
+                <div className="absolute inset-0 h-full w-full backface-hidden">
                   <TechStackCard
                     cardName={card.id}
                     number={card.number}
@@ -120,7 +120,7 @@ export const SERVICES = () => {
                 </div>
 
                 {/* --- BACK FACE --- */}
-                <div className="absolute inset-0 h-full w-full rounded-[2rem] bg-[#111] border border-white/10 px-6 py-8 text-center [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-center justify-center gap-4 shadow-2xl">
+                <div className="absolute inset-0 h-full w-full rounded-4xl bg-[#111] border border-white/10 px-6 py-8 text-center transform-[rotateY(180deg)] backface-hidden flex flex-col items-center justify-center gap-4 shadow-2xl">
                     <div className="text-xs font-bold text-[#4988C4]">{card.number}</div>
                     <h3 className="text-lg font-bold text-white uppercase tracking-wider">{card.title}</h3>
                     <p className="text-xs text-gray-400 leading-relaxed">
