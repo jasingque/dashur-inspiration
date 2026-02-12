@@ -32,11 +32,11 @@ export const HomePage = () => {
         <meta name="twitter:description" content="An innovative tech company dedicated to shaping the future through cutting-edge AI solutions." />
       </Helmet>
       <div className="absolute box-border caret-transparent shrink-0 container order-[-1000] pointer-events-none z-0 overflow-hidden top-0 inset-x-0">
-        <div className="absolute aspect-[1.01632_/_1] box-border caret-transparent shrink-0 top-[-141px] translate-x-[-50.0%] w-[1038px] left-[32%]">
+        <div className="absolute aspect-[1.01632/1] box-border caret-transparent shrink-0 top-[-141px] translate-x-[-50.0%] w-[1038px] left-[32%]">
           <div className="absolute box-border caret-transparent inset-0">
             <img
               sizes="1038px"
-              className="aspect-[auto_1868_/_1838] box-border caret-transparent h-full object-cover w-full"
+              className="aspect-[auto_1868/1838] box-border caret-transparent h-full object-cover w-full"
               loading="lazy"
               decoding="async"
             />

@@ -70,10 +70,10 @@ export const Footer = () => {
             <div className="flex flex-col items-start md:items-start">
               <SectionHeader> MAIL US </SectionHeader>
               <a href="mailto:contact@dashurai.com" className="group relative text-3xl font-bold md:text-4xl">
-                <span className="bg-gradient-to-r from-white to-[#4988C4] bg-clip-text text-transparent group-hover:opacity-0 transition-opacity">
+                <span className="bg-linear-to-r from-white to-[#4988C4] bg-clip-text text-transparent group-hover:opacity-0 transition-opacity">
                   contact@dashurai.com
                 </span>
-                <span className="absolute left-0 top-0 bg-gradient-to-r from-[#4988C4] to-white bg-clip-text text-transparent opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="absolute left-0 top-0 bg-linear-to-r from-[#4988C4] to-white bg-clip-text text-transparent opacity-0 transition-opacity group-hover:opacity-100">
                    contact@dashurai.com
                 </span>
               </a>
