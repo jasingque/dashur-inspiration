@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 const inputStyles = "w-full px-4 py-3 bg-black/40 border border-white/10 rounded-lg text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all";
 const labelStyles = "block text-white text-sm font-medium mb-2";
@@ -26,6 +26,13 @@ export const Contact: React.FC = () => {
           window.scrollTo(0, 0);
           document.title = "Contact Us - Dashur AI";
       }, []);
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      // Handle form submission here
+      console.log('Form submitted');
+    };
+
   return (
     <>
       <Helmet>
@@ -58,7 +65,7 @@ export const Contact: React.FC = () => {
             </p>
           </div>
 
-          <form className="w-full bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm space-y-6 shadow-2xl">
+          <form onSubmit={handleSubmit} className="w-full bg-white/5 border border-white/10 p-8 rounded-2xl backdrop-blur-sm space-y-6 shadow-2xl">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Field id="firstname" name="firstname" label="First Name" placeholder="Jane" required />

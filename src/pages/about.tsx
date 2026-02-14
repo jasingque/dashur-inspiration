@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from 'react-helmet';
 import { DashurGlobe } from '../components/DashurGlobe';
+import { useNavigate } from "react-router-dom";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -121,6 +122,7 @@ const capabilities = [
 ];
 
 export const AboutPage = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
     // Force title update
@@ -173,13 +175,7 @@ export const AboutPage = () => {
                   variants={itemVariants}
                 >
                   <span className="block bg-linear-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
-                    Transforming
-                  </span>
-                  <span className="block bg-linear-to-r from-cyan-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
-                    Business
-                  </span>
-                  <span className="block bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    Through AI
+                    Transforming Business Through AI
                   </span>
                 </motion.h1>
               </div>
@@ -200,7 +196,7 @@ export const AboutPage = () => {
             {/* Right Column - Globe */}
             <motion.div 
               variants={slideInRight}
-              className="lg:col-span-7 relative flex items-center justify-center"
+              className="lg:col-span-7 relative hidden lg:flex items-center justify-center"
             >
               <DashurGlobe />
             </motion.div>
@@ -337,6 +333,8 @@ export const AboutPage = () => {
                 className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-8 py-3 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
+                onClick={() => navigate("/contact")} 
+
               >
                 <span className="relative z-10 transition-all duration-500">Get Started Today</span>
                 
