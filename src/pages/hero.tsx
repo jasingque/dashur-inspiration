@@ -27,7 +27,7 @@ export const Hero = (props: HeroProps) => {
   return (
     <section className="relative w-full min-h-screen lg:min-h-[90vh] flex items-center justify-center overflow-hidden px-3 sm:px-4 md:px-6 lg:px-8 pt-2 sm:pt-2 md:pt-16 lg:pt-36 pb-4 sm:pb-4 md:pb-8 lg:pb-20">
       {/* 3D video */}
-      <div className="absolute inset-0 z-0 flex justify-center pointer-events-none lg:block">
+      <div className="absolute inset-0 z-0 hidden lg:flex justify-center pointer-events-none">
         <div className="absolute right-[-5%] sm:right-[-2%] w-[85%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-full mask-[radial-gradient(circle_at_center,black_30%,transparent_70%)]">
           <video 
             src={props.videoUrl} 

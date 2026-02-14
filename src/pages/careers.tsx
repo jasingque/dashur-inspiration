@@ -73,8 +73,7 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
   useEffect(() => {
     if (!isHomePage) {
       window.scrollTo(0, 0);
-      // Force title update
-      document.title = "Careers - Dashurai";
+      document.title = "Careers - Dashur AI";
     }
   }, [isHomePage]);
       
@@ -91,7 +90,7 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
   return (
     <>
       <Helmet>
-        <title>{isHomePage ? "Careers - Dashurai" : "Careers - Dashurai"}</title>
+        <title>{isHomePage ? "Careers - Dashur AI" : "Careers - Dashur AI"}</title>
         <meta name="description" content="Join our team at Dashurai - Explore career opportunities in AI, software development, and technology innovation" />
       </Helmet>
     <section 

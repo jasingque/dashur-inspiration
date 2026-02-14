@@ -124,13 +124,13 @@ export const AboutPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     // Force title update
-    document.title = "About Us - Dashurai";
+    document.title = "About Us - Dashur AI";
   }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       <Helmet>
-        <title>About Us - Dashurai | AI Innovation & Automation Experts</title>
+        <title>About Us - Dashur AI | AI Innovation & Automation Experts</title>
         <meta name="description" content="Learn about Dashurai's mission to shape the future through cutting-edge AI solutions. 2+ years of innovation, 500+ challenges solved, 200+ AI systems deployed globally." />
         <meta name="keywords" content="about Dashurai, AI innovation, automation experts, AI company, machine learning solutions, tech innovation company" />
         <link rel="canonical" href="https://www.dashurai.com/about" />

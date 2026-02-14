@@ -9,7 +9,6 @@ const SOLUTIONS = lazy(() => import("./solution").then(m => ({ default: m.SOLUTI
 const CAREERS = lazy(() => import("./careers").then(m => ({ default: m.CAREERS })));
 const SERVICES = lazy(() => import("./services").then(m => ({ default: m.SERVICES })));
 const CAPABILITIES = lazy(() => import("./capabilities").then(m => ({ default: m.CAPABILITIES })));
-const Contact = lazy(() => import("../pages/contactform").then(m => ({ default: m.Contact })));
 
 export const HomePage = () => {
   useEffect(() => {
@@ -31,7 +30,7 @@ export const HomePage = () => {
         <meta name="twitter:title" content="Dashurai - Empowering Innovation, Connecting the Future" />
         <meta name="twitter:description" content="An innovative tech company dedicated to shaping the future through cutting-edge AI solutions." />
       </Helmet>
-      <div className="absolute box-border caret-transparent shrink-0 container order-[-1000] pointer-events-none z-0 overflow-hidden top-0 inset-x-0">
+      <div className="absolute box-border caret-transparent shrink-0 container order-[-1000] pointer-events-none z-0 overflow-hidden top-0 inset-x-0 hidden lg:block">
         <div className="absolute aspect-[1.01632/1] box-border caret-transparent shrink-0 top-[-141px] translate-x-[-50.0%] w-[1038px] left-[32%]">
           <div className="absolute box-border caret-transparent inset-0">
             <img
@@ -72,9 +71,6 @@ export const HomePage = () => {
         </Suspense>
         <Suspense fallback={<div className="min-h-[200px]" />}>
           <CAPABILITIES />
-        </Suspense>
-        <Suspense fallback={<div className="min-h-[200px]" />}>
-          <Contact />
         </Suspense>
       </div>
       <FloatingAI />
