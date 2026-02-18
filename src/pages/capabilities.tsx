@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, memo, useCallback, useMemo } from "react";
+import { useEffect, useRef, useState, memo, useMemo } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -155,10 +155,6 @@ const TypewriterText = memo(() => {
 const CallToAction = memo(() => {
   const navigate = useNavigate();
   
-  const handleGetStarted = useCallback(() => {
-    navigate('/contact');
-  }, [navigate]);
-  
   return (
     <motion.section
       initial={{ opacity: 0, y: 50 }}
@@ -193,7 +189,7 @@ const CallToAction = memo(() => {
           transition={{ duration: 0.8, delay: 0.8 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={handleGetStarted}
+          onClick={() => navigate("/contact")} 
           className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-8 py-3 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]"
         >
           <span className="relative z-10 transition-all duration-500">Get Started</span>
@@ -355,15 +351,13 @@ const MarqueeRow = memo(({ row }: { row: RowConfig }) => {
 
 export const CAPABILITIES = () => {
     useEffect(() => {
-          // start from top
           window.scrollTo(0, 0);
-          // Force title update
-          document.title = "Our Capabilities - Dashurai";
+          document.title = "Our Capabilities - Dashur AI";
       }, []);
   return (
     <>
       <Helmet>
-        <title>Our Capabilities - Dashurai | AI, Mobile, Backend & Frontend Development</title>
+        <title>Our Capabilities - Dashur AI | AI, Mobile, Backend & Frontend Development</title>
         <meta name="description" content="Explore Dashurai's comprehensive capabilities: iOS & Android development, Python & Django backend, React & Next.js frontend, cloud certifications (AWS, GCP), and cutting-edge AI solutions." />
         <meta name="keywords" content="AI capabilities, mobile development, iOS Android, Python Django, React Next.js, cloud solutions AWS GCP, full stack development, tech capabilities" />
         <link rel="canonical" href="https://www.dashurai.com/capabilities" />

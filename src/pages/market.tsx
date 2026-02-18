@@ -64,8 +64,7 @@ const itemVariants = {
 export const MarketPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Force title update
-    document.title = "Our Markets - Dashurai";
+    document.title = "Our Markets - Dashur AI";
   }, []);
 
   return (

@@ -50,7 +50,7 @@ export const MobileNavbar = () => {
   return (
     <>
       {/* Mobile Navbar */}
-      <div className="lg:hidden fixed top-0 left-0 w-full z-[1003] transition-all duration-300">
+      <div className="lg:hidden fixed top-0 left-0 w-full z-1003 transition-all duration-300">
         <div className={`transition-all duration-300 ${
           isScrolled 
             ? "bg-slate-950/95 backdrop-blur-lg shadow-lg border-b border-slate-800/50" 
@@ -82,7 +82,7 @@ export const MobileNavbar = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`lg:hidden fixed inset-0 z-[1002] transition-all duration-300 ${
+      <div className={`lg:hidden fixed inset-0 z-1002 transition-all duration-300 ${
         isOpen 
           ? "opacity-100 visible" 
           : "opacity-0 invisible pointer-events-none"
@@ -131,16 +131,16 @@ export const MobileNavbar = () => {
               <Link
                 to="/contact"
                 onClick={() => setIsOpen(false)}
-                className="group relative inline-flex items-center justify-center w-full px-8 py-4 font-semibold text-white bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl overflow-hidden transition-all duration-300 hover:from-cyan-500 hover:to-blue-500 hover:scale-105"
+                className="group relative inline-flex items-center justify-center w-full px-8 py-4 font-semibold text-white bg-linear-to-r from-cyan-600 to-blue-600 rounded-xl overflow-hidden transition-all duration-300 hover:from-cyan-500 hover:to-blue-500 hover:scale-105"
               >
                 <span className="relative z-10">Get Started</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
             </div>
           </div>
 
           {/* Bottom Gradient */}
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-slate-950 to-transparent pointer-events-none" />
         </div>
       </div>
     </>

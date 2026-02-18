@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion';
-import { Helmet } from 'react-helmet';
 import { useEffect } from 'react';
 
 const FocusCard = ({ text, className }: { text: string; className?: string }) => {
@@ -50,17 +49,6 @@ export const QUESTIONS = () => {
     document.title = "Is This You? - Dashurai";
   }, []);
   return (
-    <>
-      <Helmet>
-        <title>Is This You? - Dashurai | AI Solutions for Your Challenges</title>
-        <meta name="description" content="Discover if Dashurai's AI solutions can solve your business challenges - from 24/7 service automation to medical paperwork reduction and manufacturing efficiency." />
-        <meta name="keywords" content="AI challenges, business automation, medical paperwork solutions, manufacturing efficiency, AI business problems" />
-        <link rel="canonical" href="https://www.dashurai.com/#questions" />
-        <meta property="og:title" content="Is This You? - Dashurai | AI Solutions for Your Challenges" />
-        <meta property="og:description" content="Discover if Dashurai's AI solutions can solve your business challenges." />
-        <meta property="og:url" content="https://www.dashurai.com/#questions" />
-        <meta property="og:type" content="website" />
-      </Helmet>
     <section className="relative w-full">
       <div className="sticky top-0 z-10 flex items-center justify-center h-screen pointer-events-none">
         <h2 className="text-[46px] md:text-[80px] font-bold tracking-tighter text-center leading-tight drop-shadow-2xl">
@@ -92,6 +80,5 @@ export const QUESTIONS = () => {
         />
       </div>
     </section>
-    </>
   );
 };

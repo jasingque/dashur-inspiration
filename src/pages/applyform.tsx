@@ -26,7 +26,7 @@ export default function ApplyForm() {
     window.scrollTo(0, 0);
     // Force title update for job position with direct mapping
     if (id) {
-      document.title = `${getJobTitle(id)} - Dashurai`;
+      document.title = `${getJobTitle(id)} - Dashur AI`;
     }
   }, [id]);
 
@@ -41,7 +41,7 @@ export default function ApplyForm() {
   return (
     <div className="min-h-screen text-white px-6 py-12 lg:py-24 font-plus_jakarta_sans_variable">
       <Helmet>
-        <title>{getJobTitle(id)} - Dashurai | Job Application</title>
+        <title>{getJobTitle(id)} - Dashur AI | Job Application</title>
         <meta name="description" content={`Apply for the ${getJobTitle(id)} position at Dashurai - Join our innovative AI team and shape the future with cutting-edge technology.`} />
         <meta name="keywords" content={`${getJobTitle(id)}, Dashurai careers, AI jobs, tech careers, job application, ${getJobTitle(id)} position`} />
         <link rel="canonical" href={`https://www.dashurai.com/job/${id}`} />

@@ -5,7 +5,6 @@ import appDevelopment from "../assets/appDevelopment.webp";
 import webDevelopment from "../assets/webDevelopment.webp";
 import digitalMarketing from "../assets/digitalMarketing.webp";
 import seo from "../assets/seo.webp";
-import { Helmet } from 'react-helmet';
 import { useEffect } from "react";
 
 const STACK_DATA = [
@@ -65,17 +64,6 @@ export const SERVICES = () => {
     document.title = "Our Services - Dashurai";
   }, []);
   return (
-    <>
-      <Helmet>
-        <title>Our Services - Dashurai | Design, Development & Marketing Solutions</title>
-        <meta name="description" content="Explore Dashurai's comprehensive services: Graphic Design, UI/UX Design, App Development, Web Development, Digital Marketing, and SEO solutions for your business." />
-        <meta name="keywords" content="graphic design, UI UX design, app development, web development, digital marketing, SEO services, design services" />
-        <link rel="canonical" href="https://www.dashurai.com/#services" />
-        <meta property="og:title" content="Our Services - Dashurai | Design, Development & Marketing Solutions" />
-        <meta property="og:description" content="Explore Dashurai's comprehensive services for your business growth." />
-        <meta property="og:url" content="https://www.dashurai.com/#services" />
-        <meta property="og:type" content="website" />
-      </Helmet>
     <section className="flex w-full flex-col items-center justify-center overflow-hidden px-0 py-[100px] md:overflow-visible md:px-6 md:py-[200px]">
       <div className="flex w-full max-w-[1200px] flex-col gap-12 px-4 md:px-0">
         
@@ -136,6 +124,5 @@ export const SERVICES = () => {
 
       </div>
     </section>
-    </>
   );
 };
