@@ -16,6 +16,7 @@
     "canvas-confetti": "^1.9.4",
     "cobe": "^0.6.5",
     "framer-motion": "^12.27.1",
+    "lucide-react": "^0.564.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-helmet": "^6.1.0",
