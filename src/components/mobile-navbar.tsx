@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation} from "react-router-dom";
+import { Link, useLocation, useNavigate} from "react-router-dom";
+import { LogIn } from "lucide-react";
 import logo from "../assets/logo.webp";
 
 export const MobileNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
     { name: "About", path: "/about" },
@@ -62,21 +64,33 @@ export const MobileNavbar = () => {
               <img src={logo} alt="logo" className="h-10 w-auto object-contain" />
             </Link>
 
-            {/* Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="relative w-8 h-8 flex flex-col justify-center items-center group"
-            >
-              <span className={`absolute h-0.5 w-6 bg-current transition-all duration-300 ease-in-out ${
-                isOpen ? "rotate-45 translate-y-0" : "-translate-y-2"
-              } ${location.pathname === "/" && !isScrolled ? "text-white" : "text-white"}`} />
-              <span className={`h-0.5 w-6 bg-current transition-all duration-300 ease-in-out ${
-                isOpen ? "opacity-0" : "opacity-100"
-              } ${location.pathname === "/" && !isScrolled ? "text-white" : "text-white"}`} />
-              <span className={`absolute h-0.5 w-6 bg-current transition-all duration-300 ease-in-out ${
-                isOpen ? "-rotate-45 translate-y-0" : "translate-y-2"
-              } ${location.pathname === "/" && !isScrolled ? "text-white" : "text-white"}`} />
-            </button>
+            {/* Right Side Buttons */}
+            <div className="flex items-center gap-3">
+              {/* Login Button */}
+              <button
+                onClick={() => navigate("/auth")}
+                className="relative overflow-hidden rounded-full border-2 border-cyan-600 bg-transparent p-2 text-cyan-400 transition-all duration-500 hover:bg-cyan-600 hover:text-white"
+                aria-label="Login"
+              >
+                <LogIn className="w-4 h-4" />
+              </button>
+              
+              {/* Menu Button */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="relative w-8 h-8 flex flex-col justify-center items-center group"
+              >
+                <span className={`absolute h-0.5 w-6 bg-current transition-all duration-300 ease-in-out ${
+                  isOpen ? "rotate-45 translate-y-0" : "-translate-y-2"
+                } ${location.pathname === "/" && !isScrolled ? "text-white" : "text-white"}`} />
+                <span className={`h-0.5 w-6 bg-current transition-all duration-300 ease-in-out ${
+                  isOpen ? "opacity-0" : "opacity-100"
+                } ${location.pathname === "/" && !isScrolled ? "text-white" : "text-white"}`} />
+                <span className={`absolute h-0.5 w-6 bg-current transition-all duration-300 ease-in-out ${
+                  isOpen ? "-rotate-45 translate-y-0" : "translate-y-2"
+                } ${location.pathname === "/" && !isScrolled ? "text-white" : "text-white"}`} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -126,8 +140,21 @@ export const MobileNavbar = () => {
               ))}
             </nav>
 
-            {/* CTA Button */}
-            <div className="mt-12">
+            {/* CTA Buttons */}
+            <div className="mt-12 space-y-4">
+              {/* Login Button */}
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate("/auth");
+                }}
+                className="group relative inline-flex items-center justify-center w-full px-8 py-4 font-semibold text-cyan-400 border-2 border-cyan-600 rounded-xl overflow-hidden transition-all duration-300 hover:bg-cyan-600 hover:text-white"
+              >
+                <LogIn className="w-5 h-5 mr-2" />
+                <span className="relative z-10">Login</span>
+              </button>
+              
+              {/* Get Started Button */}
               <Link
                 to="/contact"
                 onClick={() => setIsOpen(false)}

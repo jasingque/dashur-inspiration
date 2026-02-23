@@ -1,17 +1,28 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { BriefcaseBusiness, NotepadText, Check, Mail } from 'lucide-react';
 
+interface Stat {
+  label: string;
+  value: string;
+  icon: React.ReactNode;
+  color: string;
+}
+
+interface Activity {
+  type: 'application' | 'contact' | 'position';
+  message: string;
+  time: string;
+}
+
 const DashboardHome = () => {
-  const navigate = useNavigate();
-  const stats = [
+  const stats: Stat[] = [
     { label: 'Total Positions', value: '12', icon: <BriefcaseBusiness />, color: 'bg-blue-500' },
     { label: 'Applications', value: '48', icon: <NotepadText />, color: 'bg-green-500' },
     { label: 'Contact Messages', value: '23', icon: <Mail />, color: 'bg-purple-500' },
     { label: 'Active Jobs', value: '8', icon: <Check />, color: 'bg-orange-500' },
   ];
 
-  const recentActivity = [
+  const recentActivity: Activity[] = [
     { type: 'application', message: 'New application for Frontend Developer', time: '2 hours ago' },
     { type: 'contact', message: 'New contact form submission', time: '4 hours ago' },
     { type: 'position', message: 'New position added: UX Designer', time: '1 day ago' },

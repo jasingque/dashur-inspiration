@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { LogOut, LayoutDashboard, BriefcaseBusiness, NotepadText, Contact, User, Settings } from 'lucide-react';
+import { LogOut, LayoutDashboard, BriefcaseBusiness, NotepadText, Contact, User, X, Menu } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import logo from '../assets/logo.webp';
 
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  path: string;
+}
+
 const AdminDashboard = () => {
-  const [username, setUsername] = useState('Admin');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const username: string = localStorage.getItem('adminUsername') || 'Admin';
+  const email: string = localStorage.getItem('adminEmail') || 'admin@example.com';
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,48 +25,67 @@ const AdminDashboard = () => {
     if (!isAuthenticated) {
       navigate('/admin/login');
     }
-    const storedUsername = localStorage.getItem('adminUsername');
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
   }, [navigate]);
 
-  const handleLogout = () => {
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      if (mobile) {
+        setIsSidebarOpen(false);
+      } else {
+        setIsSidebarOpen(true);
+      }
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleLogout = (): void => {
     localStorage.removeItem('isAdminAuthenticated');
+    localStorage.removeItem('adminEmail');
+    localStorage.removeItem('adminUsername');
     navigate('/admin/login');
   };
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard />, path: '/admin/dashboard' },
     { id: 'positions', label: 'Career Positions', icon: <BriefcaseBusiness />, path: '/admin/dashboard/positions' },
     { id: 'applications', label: 'Applications', icon: <NotepadText />, path: '/admin/dashboard/applications' },
     { id: 'contacts', label: 'Contact Forms', icon: <Contact />, path: '/admin/dashboard/contacts' },
   ];
 
-  const isActiveMenu = (path) => location.pathname === path;
+  const isActiveMenu = (path: string): boolean => location.pathname === path;
 
   return (
     <div className="min-h-screen bg-gray-900 flex">
-      {isSidebarOpen && (
+      <Helmet>
+        <title>Admin Dashboard - Dashur AI</title>
+        <meta name="description" content="Dashur AI admin dashboard for managing positions, applications, and contacts" />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      {isSidebarOpen && isMobile && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
       
-      <div className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white border-r border-slate-700 transform transition-transform duration-300 ease-in-out lg:transform-none ${
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-      }`}>
-        <div className="p-6">
+      <div className={`fixed inset-y-0 left-0 z-50 ${isSidebarOpen ? 'w-64' : 'w-20'} bg-slate-900 text-white border-r border-slate-700 transform transition-all duration-300 ease-in-out ${isMobile && !isSidebarOpen ? '-translate-x-full' : ''}`}>
+        <div className="p-4">
           <div className="flex items-center justify-between mb-8">
-            <img src={logo} alt="Logo" className="h-10 w-auto object-contain" />
+            <img src={logo} alt="Dashurai Logo" className={`h-6 transition-all duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 w-0'}`} />
             <button
-              onClick={() => setIsSidebarOpen(false)}
-              className="lg:hidden text-gray-400 hover:text-white transition-colors duration-200"
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="text-gray-400 hover:text-white transition-colors duration-200 p-2 rounded-lg hover:bg-slate-700"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              {isSidebarOpen ? (
+                <X/>
+              ) : (
+                <Menu/>
+              )}
             </button>
           </div>
           
@@ -66,34 +95,39 @@ const AdminDashboard = () => {
                 key={item.id}
                 onClick={() => {
                   navigate(item.path);
-                  setIsSidebarOpen(false);
+                  if (isMobile) {
+                    setIsSidebarOpen(false);
+                  }
                 }}
-                className={`w-full flex items-center px-4 py-3 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 ${
+                className={`w-full flex items-center ${isSidebarOpen ? 'px-4' : 'px-2 justify-center'} py-3 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-105 ${
                   isActiveMenu(item.path)
                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
                     : 'text-gray-300 hover:bg-slate-800 hover:text-white hover:shadow-md'
                 }`}
+                title={!isSidebarOpen ? item.label : ''}
               >
                 <span className="text-lg sm:text-xl transition-transform duration-200 group-hover:scale-110">{item.icon}</span>
-                <span className="ml-3 font-medium text-sm sm:text-base">{item.label}</span>
+                {isSidebarOpen && (
+                  <span className="ml-3 font-medium text-sm sm:text-base">{item.label}</span>
+                )}
               </button>
             ))}
           </nav>
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-in-out ${isMobile ? 'ml-0' : (isSidebarOpen ? 'ml-64' : 'ml-20')}`}>
         <header className="bg-slate-800 shadow-sm border-b border-gray-700">
           <div className="px-4 sm:px-6 py-4 flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="lg:hidden text-gray-400 hover:text-white transition-colors duration-200 p-2 rounded-lg hover:bg-slate-700"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
+              {isMobile && (
+                <button
+                  onClick={() => setIsSidebarOpen(true)}
+                  className="text-gray-400 hover:text-white transition-colors duration-200 p-2 rounded-lg hover:bg-slate-700"
+                >
+                  <Menu/>
+                </button>
+              )}
               <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-white truncate">
                 {menuItems.find(item => isActiveMenu(item.path))?.label || 'Dashboard'}
               </h2>
@@ -114,7 +148,7 @@ const AdminDashboard = () => {
                   <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-xl py-2 z-50 transform transition-all duration-200 ease-out">
                     <div className="px-4 py-2 border-b border-slate-700">
                       <p className="text-sm sm:text-base font-semibold text-white">{username}</p>
-                      <p className="text-xs sm:text-sm text-gray-400">admin@example.com</p>
+                      <p className="text-xs sm:text-sm text-gray-400">{email}</p>
                     </div>
                     <button
                       onClick={handleLogout}
