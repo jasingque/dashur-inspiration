@@ -224,8 +224,8 @@ const CertificationCard = memo(({ imageUrl, title }: { imageUrl: string; title: 
       <div className="relative z-10">
         {/* Icon with subtle effect when not hovered */}
         <div className="relative mb-6 h-16 w-16">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
-          <div className="relative h-full w-full rounded-xl bg-gradient-to-br from-slate-800/20 to-slate-700/20 p-3 flex items-center justify-center transition-all duration-500 group-hover:from-cyan-100/10 group-hover:to-purple-100/10">
+          <div className="absolute inset-0 bg-linear-to-r from-cyan-500/10 to-purple-500/10 rounded-xl blur-lg opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
+          <div className="relative h-full w-full rounded-xl bg-linear-to-br from-slate-800/20 to-slate-700/20 p-3 flex items-center justify-center transition-all duration-500 group-hover:from-cyan-100/10 group-hover:to-purple-100/10">
             <img src={imageUrl} alt={title} className={`h-full w-full object-contain filter brightness-75 opacity-60 transition-all duration-500 group-hover:brightness-125 group-hover:opacity-100 ${isWhiteLogo ? 'brightness-0 invert' : ''}`} loading="lazy" decoding="async" />
           </div>
         </div>

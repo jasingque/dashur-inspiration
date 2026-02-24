@@ -1,16 +1,89 @@
-import React, { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, UserPlus, Eye, EyeClosed, ArrowLeft } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const AuthPage = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const [loginEmail, setLoginEmail] = useState<string>('');
+  const [loginPassword, setLoginPassword] = useState<string>('');
+
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [registerEmail, setRegisterEmail] = useState<string>('');
+  const [registerPassword, setRegisterPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  const DEMO_CREDENTIALS = {
+    email: 'jane@example.com',
+    password: 'jane123'
+  };
+
+  const handleLoginSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    
+    if (!loginEmail || !loginPassword) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    if (loginEmail === DEMO_CREDENTIALS.email && loginPassword === DEMO_CREDENTIALS.password) {
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userEmail', loginEmail);
+      
+      navigate('/');
+    } else {
+      alert('Invalid credentials. Try jane@example.com / jane123');
+    }
+  };
+
+  const handleRegisterSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    
+    if (!firstName || !lastName || !registerEmail || !registerPassword || !confirmPassword) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    if (registerPassword !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    if (registerPassword.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
+    }
+
+    console.log('Registration data:', {
+      firstName,
+      lastName,
+      email: registerEmail,
+      password: registerPassword
+    });
+
+    alert('Registration successful! Please login with your new credentials.');
+    
+    setIsLogin(true);
+    
+    setFirstName('');
+    setLastName('');
+    setRegisterEmail('');
+    setRegisterPassword('');
+    setConfirmPassword('');
+  };
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-900 to-slate-800 flex items-center justify-center p-4">
+      <Helmet>
+        <title>{isLogin ? 'Login' : 'Sign Up'} - Dashur AI</title>
+        <meta name="description" content={isLogin ? "Login to your Dashur AI account" : "Create a new Dashur AI account"} />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="w-full max-w-md">
         <div className="text-left mb-6">
           <button 
@@ -33,11 +106,13 @@ const AuthPage = () => {
                   <p className="text-gray-400 text-sm">Join our team to explore new opportunities.</p>
                 </div>
 
-                <form className="space-y-6">
+                <form onSubmit={handleLoginSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                     <input
                       type="email"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400"
                       placeholder="Enter your email"
                       required
@@ -49,6 +124,8 @@ const AuthPage = () => {
                     <div className="relative">
                       <input
                         type={showPassword ? "text" : "password"}
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400 pr-12"
                         placeholder="Enter your password"
                         required
@@ -77,7 +154,7 @@ const AuthPage = () => {
                     type="submit"
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-200"
                   >
-                    Sign In
+                    Login
                   </button>
                 </form>
 
@@ -88,7 +165,7 @@ const AuthPage = () => {
                       onClick={() => setIsLogin(false)}
                       className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
                     >
-                      Log in
+                      Sign up
                     </button>
                   </p>
                 </div>
@@ -103,12 +180,14 @@ const AuthPage = () => {
                   <p className="text-gray-400 text-sm">Sign up to explore more.</p>
                 </div>
 
-                <form className="space-y-4">
+                <form onSubmit={handleRegisterSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-300 mb-2">First Name</label>
                       <input
                         type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400"
                         placeholder="First name"
                         required
@@ -118,6 +197,8 @@ const AuthPage = () => {
                       <label className="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
                       <input
                         type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400"
                         placeholder="Last name"
                         required
@@ -129,6 +210,8 @@ const AuthPage = () => {
                     <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                     <input
                       type="email"
+                      value={registerEmail}
+                      onChange={(e) => setRegisterEmail(e.target.value)}
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400"
                       placeholder="Enter your email"
                       required
@@ -140,6 +223,8 @@ const AuthPage = () => {
                     <div className="relative">
                       <input
                         type={showPassword ? "text" : "password"}
+                        value={registerPassword}
+                        onChange={(e) => setRegisterPassword(e.target.value)}
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400 pr-12"
                         placeholder="Create password"
                         required
@@ -163,6 +248,8 @@ const AuthPage = () => {
                     <div className="relative">
                       <input
                         type={showConfirmPassword ? "text" : "password"}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition text-white placeholder-gray-400 pr-12"
                         placeholder="Confirm password"
                         required
@@ -196,7 +283,7 @@ const AuthPage = () => {
                       onClick={() => setIsLogin(true)}
                       className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
                     >
-                      Sign in
+                      Login
                     </button>
                   </p>
                 </div>

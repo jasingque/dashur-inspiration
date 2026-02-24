@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
-import {X, Download, Trash2} from 'lucide-react';
+import { useState } from 'react';
+import {X, Download, Trash2, FileUser} from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+
+interface Application {
+  id: number;
+  name: string;
+  email: string;
+  position: string;
+  date: string;
+  status: 'Pending' | 'Reviewed' | 'Accepted' | 'Rejected';
+}
 
 const ApplicationsManagement = () => {
-  const [applications, setApplications] = useState([
+  const [applications, setApplications] = useState<Application[]>([
     {
       id: 1,
       name: 'John Doe',
@@ -20,27 +30,27 @@ const ApplicationsManagement = () => {
       status: 'Reviewed'
     },
   ]);
-  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
 
-  const updateStatus = (id, newStatus) => {
+  const updateStatus = (id: number, newStatus: Application['status']): void => {
     setApplications(applications.map(app => 
       app.id === id ? { ...app, status: newStatus } : app
     ));
   };
 
-  const deleteApplication = (id) => {
+  const deleteApplication = (id: number): void => {
     setApplications(applications.filter(app => app.id !== id));
   };
 
-  const viewApplication = (application) => {
+  const viewApplication = (application: Application): void => {
     setSelectedApplication(application);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setSelectedApplication(null);
   };
 
-  const downloadResume = (application) => {
+  const downloadResume = (application: Application): void => {
     const resumeContent = `Resume for ${application.name}\n\nPosition: ${application.position}\nEmail: ${application.email}\nDate Applied: ${application.date}\nStatus: ${application.status}`;
     
     const blob = new Blob([resumeContent], { type: 'text/plain' });
@@ -54,7 +64,7 @@ const ApplicationsManagement = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: Application['status']): string => {
     switch(status) {
       case 'Pending': return 'bg-yellow-100 text-yellow-800';
       case 'Reviewed': return 'bg-blue-100 text-blue-800';
@@ -66,6 +76,11 @@ const ApplicationsManagement = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Manage Applications - Dashur AI Admin</title>
+        <meta name="description" content="Review and manage job applications in Dashur AI admin dashboard" />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold text-white">Job Applications</h3>
         <div className="text-sm text-gray-400">
@@ -101,7 +116,7 @@ const ApplicationsManagement = () => {
                 <td className="px-6 py-4">
                   <select
                     value={application.status}
-                    onChange={(e) => updateStatus(application.id, e.target.value)}
+                    onChange={(e) => updateStatus(application.id, e.target.value as Application['status'])}
                     className={`px-3 py-2 text-sm rounded-full border-0 ${getStatusColor(application.status)}`}
                   >
                     <option value="Pending">Pending</option>
@@ -116,7 +131,7 @@ const ApplicationsManagement = () => {
                       onClick={() => viewApplication(application)}
                       className="text-blue-400 hover:text-blue-300 text-sm font-medium"
                     >
-                      View
+                      <FileUser />
                     </button>
                     <button
                       onClick={() => deleteApplication(application.id)}

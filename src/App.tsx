@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Navbar } from "./components/navbar";
 import { MobileNavbar } from "./components/mobile-navbar";
 import { Footer } from "./components/footer";
@@ -12,6 +13,7 @@ const MarketPage = lazy(() => import("./pages/market").then(m => ({ default: m.M
 const CAREERS = lazy(() => import("./pages/careers").then(m => ({ default: m.CAREERS })));
 const Contact = lazy(() => import("./pages/contactform").then(m => ({ default: m.Contact })));
 const Applyform = lazy(() => import("./pages/applyform"));
+const NotFound = lazy(() => import("./pages/notfound").then(m => ({ default: m.NotFound })));
 
 const AdminLogin = lazy(() => import("./adminDash/Login"));
 const AdminDashboard = lazy(() => import("./adminDash/Dashboard"));
@@ -53,6 +55,7 @@ const AppContent = () => {
               <Route path="applications" element={<ApplicationsManagement />} />
               <Route path="contacts" element={<ContactsManagement />} />
             </Route>
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
         <div className="box-border caret-transparent"></div>
@@ -66,8 +69,10 @@ const AppContent = () => {
 
 export const App = () => {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </HelmetProvider>
   );
 };
