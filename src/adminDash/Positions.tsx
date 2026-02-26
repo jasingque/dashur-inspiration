@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { Trash2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import Pagination from '../components/Pagination';
 
 interface Position {
   id: number;
@@ -21,9 +22,24 @@ const PositionsManagement = () => {
   const [positions, setPositions] = useState<Position[]>([
     { id: 1, title: 'Frontend Developer', department: 'Engineering', type: 'Full-time', status: 'Active' },
     { id: 2, title: 'UX Designer', department: 'Design', type: 'Full-time', status: 'Active' },
+    { id: 3, title: 'Backend Developer', department: 'Engineering', type: 'Full-time', status: 'Active' },
+    { id: 4, title: 'Product Manager', department: 'Product', type: 'Full-time', status: 'Active' },
+    { id: 5, title: 'DevOps Engineer', department: 'Engineering', type: 'Full-time', status: 'Active' },
+    { id: 6, title: 'QA Engineer', department: 'Engineering', type: 'Full-time', status: 'Active' },
+    { id: 7, title: 'Data Scientist', department: 'Data', type: 'Full-time', status: 'Active' },
+    { id: 8, title: 'UI Designer', department: 'Design', type: 'Part-time', status: 'Active' },
+    { id: 9, title: 'Full Stack Developer', department: 'Engineering', type: 'Full-time', status: 'Active' },
+    { id: 10, title: 'Product Designer', department: 'Design', type: 'Full-time', status: 'Active' },
+    { id: 11, title: 'Technical Writer', department: 'Content', type: 'Part-time', status: 'Active' },
+    { id: 12, title: 'Marketing Manager', department: 'Marketing', type: 'Full-time', status: 'Active' },
+    { id: 13, title: 'Sales Representative', department: 'Sales', type: 'Full-time', status: 'Active' },
+    { id: 14, title: 'Customer Success Manager', department: 'Support', type: 'Full-time', status: 'Active' },
+    { id: 15, title: 'Security Engineer', department: 'Engineering', type: 'Full-time', status: 'Active' },
   ]);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({ title: '', department: '', type: 'Full-time', status: 'Active' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -35,6 +51,15 @@ const PositionsManagement = () => {
 
   const handleDelete = (id: number): void => {
     setPositions(positions.filter(p => p.id !== id));
+  };
+
+  const totalPages = Math.ceil(positions.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPositions = positions.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -107,7 +132,7 @@ const PositionsManagement = () => {
 
       <div className="bg-slate-800 rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[600px]">
+          <table className="w-full min-w-150">
           <thead className="bg-slate-700">
             <tr>
               <th className="px-4 sm:px-6 py-3 text-left text-sm sm:text-base font-medium text-gray-300 uppercase tracking-wider">Title</th>
@@ -118,7 +143,7 @@ const PositionsManagement = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
-            {positions.map((position) => (
+            {currentPositions.map((position) => (
               <tr key={position.id}>
                 <td className="px-4 sm:px-6 py-4 text-gray-300">
                   <div>
@@ -149,6 +174,14 @@ const PositionsManagement = () => {
         </table>
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <Pagination 
+          count={totalPages} 
+          currentPage={currentPage} 
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };

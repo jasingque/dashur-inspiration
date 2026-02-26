@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {X, Download, Trash2, FileUser} from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import Pagination from '../components/Pagination';
 
 interface Application {
   id: number;
@@ -29,8 +30,90 @@ const ApplicationsManagement = () => {
       date: '2026-02-14',
       status: 'Reviewed'
     },
+    {
+      id: 3,
+      name: 'Mike Wazowski',
+      email: 'mike@example.com',
+      position: 'Backend Developer',
+      date: '2026-02-13',
+      status: 'Accepted'
+    },
+    {
+      id: 4,
+      name: 'James P. Sullivan',
+      email: 'james@example.com',
+      position: 'Product Manager',
+      date: '2026-02-12',
+      status: 'Rejected'
+    },
+    {
+      id: 5,
+      name: 'Tom Brown',
+      email: 'tom@example.com',
+      position: 'DevOps Engineer',
+      date: '2026-02-11',
+      status: 'Pending'
+    },
+    {
+      id: 6,
+      name: 'Emily Davis',
+      email: 'emily@example.com',
+      position: 'QA Engineer',
+      date: '2026-02-10',
+      status: 'Reviewed'
+    },
+    {
+      id: 7,
+      name: 'Chris Griffin',
+      email: 'chris@example.com',
+      position: 'Full Stack Developer',
+      date: '2026-02-09',
+      status: 'Accepted'
+    },
+    {
+      id: 8,
+      name: 'Lisa Loud',
+      email: 'lisa@example.com',
+      position: 'UI Designer',
+      date: '2026-02-08',
+      status: 'Pending'
+    },
+    {
+      id: 9,
+      name: 'David Dimaguiba',
+      email: 'david@example.com',
+      position: 'Data Scientist',
+      date: '2026-02-07',
+      status: 'Reviewed'
+    },
+    {
+      id: 10,
+      name: 'Jennifer Taylor',
+      email: 'jennifer@example.com',
+      position: 'Frontend Developer',
+      date: '2026-02-06',
+      status: 'Accepted'
+    },
+    {
+      id: 11,
+      name: 'Robert Gurrero',
+      email: 'robert@example.com',
+      position: 'Backend Developer',
+      date: '2026-02-05',
+      status: 'Rejected'
+    },
+    {
+      id: 12,
+      name: 'Maria Garcia',
+      email: 'maria@example.com',
+      position: 'Product Designer',
+      date: '2026-02-04',
+      status: 'Pending'
+    },
   ]);
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const updateStatus = (id: number, newStatus: Application['status']): void => {
     setApplications(applications.map(app => 
@@ -74,6 +157,15 @@ const ApplicationsManagement = () => {
     }
   };
 
+  const totalPages = Math.ceil(applications.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentApplications = applications.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div>
       <Helmet>
@@ -90,7 +182,7 @@ const ApplicationsManagement = () => {
 
       <div className="bg-slate-800 rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[600px]">
+          <table className="w-full min-w-150">
           <thead className="bg-slate-700">
             <tr>
               <th className="px-4 sm:px-6 py-3 text-left text-sm sm:text-base font-medium text-gray-300 uppercase tracking-wider">Name</th>
@@ -102,7 +194,7 @@ const ApplicationsManagement = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
-            {applications.map((application) => (
+            {currentApplications.map((application) => (
               <tr key={application.id}>
                 <td className="px-4 sm:px-6 py-4 font-medium text-gray-300">
                   <div>
@@ -147,6 +239,14 @@ const ApplicationsManagement = () => {
         </table>
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <Pagination 
+          count={totalPages} 
+          currentPage={currentPage} 
+          onPageChange={handlePageChange}
+        />
+      )}
 
       {selectedApplication && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">

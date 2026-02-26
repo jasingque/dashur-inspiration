@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import Pagination from '../components/Pagination';
 
 interface Contact {
   id: number;
@@ -32,7 +33,99 @@ const ContactsManagement = () => {
       date: '2026-02-14',
       status: 'Responded'
     },
+    {
+      id: 3,
+      name: 'Carol Davis',
+      email: 'carol@example.com',
+      subject: 'Product Question',
+      message: 'Does your product support integration with other tools?',
+      date: '2026-02-13',
+      status: 'New'
+    },
+    {
+      id: 4,
+      name: 'David Brown',
+      email: 'david@example.com',
+      subject: 'Billing Issue',
+      message: 'I was charged twice for my subscription.',
+      date: '2026-02-12',
+      status: 'Pending'
+    },
+    {
+      id: 5,
+      name: 'Emma Miller',
+      email: 'emma@example.com',
+      subject: 'Feature Request',
+      message: 'Would love to see a dark mode feature.',
+      date: '2026-02-11',
+      status: 'Responded'
+    },
+    {
+      id: 6,
+      name: 'Frank Garcia',
+      email: 'frank@example.com',
+      subject: 'Technical Support',
+      message: 'Having trouble logging in to my account.',
+      date: '2026-02-10',
+      status: 'New'
+    },
+    {
+      id: 7,
+      name: 'Grace Martinez',
+      email: 'grace@example.com',
+      subject: 'Partnership Inquiry',
+      message: 'Interested in discussing partnership opportunities.',
+      date: '2026-02-09',
+      status: 'Pending'
+    },
+    {
+      id: 8,
+      name: 'Henry Anderson',
+      email: 'henry@example.com',
+      subject: 'Feedback',
+      message: 'Great product! Very satisfied with the service.',
+      date: '2026-02-08',
+      status: 'Closed'
+    },
+    {
+      id: 9,
+      name: 'Isabella Taylor',
+      email: 'isabella@example.com',
+      subject: 'Account Deletion',
+      message: 'Please delete my account and all associated data.',
+      date: '2026-02-07',
+      status: 'Responded'
+    },
+    {
+      id: 10,
+      name: 'Jack Thomas',
+      email: 'jack@example.com',
+      subject: 'API Question',
+      message: 'Do you provide API access for developers?',
+      date: '2026-02-06',
+      status: 'New'
+    },
+    {
+      id: 11,
+      name: 'Karen White',
+      email: 'karen@example.com',
+      subject: 'Refund Request',
+      message: 'I would like to request a refund for my recent purchase.',
+      date: '2026-02-05',
+      status: 'Pending'
+    },
+    {
+      id: 12,
+      name: 'Liam Harris',
+      email: 'liam@example.com',
+      subject: 'User Guide',
+      message: 'Where can I find the user documentation?',
+      date: '2026-02-04',
+      status: 'Responded'
+    },
   ]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const updateStatus = (id: number, newStatus: Contact['status']): void => {
     setContacts(contacts.map(contact => 
@@ -42,6 +135,15 @@ const ContactsManagement = () => {
 
   const deleteContact = (id: number): void => {
     setContacts(contacts.filter(contact => contact.id !== id));
+  };
+
+  const totalPages = Math.ceil(contacts.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentContacts = contacts.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   const getStatusColor = (status: Contact['status']): string => {
@@ -69,7 +171,7 @@ const ContactsManagement = () => {
       </div>
 
       <div className="space-y-4">
-        {contacts.map((contact) => (
+        {currentContacts.map((contact) => (
           <div key={contact.id} className="bg-slate-800 rounded-lg shadow p-4 sm:p-6 relative">
             <button
               onClick={() => deleteContact(contact.id)}
@@ -121,6 +223,14 @@ const ContactsManagement = () => {
           </div>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <Pagination 
+          count={totalPages} 
+          currentPage={currentPage} 
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };
