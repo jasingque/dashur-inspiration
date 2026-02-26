@@ -50,11 +50,11 @@ export const Footer = () => {
   return (
     <footer className="relative w-full overflow-hidden pt-20 md:pt-32 pb-20">
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden">
-        <div className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1400px] opacity-[0.05] text-white z-0">
+        <div className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-350 opacity-[0.05] text-white z-0">
           <DashurLogo className="w-full h-auto" />
         </div>
       </div>
-      <div className="relative z-20 mx-auto flex w-full max-w-[1120px] flex-col gap-16 px-6 md:px-0">
+      <div className="relative z-20 mx-auto flex w-full max-w-280 flex-col gap-16 px-6 md:px-0">
         <div className="flex flex-col justify-between gap-10 md:flex-row">
           <div className="flex flex-col gap-10 md:w-1/2">
             

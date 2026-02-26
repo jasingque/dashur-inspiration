@@ -268,7 +268,7 @@ export const AboutPage = () => {
                   <div className="absolute inset-0 bg-gradient-radial from-cyan-500/20 to-transparent rounded-full blur-xl group-hover:from-cyan-400/30 transition-all duration-500" />
                   <AnimatedCounter target={stat.count} suffix={stat.value.includes('+') ? '+' : ''} duration={2000} />
                 </div>
-                <div className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-400 font-medium max-w-[150px] mx-auto">
+                <div className="mt-4 sm:mt-6 text-sm sm:text-base text-gray-400 font-medium max-w-37.5 mx-auto">
                   {stat.label}
                 </div>
               </motion.div>
@@ -340,10 +340,10 @@ export const AboutPage = () => {
               >
                 <span className="relative z-10 transition-all duration-500">Get Started Today</span>
                 
-                <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-                <span className="absolute right-full top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-                <span className="absolute left-full top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-                <span className="absolute bottom-full left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+                <span className="absolute left-0 -top-full h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+                <span className="absolute right-full top-2.5 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+                <span className="absolute left-full top-5 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+                <span className="absolute bottom-full left-0 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
               </motion.button>
             </div>
           </motion.div>

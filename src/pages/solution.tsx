@@ -80,9 +80,9 @@ export const SOLUTIONS = () => {
         <meta property="og:url" content="https://www.dashurai.com/#solutions" />
         <meta property="og:type" content="website" />
       </Helmet>
-    <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-6 py-[70px] md:px-0 md:py-[135px]">
+    <section className="relative flex w-full flex-col items-center justify-center overflow-hidden px-6 py-17.5 md:px-0 md:py-33.75">
       <motion.div 
-        className="relative z-2 flex w-full max-w-[1120px] flex-col gap-8"
+        className="relative z-2 flex w-full max-w-280 flex-col gap-8"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -91,7 +91,7 @@ export const SOLUTIONS = () => {
 
         {/* Header Section */}
         <motion.div variants={itemVariants} className="flex w-full flex-col gap-4 md:flex-row md:gap-6">
-          <div className="shrink-0 md:w-[190px]">
+          <div className="shrink-0 md:w-47.5">
             <p className="font-plus_jakarta_sans text-sm font-semibold tracking-wide text-zinc-400">
               [ OUR MARKETS ]
             </p>
@@ -103,7 +103,7 @@ export const SOLUTIONS = () => {
                 Industries We Serve
               </span>
             </h2>
-            <p className="text-base leading-6 text-gray-400 md:w-1/2 md:max-w-[360px]">
+            <p className="text-base leading-6 text-gray-400 md:w-1/2 md:max-w-90">
              Our intelligent systems eliminate operational friction, automate complex workflows, and accelerate industrial growth, ensuring you stay ahead of the curve.
             </p>
           </div>

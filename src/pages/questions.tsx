@@ -19,7 +19,7 @@ const FocusCard = ({ text, className }: { text: string; className?: string }) =>
   return (
     <div
       ref={ref}
-      className={`absolute flex flex-col items-center justify-center w-[300px] max-w-[90vw] h-[200px] ${className}`}
+      className={`absolute flex flex-col items-center justify-center w-75 max-w-[90vw] h-50 ${className}`}
     >
       <motion.div 
         style={{ opacity: bracketOpacity, scale: bracketScale }}
@@ -57,7 +57,7 @@ export const QUESTIONS = () => {
           </span>
         </h2>
       </div>
-      <div className="relative z-0 w-full max-w-280 mx-auto h-[3000px] overflow-hidden pb-40">
+      <div className="relative z-0 w-full max-w-280 mx-auto h-750 overflow-hidden pb-40">
         <FocusCard 
           text="You can't deliver 24/7 personalized service without automation." 
           className="top-[8%] left-4 md:left-[10%]" 

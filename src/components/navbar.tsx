@@ -61,7 +61,7 @@ const handleNavClick = (e: React.MouseEvent, path: string) => {
           isAtTop ? "bg-transparent backdrop-blur-none" : "bg-slate-950/80 backdrop-blur-md shadow-lg"
         }`}
       >
-        <nav className="mx-auto flex h-20 max-w-[1120px] items-center justify-between px-4 md:px-[15px]">
+        <nav className="mx-auto flex h-20 max-w-280 items-center justify-between px-4 md:px-3.75">
           
           {/* Logo */}
           <div className="shrink-0 w-40 md:w-64">
@@ -94,10 +94,10 @@ const handleNavClick = (e: React.MouseEvent, path: string) => {
             <button onClick={() => navigate("/contact")} className="group relative overflow-hidden rounded-md border-2 border-blue-950 bg-transparent px-8 py-3 text-sm font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e]">
               <span className="relative z-10 transition-all duration-500">Join Team Dashur</span>
               
-              <span className="absolute left-0 -top-full h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
-              <span className="absolute right-full top-[10px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
-              <span className="absolute left-full top-[20px] h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
-              <span className="absolute bottom-full left-0 h-[15px] w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
+              <span className="absolute left-0 -top-full h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
+              <span className="absolute right-full top-2.5 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
+              <span className="absolute left-full top-5 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
+              <span className="absolute bottom-full left-0 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
             </button>
             <button 
               onClick={() => navigate("/auth")} 

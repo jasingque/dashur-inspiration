@@ -64,8 +64,8 @@ export const SERVICES = () => {
     document.title = "Our Services - Dashurai";
   }, []);
   return (
-    <section className="flex w-full flex-col items-center justify-center overflow-hidden px-0 py-[100px] md:overflow-visible md:px-6 md:py-[200px]">
-      <div className="flex w-full max-w-[1200px] flex-col gap-12 px-4 md:px-0">
+    <section className="flex w-full flex-col items-center justify-center overflow-hidden px-0 py-25 md:overflow-visible md:px-6 md:py-50">
+      <div className="flex w-full max-w-300 flex-col gap-12 px-4 md:px-0">
         
         {/* Header */}
         <h2 className="font-plus_jakarta_sans_variable wrap-break-word text-3xl sm:text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
@@ -75,7 +75,7 @@ export const SERVICES = () => {
         </h2>
 
         {/* Cards Container */}
-        <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:block lg:relative lg:h-[450px]">
+        <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:block lg:relative lg:h-112.5">
           {STACK_DATA.map((card, index) => {
             const leftPosition = index * 14;
             const topPosition = 150 - (index * 35);
@@ -88,8 +88,8 @@ export const SERVICES = () => {
                   '--z-index': index
                 } as React.CSSProperties}
                 className={`
-                  relative w-full h-[320px] transition-all duration-500 ease-in-out group perspective-[1000px]
-                  lg:absolute lg:w-[260px] lg:left-(--left-pos) lg:top-(--top-pos)-lg:z-(--z-index)
+                  relative w-full h-80 transition-all duration-500 ease-in-out group perspective-[1000px]
+                  lg:absolute lg:w-65 lg:left-(--left-pos) lg:top-(--top-pos)-lg:z-(--z-index)
                   hover:z-100 hover:-translate-y-8
                 `}
               >
