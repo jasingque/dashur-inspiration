@@ -5,7 +5,7 @@ import Healthcare from '../assets/healthcare.webp';
 import Manufacturing from '../assets/manufacturing.webp';
 import Defense from '../assets/defense.webp';
 import Aerospace from '../assets/aerospace.webp';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet-async';
 import { useEffect } from "react";
 
 const TOP_SOLUTIONS = [

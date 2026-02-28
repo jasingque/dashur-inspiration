@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 // --- Data & Config ---
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Capabilities", href: "capabilities" },
+  { label: "Capabilities", href: "/capabilities" },
   { label: "Market", href: "/market" },
   { label: "Career", href: "/careers" },
   { label: "Contact", href: "/contact" },
@@ -31,9 +32,9 @@ const SectionHeader = ({ children }: { children: React.ReactNode }) => (
 
 const FooterLink = ({ href, label }: { href: string; label: string }) => (
   <li>
-    <a href={href} className="text-base font-semibold text-white transition-colors hover:text-blue-700">
+    <Link to={href} className="text-base font-semibold text-white transition-colors hover:text-blue-700">
       {label}
-    </a>
+    </Link>
   </li>
 );
 

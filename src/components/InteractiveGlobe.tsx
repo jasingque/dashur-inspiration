@@ -2,7 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { Sphere } from '@react-three/drei'
 import { useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { CanvasTexture, Mesh, Color, BackSide } from 'three'
 
 // Create realistic Earth texture with accurate continent shapes
 const createRealisticEarthTexture = () => {
@@ -136,13 +136,13 @@ const createRealisticEarthTexture = () => {
     }
   }
   
-  return new THREE.CanvasTexture(canvas)
+  return new CanvasTexture(canvas)
 }
 
 const earthTexture = createRealisticEarthTexture()
 
 function Globe() {
-  const globeRef = useRef<THREE.Mesh>(null)
+  const globeRef = useRef<Mesh>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [rotation, setRotation] = useState({ x: 0, y: 0 })
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
@@ -194,7 +194,7 @@ function Globe() {
         <meshPhongMaterial 
           map={earthTexture}
           bumpScale={0.02}
-          specular={new THREE.Color('#444444')}
+          specular={new Color('#444444')}
           shininess={5}
         />
       </Sphere>
@@ -205,7 +205,7 @@ function Globe() {
           color="#06b6d4" 
           transparent 
           opacity={0.1}
-          side={THREE.BackSide}
+          side={BackSide}
         />
       </Sphere>
 
@@ -215,7 +215,7 @@ function Globe() {
           color="#0284c7" 
           transparent 
           opacity={0.05}
-          side={THREE.BackSide}
+          side={BackSide}
         />
       </Sphere>
     </group>

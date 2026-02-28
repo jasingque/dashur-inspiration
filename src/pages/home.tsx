@@ -1,7 +1,7 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { Hero } from "./hero";
 import { FloatingAI } from "../components/floatBot";
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import videoUrl from "../assets/opt_3DLogo.mp4";
 
 const QUESTIONS = lazy(() => import("./questions").then(m => ({ default: m.QUESTIONS })));
@@ -11,11 +11,6 @@ const SERVICES = lazy(() => import("./services").then(m => ({ default: m.SERVICE
 const CAPABILITIES = lazy(() => import("./capabilities").then(m => ({ default: m.CAPABILITIES })));
 
 export const HomePage = () => {
-  useEffect(() => {
-    // Force title update
-    document.title = "DASHUR AI HOME";
-  }, []);
-  
   return (
     <>
       <Helmet>
