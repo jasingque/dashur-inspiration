@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, memo, useMemo } from "react";
 import { TrustCard, type CapabilityItem } from "../components/capabilitiesCard";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 // --- Types ---
 type RowConfig = {
