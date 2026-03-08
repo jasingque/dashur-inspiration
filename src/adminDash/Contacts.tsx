@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { toast, ToastContainer } from 'react-toastify';
 import Pagination from '../components/Pagination';
+import { adminAPI, AdminContact } from '../api';
+import { useDashboardTrigger } from '../hooks/useDashboardRefresh';
 
 interface Contact {
   id: number;
@@ -13,128 +16,85 @@ interface Contact {
   status: 'New' | 'Responded' | 'Pending' | 'Closed';
 }
 
+// Backend comment: AdminContact interface from API has different field names
+// Backend returns: first_name, last_name, subject, message, submitted_at, status
+// Frontend expects: name, date
+
 const ContactsManagement = () => {
-  const [contacts, setContacts] = useState<Contact[]>([
-    {
-      id: 1,
-      name: 'Alice Johnson',
-      email: 'alice@example.com',
-      subject: 'General Inquiry',
-      message: 'I would like to know more about your services.',
-      date: '2026-02-15',
-      status: 'New'
-    },
-    {
-      id: 2,
-      name: 'Bob Wilson',
-      email: 'bob@example.com',
-      subject: 'Support Request',
-      message: 'I need help with my account.',
-      date: '2026-02-14',
-      status: 'Responded'
-    },
-    {
-      id: 3,
-      name: 'Carol Davis',
-      email: 'carol@example.com',
-      subject: 'Product Question',
-      message: 'Does your product support integration with other tools?',
-      date: '2026-02-13',
-      status: 'New'
-    },
-    {
-      id: 4,
-      name: 'David Brown',
-      email: 'david@example.com',
-      subject: 'Billing Issue',
-      message: 'I was charged twice for my subscription.',
-      date: '2026-02-12',
-      status: 'Pending'
-    },
-    {
-      id: 5,
-      name: 'Emma Miller',
-      email: 'emma@example.com',
-      subject: 'Feature Request',
-      message: 'Would love to see a dark mode feature.',
-      date: '2026-02-11',
-      status: 'Responded'
-    },
-    {
-      id: 6,
-      name: 'Frank Garcia',
-      email: 'frank@example.com',
-      subject: 'Technical Support',
-      message: 'Having trouble logging in to my account.',
-      date: '2026-02-10',
-      status: 'New'
-    },
-    {
-      id: 7,
-      name: 'Grace Martinez',
-      email: 'grace@example.com',
-      subject: 'Partnership Inquiry',
-      message: 'Interested in discussing partnership opportunities.',
-      date: '2026-02-09',
-      status: 'Pending'
-    },
-    {
-      id: 8,
-      name: 'Henry Anderson',
-      email: 'henry@example.com',
-      subject: 'Feedback',
-      message: 'Great product! Very satisfied with the service.',
-      date: '2026-02-08',
-      status: 'Closed'
-    },
-    {
-      id: 9,
-      name: 'Isabella Taylor',
-      email: 'isabella@example.com',
-      subject: 'Account Deletion',
-      message: 'Please delete my account and all associated data.',
-      date: '2026-02-07',
-      status: 'Responded'
-    },
-    {
-      id: 10,
-      name: 'Jack Thomas',
-      email: 'jack@example.com',
-      subject: 'API Question',
-      message: 'Do you provide API access for developers?',
-      date: '2026-02-06',
-      status: 'New'
-    },
-    {
-      id: 11,
-      name: 'Karen White',
-      email: 'karen@example.com',
-      subject: 'Refund Request',
-      message: 'I would like to request a refund for my recent purchase.',
-      date: '2026-02-05',
-      status: 'Pending'
-    },
-    {
-      id: 12,
-      name: 'Liam Harris',
-      email: 'liam@example.com',
-      subject: 'User Guide',
-      message: 'Where can I find the user documentation?',
-      date: '2026-02-04',
-      status: 'Responded'
-    },
-  ]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  
+  // Get dashboard trigger function
+  const triggerActivityRefresh: () => void = useDashboardTrigger().triggerActivityRefresh;
 
-  const updateStatus = (id: number, newStatus: Contact['status']): void => {
-    setContacts(contacts.map(contact => 
-      contact.id === id ? { ...contact, status: newStatus } : contact
-    ));
+  // Fetch contacts from API
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const data = await adminAPI.getContacts();
+        console.log('Raw contacts response from API:', data);
+        console.log('First contact data:', data[0]);
+        
+        // Transform backend data to frontend format
+        const transformedData: Contact[] = data.map((contact: AdminContact) => ({
+          id: contact.id,
+          name: contact.name,
+          email: contact.email,
+          subject: contact.subject,
+          message: contact.message,
+          date: new Date(contact.submitted_at).toISOString().split('T')[0],
+          status: contact.status as Contact['status']
+        }));
+        console.log('Transformed contacts data:', transformedData);
+        setContacts(transformedData);
+      } catch (err) {
+        setError('Failed to fetch contacts');
+        console.error('Error fetching contacts:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContacts();
+  }, []);
+
+  const updateStatus = async (id: number, newStatus: Contact['status']): Promise<void> => {
+    try {
+      await adminAPI.updateContact(id, newStatus);
+      setContacts(contacts.map(contact => 
+        contact.id === id ? { ...contact, status: newStatus } : contact
+      ));
+      toast.success(`Contact status updated to ${newStatus} successfully!`);
+      // Trigger dashboard refresh to show new activity
+      console.log('Triggering dashboard refresh after contact status update');
+      triggerActivityRefresh();
+    } catch (err) {
+      toast.error('Failed to update contact status. Please try again.');
+      setError('Failed to update contact status');
+      console.error('Error updating contact:', err);
+    }
   };
 
-  const deleteContact = (id: number): void => {
-    setContacts(contacts.filter(contact => contact.id !== id));
+  const deleteContact = async (id: number): Promise<void> => {
+    try {
+      await adminAPI.deleteContact(id);
+      setContacts(contacts.filter(contact => contact.id !== id));
+      toast.success('Contact deleted successfully!');
+      // Trigger dashboard refresh to show new activity
+      console.log('Triggering dashboard refresh after contact deletion');
+      if (typeof triggerActivityRefresh === 'function') {
+        triggerActivityRefresh();
+      } else {
+        console.error('triggerActivityRefresh is not a function');
+      }
+    } catch (err) {
+      toast.error('Failed to delete contact. Please try again.');
+      setError('Failed to delete contact');
+      console.error('Error deleting contact:', err);
+    }
   };
 
   const totalPages = Math.ceil(contacts.length / itemsPerPage);
@@ -157,7 +117,20 @@ const ContactsManagement = () => {
   };
 
   return (
-    <div>
+    <>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div>
       <Helmet>
         <title>Manage Contact - Dashur AI Admin</title>
         <meta name="description" content="Manage contact form submissions and inquiries in Dashur AI admin dashboard" />
@@ -169,6 +142,20 @@ const ContactsManagement = () => {
           Total: {contacts.length} messages
         </div>
       </div>
+
+      {loading && (
+        <div className="text-center py-8 text-gray-400">
+          Loading contacts...
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
+          <p className="text-red-400 text-sm">{error}</p>
+        </div>
+      )}
+
+      {!loading && !error && (
 
       <div className="space-y-4">
         {currentContacts.map((contact) => (
@@ -223,6 +210,7 @@ const ContactsManagement = () => {
           </div>
         ))}
       </div>
+      )}
 
       {totalPages > 1 && (
         <Pagination 
@@ -232,6 +220,7 @@ const ContactsManagement = () => {
         />
       )}
     </div>
+    </>
   );
 };
 

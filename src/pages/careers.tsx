@@ -1,80 +1,68 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CaseStudyCard } from "../components/careerCard";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from "react-router-dom";
+import { careersAPI, Position } from "../api";
 import SoftwareEngineer from "../assets/softwareEngineer.webp";
 import QAEngineer from "../assets/qaEngineer.webp";
 import MobileDeveloper from "../assets/mobileDeveloper.webp";
 import IOSDeveloper from "../assets/iosEngineer.webp";
 import DevOpsEngineer from "../assets/DevOpsEngineer.webp";
 
-
-const CASE_STUDIES = [
-  {
-    id: "software-developer",
-    title: "Software Developer",
-    tags: ["Onsite", "Open"],
-    imageUrl: SoftwareEngineer,
-    description: (
-      <>
-        Dashur AI, LLC. is one of the leading companies in our field in the area. We are hiring a talented Software Developer professional to join our team. If you're excited to be part of a winning team, Dashur AI is a great place to grow your career.
-      </>
-    ),
-  },
-  {
-    id: "qa-engineer",
-    title: "QA Engineer",
-    tags: ["Onsite", "Open"],
-    imageUrl: QAEngineer,
-    description: (
-      <>
-        Dashur AI, LLC. is one of the leading companies in our field in the area. We are hiring a talented QA Engineer professional to join our team. If you're excited to be part of a winning team, Dashur AI is a great place to grow your career.
-      </>
-    ),
-  },
-  {
-    id: "mobile-developer",
-    title: "Mobile Developer",
-    tags: ["Onsite", "Open"],
-    imageUrl: MobileDeveloper,
-    description: (
-      <>
-        Dashur AI, LLC is an emerging tech firm in the Las Vegas metropolitan area. We are looking to hire an experienced Mobile Developer to help us keep growing. If you're hard-working and dedicated, Dashur AI is an excellent place to grow your career.
-      </>
-    ),
-  },
-  {
-    id: "ios-engineer",
-    title: "iOS Engineer",
-    tags: ["Onsite", "Open"],
-    imageUrl: IOSDeveloper,
-    description: (
-      <>  
-        Dashur AI, LLC. is one of the leading companies in our field in the area. We are hiring a talented iOS Engineer professional to join our team. If you're excited to be part of a winning team, Dashur AI is a great place to grow your career.
-      </>
-    ),
-  },
-  {
-    id: "devops-engineer",
-    title: "DevOps Engineer",
-    tags: ["Onsite", "Open"],
-    imageUrl: DevOpsEngineer,
-    description: (
-      <>  
-        Dashur AI, LLC is an emerging tech firm in the Las Vegas metropolitan area. We are looking to hire an experienced DevOps Engineer to help us keep growing. If you're hard-working and dedicated, Dashur AI is an excellent place to grow your career.
-      </>
-    ),
-  },
-];
+interface CareerPosition {
+  id: string;
+  title: string;
+  tags: string[];
+  imageUrl: string;
+  description: React.ReactNode;
+}
 
 export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomePage?: boolean }) => {
   const navigate = useNavigate();
+  const [positions, setPositions] = useState<CareerPosition[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Backend comment: careersAPI.getPositions() returns Position objects with different structure
+  // Backend returns: id, title, description, requirements, location, employment_type, is_active
+  // Frontend expects: id, title, description, tags, imageUrl
+  
   useEffect(() => {
     if (!isHomePage) {
       window.scrollTo(0, 0);
       document.title = "Careers - Dashur AI";
     }
+    
+    const fetchPositions = async () => {
+      try {
+        const data = await careersAPI.getPositions();
+        // Transform backend data to frontend format
+        const transformedData = data.map((position: Position, index: number) => {
+          const images = [SoftwareEngineer, QAEngineer, MobileDeveloper, IOSDeveloper, DevOpsEngineer];
+          const id = position.title.toLowerCase().replace(/\s+/g, '-');
+          
+          return {
+            id,
+            title: position.title,
+            tags: [position.employment_type || position.type, position.status_display || position.status].filter((tag): tag is string => Boolean(tag)),
+            imageUrl: images[index % images.length],
+            description: (
+              <>
+                {position.description || `Dashur AI, LLC. is hiring a talented ${position.title} professional to join our team. If you're excited to be part of a winning team, Dashur AI is a great place to grow your career.`}
+              </>
+            ),
+          };
+        });
+        setPositions(transformedData);
+      } catch (err) {
+        console.error('Error fetching positions:', err);
+        setPositions([]); // Set empty array if API fails
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPositions();
   }, [isHomePage]);
       
   const containerRef = useRef(null);
@@ -85,7 +73,15 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
 
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.9]);
-  const displayedStudies = limit ? CASE_STUDIES.slice(0, limit) : CASE_STUDIES;
+  const displayedStudies = limit ? positions.slice(0, limit) : positions;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-white">
+        <div>Loading careers...</div>
+      </div>
+    );
+  }
 
   return (
     <>

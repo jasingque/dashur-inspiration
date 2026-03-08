@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Eye, EyeClosed } from 'lucide-react';
+import { authAPI } from '../api';
 
 interface Credentials {
   email: string;
@@ -16,14 +17,37 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-
-    if (credentials.email === 'admin@example.com' && credentials.password === 'admin123') {
+    setError('');
+    
+    try {
+      // Backend comment: Using admin login endpoint for admin authentication
+      // Admin user must have is_staff=True in the database
+      const response = await authAPI.adminLogin(credentials);
+      
+      // Debug: Log the response structure
+      console.log('Admin login response:', response);
+      
+      if (!response.user || !response.user.email) {
+        throw new Error('Invalid response structure from server');
+      }
+      
       localStorage.setItem('isAdminAuthenticated', 'true');
-      localStorage.setItem('adminEmail', credentials.email);
-      localStorage.setItem('adminUsername', credentials.email.split('@')[0]);
+      localStorage.setItem('adminEmail', response.user.email);
+      localStorage.setItem('adminUsername', response.user.first_name || response.user.email.split('@')[0]);
+      localStorage.setItem('access_token', response.access);
+      localStorage.setItem('refresh_token', response.refresh);
       navigate('/admin/dashboard');
-    } else {
-      setError('Invalid credentials. Use admin@example.com/admin123 for demo.');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Invalid credentials. Please try again.';
+      
+      // Provide more specific error message for admin login
+      if (errorMessage.includes('Admin privileges required')) {
+        setError('Admin access required. This account does not have admin privileges.');
+      } else if (errorMessage.includes('Invalid credentials')) {
+        setError('Invalid admin credentials. Please check your email and password.');
+      } else {
+        setError(errorMessage);
+      }
     }
   };
 

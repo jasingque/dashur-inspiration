@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogIn } from "lucide-react";
 import logo from "../assets/logo.webp";
+import { useAuth } from "../hooks/useAuth";
+import { UserDropdown } from "./UserDropdown";
 
 export const Navbar = () => {
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -10,6 +12,7 @@ export const Navbar = () => {
   const location = useLocation();
 
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const navLinks = [
     { name: "About", path: "/about" },
@@ -99,13 +102,18 @@ const handleNavClick = (e: React.MouseEvent, path: string) => {
               <span className="absolute left-full top-5 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:left-0" />
               <span className="absolute bottom-full left-0 h-3.75 w-full bg-cyan-600 transition-all duration-500 group-hover:bottom-0" />
             </button>
-            <button 
-              onClick={() => navigate("/auth")} 
-              className="group relative overflow-hidden rounded-full border-2 border-cyan-600 bg-transparent p-2 text-cyan-400 transition-all duration-500 hover:bg-cyan-600 hover:text-white"
-              aria-label="Login"
-            >
-              <LogIn className="w-4 h-4" />
-            </button>
+            
+            {isAuthenticated ? (
+              <UserDropdown />
+            ) : (
+              <button 
+                onClick={() => navigate("/auth")} 
+                className="group relative overflow-hidden rounded-full border-2 border-cyan-600 bg-transparent p-2 text-cyan-400 transition-all duration-500 hover:bg-cyan-600 hover:text-white"
+                aria-label="Login"
+              >
+                <LogIn className="w-4 h-4" />
+              </button>
+            )}
           </div>
           
         </nav>

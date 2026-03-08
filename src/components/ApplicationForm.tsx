@@ -1,12 +1,67 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { careersAPI } from '../api';
 
 interface FormProps {
   onSubmit: (e: React.FormEvent) => void;
   isSubmitted: boolean;
   jobTitle?: string;
+  positionId?: string;
 }
 
-export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) => {
+export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle, positionId }: FormProps) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file.name);
+    } else {
+      setSelectedFile(null);
+    }
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+
+    const form = e.target as HTMLFormElement;
+    
+    try {
+      // Use job title directly since positions API requires authentication
+      const positionTitle = jobTitle || 'Software Developer';
+      
+      const resumeFile = (form.elements.namedItem('resume') as HTMLInputElement).files?.[0];
+      
+      if (!resumeFile) {
+        setError('Please upload your resume (PDF format).');
+        return;
+      }
+
+      // Backend comment: careersAPI.applyForJob expects ApplicationData with position as UUID
+      // Backend requires: position (UUID), first_name, last_name, email, phone, cover_letter, resume (File)
+      await careersAPI.applyForJob({
+        position: positionId || positionTitle, // Use UUID if available, fallback to title
+        first_name: (form.elements.namedItem('first_name') as HTMLInputElement).value,
+        last_name: (form.elements.namedItem('last_name') as HTMLInputElement).value,
+        email: (form.elements.namedItem('email') as HTMLInputElement).value,
+        phone: '', // Optional field
+        cover_letter: '', // Optional field
+        resume: resumeFile
+      });
+
+      setSelectedFile(null); // Reset file selection
+      onSubmit(e);
+    } catch (err) {
+      setError('Failed to submit application. Please try again.');
+      console.error('Application submission error:', err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
   if (isSubmitted) {
     return (
       <motion.div 
@@ -40,7 +95,12 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
           Application Form
         </h2>
         
-        <form onSubmit={onSubmit} className="space-y-6">
+        <form onSubmit={handleFormSubmit} className="space-y-6">
+          {error && (
+            <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-3">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
           {/* Position Selection */}
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Position</label>
@@ -56,18 +116,18 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">First Name</label>
-              <input required placeholder="Jane" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all text-white placeholder:text-zinc-700" />
+              <input required name="first_name" placeholder="Jane" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all text-white placeholder:text-zinc-700" />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Last Name</label>
-              <input required placeholder="Doe" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all text-white placeholder:text-zinc-700" />
+              <input required name="last_name" placeholder="Doe" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all text-white placeholder:text-zinc-700" />
             </div>
           </div>
 
           {/* Email */}
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider text-zinc-500">Email Address</label>
-            <input required type="email" placeholder="jane@example.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all text-white placeholder:text-zinc-700" />
+            <input required name="email" type="email" placeholder="jane@example.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all text-white placeholder:text-zinc-700" />
           </div>
 
           {/* Resume Upload */}
@@ -76,15 +136,22 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
             <div className="relative group/upload">
               <input 
                 required 
+                name="resume"
                 type="file" 
                 accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
               />
               <div className="w-full bg-white/5 border-2 border-dashed border-white/10 rounded-xl px-4 py-8 flex flex-col items-center justify-center group-hover/upload:bg-white/10 transition-colors">
                 <svg className="w-8 h-8 text-zinc-500 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
-                <p className="text-sm text-zinc-500 font-medium">Click to upload or drag and drop</p>
+                <p className="text-sm text-zinc-500 font-medium">
+                  {selectedFile ? selectedFile : 'Click to upload or drag and drop'}
+                </p>
+                {selectedFile && (
+                  <p className="text-xs text-zinc-600 mt-1">Click to change file</p>
+                )}
               </div>
             </div>
           </div>
@@ -93,10 +160,11 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle }: FormProps) 
           <div className="pt-4">
             <button 
               type="submit"
-              className="group relative overflow-hidden rounded-lg border border-blue-900/50 bg-transparent w-full py-3.5 text-[10px] font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e] hover:shadow-[0_0_20px_rgba(8,145,178,0.2)] active:scale-[0.99]"
+              className="group relative overflow-hidden rounded-lg border border-blue-900/50 bg-transparent w-full py-3.5 text-[10px] font-bold uppercase text-white transition-all duration-500 hover:text-[#0c071e] hover:shadow-[0_0_20px_rgba(8,145,178,0.2)] active:scale-[0.99] disabled:opacity-50"
+              disabled={submitting}
             >
               <span className="relative z-10 transition-all duration-500 tracking-[0.4em]">
-                Submit Application
+                {submitting ? 'Submitting...' : 'Submit Application'}
               </span>
               <span className="absolute left-0 -top-full h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:top-0" />
               <span className="absolute right-full top-[25%] h-1/4 w-full bg-cyan-600 transition-all duration-500 group-hover:right-0" />
