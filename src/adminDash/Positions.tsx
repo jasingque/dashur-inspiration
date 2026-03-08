@@ -128,10 +128,8 @@ const PositionsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Dashboard refresh trigger
   const { triggerActivityRefresh } = useDashboardTrigger();
 
-  // Fetch positions from API
   useEffect(() => {
     const fetchPositions = async () => {
       try {
@@ -142,7 +140,6 @@ const PositionsManagement = () => {
         console.log('Positions array type:', typeof data);
         console.log('Is array?', Array.isArray(data));
         
-        // Transform backend data to frontend format
         const transformedData: Position[] = data.map((position: AdminPosition) => ({
           id: position.id,
           title: position.title,
@@ -183,11 +180,9 @@ const PositionsManagement = () => {
   const handleResponsibilityChange = (index: number, field: 'title' | 'desc', value: string) => {
     const updatedResponsibilities = formData.key_responsibilities.map((resp, i) => {
       if (i === index) {
-        // If it's a string, convert it to a Responsibility object
         if (typeof resp === 'string') {
           return { title: field === 'title' ? value : resp, desc: field === 'desc' ? value : '' };
         }
-        // If it's already an object, update the field
         return { ...resp, [field]: value };
       }
       return resp;
@@ -201,7 +196,6 @@ const PositionsManagement = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     try {
-      // Validate required fields
       if (!formData.role_overview.trim()) {
         setError('Role Overview is required');
         return;
@@ -217,26 +211,23 @@ const PositionsManagement = () => {
         return;
       }
       
-      setError(null); // Clear any previous errors
+      setError(null); 
       
-      // Backend comment: Position model requires title, department, type, status, description, role_overview, key_responsibilities
-      // Backend expects: title, department, type, status, description, role_overview, key_responsibilities, tags, image_url
       const newPositionData = {
         title: formData.title,
         department: formData.department,
-        type: formData.type.toLowerCase() as 'full-time' | 'part-time' | 'contract', // Backend expects lowercase: 'full-time', 'part-time', 'contract'
-        status: formData.status.toLowerCase() as 'active' | 'inactive', // Backend expects lowercase: 'active', 'inactive'
-        description: formData.description, // Use actual description from form
-        role_overview: formData.role_overview, // Required field for job details
+        type: formData.type.toLowerCase() as 'full-time' | 'part-time' | 'contract', 
+        status: formData.status.toLowerCase() as 'active' | 'inactive', 
+        description: formData.description, 
+        role_overview: formData.role_overview, 
         key_responsibilities: formData.key_responsibilities.map((resp) => {
-          // Handle Responsibility objects directly (new form format)
+
           if (resp && typeof resp === 'object' && resp.title && resp.desc) {
             return {
               title: resp.title.trim(),
               desc: resp.desc.trim()
             };
           }
-          // Handle string format for backward compatibility
           if (typeof resp === 'string') {
             const parts = resp.split(':');
             if (parts.length >= 2) {
@@ -250,14 +241,13 @@ const PositionsManagement = () => {
               desc: ''
             };
           }
-          // Fallback for empty or invalid objects
           return {
             title: resp?.title || 'Untitled Responsibility',
             desc: resp?.desc || ''
           };
         }),
-        tags: [], // Required field, default empty array
-        image_url: '', // Required field, default empty string
+        tags: [],
+        image_url: '',
       };
       console.log('Creating position with data:', newPositionData);
       const newPosition = await adminAPI.createPosition(newPositionData);
@@ -273,21 +263,16 @@ const PositionsManagement = () => {
       };
       setPositions([...positions, transformedPosition]);
       
-      // Trigger dashboard refresh to show new activity
       triggerActivityRefresh();
       
-      // Show success toast
       toast.success(`Position "${formData.title}" created successfully!`);
       
-      // Generate and show job details for the new position
       const jobDetails = generateJobDetails(formData.title, formData.description, formData.role_overview, formData.key_responsibilities);
       console.log('Generated Job Details:', jobDetails);
       
-      // Try to update JobDetails.tsx automatically
       const updateResult = await updateJobDetailsFile(jobDetails);
       
       if (updateResult && updateResult.success) {
-        // Copy the updated content to clipboard
         try {
           await navigator.clipboard.writeText(updateResult.content || '');
           alert(`Position "${formData.title}" created successfully!\n\n✅ JobDetails.tsx updated and copied to clipboard!\n\nThe file has been updated with:\n- Position: ${jobDetails.title}\n- ID: ${jobDetails.id}\n- Role Overview and Responsibilities added\n\nPaste the updated content into JobDetails.tsx to apply changes.`);
@@ -296,7 +281,6 @@ const PositionsManagement = () => {
           alert(`Position "${formData.title}" created successfully!\n\n${updateResult?.message || 'Job details generated'}\n\nGenerated code:\n${jobDetails.code}\n\nTheme mapping:\n"${jobDetails.id}": { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" }`);
         }
       } else {
-        // Fallback to manual copy
         const fullJobDetailsCode = `${jobDetails.code},\n  "${jobDetails.id}": { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" }`;
         try {
           await navigator.clipboard.writeText(fullJobDetailsCode);
@@ -324,8 +308,8 @@ const PositionsManagement = () => {
       type: position.type,
       status: position.status,
       description: position.description,
-      role_overview: position.role_overview || '', // Use actual position data
-      key_responsibilities: position.key_responsibilities || [] // Use actual position data
+      role_overview: position.role_overview || '', 
+      key_responsibilities: position.key_responsibilities || [] 
     });
     setShowForm(true);
   };
@@ -335,7 +319,6 @@ const PositionsManagement = () => {
     if (!editingPosition) return;
     
     try {
-      // Validate required fields
       if (!formData.role_overview.trim()) {
         setError('Role Overview is required');
         return;
@@ -351,26 +334,22 @@ const PositionsManagement = () => {
         return;
       }
       
-      setError(null); // Clear any previous errors
+      setError(null); 
       
-      // Backend comment: Position model requires title, department, type, status, description, role_overview, key_responsibilities
-      // Backend expects: title, department, type, status, description, role_overview, key_responsibilities, tags, image_url
       const updatedPositionData = {
         title: formData.title,
         department: formData.department,
-        type: formData.type.toLowerCase() as 'full-time' | 'part-time' | 'contract', // Backend expects lowercase: 'full-time', 'part-time', 'contract'
-        status: formData.status.toLowerCase() as 'active' | 'inactive', // Backend expects lowercase: 'active', 'inactive'
-        description: formData.description, // Use actual description from form
-        role_overview: formData.role_overview, // Include role_overview
+        type: formData.type.toLowerCase() as 'full-time' | 'part-time' | 'contract',
+        status: formData.status.toLowerCase() as 'active' | 'inactive', 
+        description: formData.description, 
+        role_overview: formData.role_overview, 
         key_responsibilities: formData.key_responsibilities.map((resp) => {
-          // Handle Responsibility objects directly (new form format)
           if (resp && typeof resp === 'object' && resp.title && resp.desc) {
             return {
               title: resp.title.trim(),
               desc: resp.desc.trim()
             };
           }
-          // Handle string format for backward compatibility
           if (typeof resp === 'string') {
             const parts = resp.split(':');
             if (parts.length >= 2) {
@@ -384,19 +363,17 @@ const PositionsManagement = () => {
               desc: ''
             };
           }
-          // Fallback for empty or invalid objects
           return {
             title: resp?.title || 'Untitled Responsibility',
             desc: resp?.desc || ''
           };
         }),
-        tags: [], // Required field, default empty array
-        image_url: '', // Required field, default empty string
+        tags: [],
+        image_url: '', 
       };
       console.log('Updating position with data:', updatedPositionData);
       await adminAPI.updatePosition(editingPosition.id, updatedPositionData);
       
-      // Update local state
       setPositions(positions.map(pos => 
         pos.id === editingPosition.id 
           ? { 
@@ -412,13 +389,10 @@ const PositionsManagement = () => {
           : pos
       ));
       
-      // Trigger dashboard refresh to show updated activity
       triggerActivityRefresh();
       
-      // Show success toast
       toast.success(`Position "${formData.title}" updated successfully!`);
       
-      // Reset form
       setFormData({ title: '', department: '', type: 'Full-time', status: 'Active', description: '', role_overview: '', key_responsibilities: [] });
       setEditingPosition(null);
       setShowForm(false);
@@ -461,7 +435,6 @@ const PositionsManagement = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPositions = positions.slice(indexOfFirstItem, indexOfLastItem);
   
-  // Debug pagination
   console.log('Total positions:', positions.length);
   console.log('Current page:', currentPage);
   console.log('Items per page:', itemsPerPage);

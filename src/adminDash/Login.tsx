@@ -20,11 +20,8 @@ const AdminLogin = () => {
     setError('');
     
     try {
-      // Backend comment: Using admin login endpoint for admin authentication
-      // Admin user must have is_staff=True in the database
       const response = await authAPI.adminLogin(credentials);
       
-      // Debug: Log the response structure
       console.log('Admin login response:', response);
       
       if (!response.user || !response.user.email) {
@@ -40,7 +37,6 @@ const AdminLogin = () => {
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Invalid credentials. Please try again.';
       
-      // Provide more specific error message for admin login
       if (errorMessage.includes('Admin privileges required')) {
         setError('Admin access required. This account does not have admin privileges.');
       } else if (errorMessage.includes('Invalid credentials')) {

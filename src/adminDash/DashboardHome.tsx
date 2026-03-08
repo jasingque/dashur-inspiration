@@ -23,13 +23,11 @@ const DashboardHome = () => {
   const [loading, setLoading] = useState(true);
   const [activityFilter, setActivityFilter] = useState<'all' | 'application' | 'contact' | 'position'>('all');
 
-  // Listen for dashboard refresh events
   useDashboardRefresh(() => {
     console.log('Dashboard refresh event received - triggering refreshRecentActivity');
     refreshRecentActivity();
   });
 
-  // Refresh recent activity
   const refreshRecentActivity = async () => {
     try {
       setLoading(true);
@@ -39,19 +37,17 @@ const DashboardHome = () => {
       setRecentActivity(activity);
     } catch (err) {
       console.error('Error refreshing recent activity:', err);
-      setRecentActivity([]); // Set empty array on error to prevent infinite loading
+      setRecentActivity([]); 
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch dashboard stats from API
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
         
-        // Fetch dashboard stats
         const stats = await adminAPI.getDashboardStats();
         console.log('Dashboard stats:', stats);
 
@@ -62,14 +58,13 @@ const DashboardHome = () => {
           { label: 'Active Jobs', value: stats.active_positions.toString(), icon: <Check />, color: 'bg-orange-500' },
         ]);
 
-        // Fetch recent activity
         try {
           const recentActivity = await adminAPI.getRecentActivity();
           console.log('Recent activity data:', recentActivity);
           setRecentActivity(recentActivity);
         } catch (activityErr) {
           console.error('Error fetching recent activity:', activityErr);
-          setRecentActivity([]); // Set empty array on error
+          setRecentActivity([]); 
         }
         
       } catch (err) {
@@ -82,14 +77,11 @@ const DashboardHome = () => {
     fetchDashboardData();
   }, []);
 
-  // Filter activities based on selected filter
   const filteredActivities = Array.isArray(recentActivity) ? recentActivity.filter(activity => {
-    // Map backend types to frontend filter types
     const mappedType = activity.type === 'contact_form' ? 'contact' : activity.type;
     return activityFilter === 'all' || mappedType === activityFilter;
   }) : [];
 
-  // Helper function to format time
   const formatTime = (timestamp: string) => {
     const date = new Date(timestamp);
     const now = new Date();
@@ -105,7 +97,6 @@ const DashboardHome = () => {
     return date.toLocaleDateString();
   };
 
-  // Helper function to get activity display type
   const getActivityDisplayType = (type: string) => {
     return type === 'contact_form' ? 'contact' : type;
   };
@@ -142,7 +133,6 @@ const DashboardHome = () => {
           </button>
         </div>
         
-        {/* Activity Filter */}
         <div className="flex gap-2 mb-4">
           {['all', 'application', 'contact', 'position'].map((filter) => (
             <button
@@ -159,7 +149,6 @@ const DashboardHome = () => {
           ))}
         </div>
 
-        {/* Activity List */}
         <div className="space-y-3">
           {loading ? (
             <div className="flex items-center justify-center py-8">

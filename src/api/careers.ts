@@ -41,25 +41,19 @@ export interface ApplicationData {
 }
 
 export const careersAPI = {
-  // Get all positions
   getPositions: async (): Promise<Position[]> => {
     const response = await api.get('/careers/positions/');
     console.log('Raw careers positions response:', response.data);
-    // Handle wrapped response structure from api_response function
     const data = response.data.data || response.data;
     console.log('Processed careers positions data:', data);
-    // Ensure we return an array
     return Array.isArray(data) ? data : [];
   },
 
-  // Get position by ID
   getPosition: async (id: string): Promise<Position> => {
     const response = await api.get(`/careers/positions/${id}/`);
-    // Handle wrapped response structure from api_response function
     return response.data.data || response.data;
   },
 
-  // Apply for a job
   applyForJob: async (applicationData: ApplicationData): Promise<JobApplication> => {
     const formData = new FormData();
     Object.keys(applicationData).forEach(key => {
@@ -74,7 +68,6 @@ export const careersAPI = {
         'Content-Type': 'multipart/form-data',
       },
     });
-    // Handle wrapped response structure from api_response function
     return response.data.data || response.data;
   },
 };

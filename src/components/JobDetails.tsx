@@ -28,7 +28,6 @@ export const JobDetails = ({ id }: { id?: string }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch position data from admin API
   useEffect(() => {
     const fetchPosition = async () => {
       if (!id) {
@@ -41,22 +40,18 @@ export const JobDetails = ({ id }: { id?: string }) => {
         setLoading(true);
         console.log('Fetching position with ID/slug:', id);
         
-        // Since URLs use slugs instead of UUIDs, we need to search through positions
         const positions = await adminAPI.getPositions();
         console.log('All positions from API:', positions);
         console.log('Position IDs from API:', positions.map((pos) => ({ id: pos.id, title: pos.title })));
         
-        // Try multiple matching strategies
         let foundPosition = positions.find((pos) => pos.id === id);
         console.log('Direct ID match result:', foundPosition);
         
-        // If not found, try string comparison
         if (!foundPosition) {
           foundPosition = positions.find((pos) => String(pos.id) === String(id));
           console.log('String ID match result:', foundPosition);
         }
         
-        // If still not found, try case-insensitive title match (fallback)
         if (!foundPosition && id) {
           foundPosition = positions.find((pos) => 
             pos.title.toLowerCase().replace(/\s+/g, '-') === id.toLowerCase()
@@ -64,7 +59,6 @@ export const JobDetails = ({ id }: { id?: string }) => {
           console.log('Title slug match result:', foundPosition);
         }
         
-        // Try partial title match as another fallback
         if (!foundPosition && id) {
           foundPosition = positions.find((pos) => 
             pos.title.toLowerCase().includes(id.toLowerCase()) ||
@@ -76,7 +70,6 @@ export const JobDetails = ({ id }: { id?: string }) => {
         console.log('Final found position:', foundPosition);
         
         if (foundPosition) {
-          // Transform the position data to match our interface
           const transformedPosition: Position = {
             id: foundPosition.id,
             title: foundPosition.title,
@@ -103,7 +96,6 @@ export const JobDetails = ({ id }: { id?: string }) => {
     fetchPosition();
   }, [id]);
 
-  // Fallback content for when position data is not available
   const fallbackContent = {
     overview: 'Join our innovative team and help shape the future of AI.',
     responsibilities: [
@@ -114,13 +106,11 @@ export const JobDetails = ({ id }: { id?: string }) => {
     ]
   };
 
-  // Use position data if available, otherwise use fallback
   const content = position ? {
     overview: position.role_overview,
     responsibilities: position.key_responsibilities
   } : fallbackContent;
 
-  // Theme styling based on position type
   const themeMap: Record<string, { border: string; icon: string }> = {
     'Full-time': { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" },
     'Part-time': { border: "border-emerald-500", icon: "bg-emerald-500/20 text-emerald-500" },

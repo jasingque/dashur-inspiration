@@ -23,10 +23,6 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
   const [positions, setPositions] = useState<CareerPosition[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Backend comment: careersAPI.getPositions() returns Position objects with different structure
-  // Backend returns: id, title, description, requirements, location, employment_type, is_active
-  // Frontend expects: id, title, description, tags, imageUrl
-  
   useEffect(() => {
     if (!isHomePage) {
       window.scrollTo(0, 0);
@@ -36,7 +32,6 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
     const fetchPositions = async () => {
       try {
         const data = await careersAPI.getPositions();
-        // Transform backend data to frontend format
         const transformedData = data.map((position: Position, index: number) => {
           const images = [SoftwareEngineer, QAEngineer, MobileDeveloper, IOSDeveloper, DevOpsEngineer];
           const id = position.title.toLowerCase().replace(/\s+/g, '-');
@@ -56,7 +51,7 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
         setPositions(transformedData);
       } catch (err) {
         console.error('Error fetching positions:', err);
-        setPositions([]); // Set empty array if API fails
+        setPositions([]);
       } finally {
         setLoading(false);
       }
@@ -71,8 +66,8 @@ export const CAREERS = ({ limit, isHomePage = false }: { limit?: number, isHomeP
     offset: ["start start", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.9]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
   const displayedStudies = limit ? positions.slice(0, limit) : positions;
 
   if (loading) {

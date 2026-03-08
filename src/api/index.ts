@@ -1,11 +1,9 @@
-// Main API exports
 export { default as api } from './axios';
 export { authAPI } from './auth';
 export { careersAPI } from './careers';
 export { contactAPI } from './contact';
 export { adminAPI } from './admin';
 
-// Re-export types
 export type {
   LoginCredentials,
   RegisterData,

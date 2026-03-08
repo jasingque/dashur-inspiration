@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 
-// Simple event emitter for dashboard refresh
 type DashboardRefreshEvent = 'refresh-activity' | 'refresh-stats' | 'refresh-all';
 
 const eventListeners = new Map<DashboardRefreshEvent, Set<() => void>>();
@@ -12,7 +11,6 @@ export const useDashboardEvent = () => {
     }
     eventListeners.get(event)!.add(callback);
     
-    // Return unsubscribe function
     return () => {
       eventListeners.get(event)?.delete(callback);
     };
@@ -28,7 +26,6 @@ export const useDashboardEvent = () => {
   return { subscribe, emit };
 };
 
-// Hook for components that want to listen to dashboard refresh events
 export const useDashboardRefresh = (onRefresh?: () => void) => {
   const { subscribe } = useDashboardEvent();
   
@@ -36,7 +33,6 @@ export const useDashboardRefresh = (onRefresh?: () => void) => {
     onRefresh?.();
   }, [onRefresh]);
 
-  // Subscribe to refresh events
   useState(() => {
     const unsubscribe = subscribe('refresh-activity', refreshActivity);
     return unsubscribe;
@@ -45,7 +41,6 @@ export const useDashboardRefresh = (onRefresh?: () => void) => {
   return { refreshActivity };
 };
 
-// Hook for components that want to trigger dashboard refresh
 export const useDashboardTrigger = () => {
   const { emit } = useDashboardEvent();
   

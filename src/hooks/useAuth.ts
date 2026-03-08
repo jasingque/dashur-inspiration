@@ -5,20 +5,17 @@ export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const loading = useState(() => {
     const token = localStorage.getItem('access_token');
-    return !token; // Only loading if no token exists
+    return !token; 
   })[0];
 
-  // Initialize user data if tokens exist
   useEffect(() => {
     const initializeAuth = async () => {
       const token = localStorage.getItem('access_token');
       if (token && !user) {
         try {
-          // Get current user data
           const response = await authAPI.getCurrentUser();
           setUser(response);
         } catch {
-          // Token is invalid, clear it
           localStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
         }
@@ -44,7 +41,6 @@ export const useAuth = () => {
     last_name: string;
   }) => {
     const response = await authAPI.register(userData);
-    // Backend returns success message, not tokens
     return response;
   }, []);
 
