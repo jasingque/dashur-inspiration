@@ -14,7 +14,6 @@ export default function ApplyForm() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch position data from API
   useEffect(() => {
     const fetchPosition = async () => {
       if (!id) return;
@@ -42,13 +41,11 @@ export default function ApplyForm() {
     fetchPosition();
   }, [id]);
 
-  // Helper function to get job title from position data
   const getJobTitle = useCallback(() => {
     if (position?.title) {
       return position.title;
     }
     
-    // Fallback: Extract title from ID if position data is not available
     if (id) {
       return id
         .split('-')
@@ -59,7 +56,6 @@ export default function ApplyForm() {
     return undefined;
   }, [position, id]);
 
-  // Get position UUID for application submission
   const getPositionId = () => {
     if (position && position.id) {
       return position.id;
@@ -69,7 +65,6 @@ export default function ApplyForm() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Force title update for job position with dynamic data
     const jobTitle = getJobTitle();
     if (jobTitle && jobTitle !== 'Position') {
       document.title = `${jobTitle} - Dashur AI`;

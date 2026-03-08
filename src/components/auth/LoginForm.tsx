@@ -23,7 +23,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onLogi
 
     try {
       await login(email, password);
-      // Call success callback if provided
       if (onLoginSuccess) {
         onLoginSuccess();
       }
@@ -33,7 +32,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToRegister, onLogi
       if (err instanceof Error) {
         errorMessage = err.message;
       } else if (typeof err === 'object' && err !== null) {
-        // Handle API validation errors
         const errorObj = err as { response?: { data?: { message?: string }, status?: number } };
         if (errorObj.response?.data?.message) {
           errorMessage = errorObj.response.data.message;

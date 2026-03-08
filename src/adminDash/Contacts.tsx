@@ -16,9 +16,6 @@ interface Contact {
   status: 'New' | 'Responded' | 'Pending' | 'Closed';
 }
 
-// Backend comment: AdminContact interface from API has different field names
-// Backend returns: first_name, last_name, subject, message, submitted_at, status
-// Frontend expects: name, date
 
 const ContactsManagement = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -27,10 +24,8 @@ const ContactsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   
-  // Get dashboard trigger function
   const triggerActivityRefresh: () => void = useDashboardTrigger().triggerActivityRefresh;
 
-  // Fetch contacts from API
   useEffect(() => {
     const fetchContacts = async () => {
       try {
@@ -38,7 +33,6 @@ const ContactsManagement = () => {
         console.log('Raw contacts response from API:', data);
         console.log('First contact data:', data[0]);
         
-        // Transform backend data to frontend format
         const transformedData: Contact[] = data.map((contact: AdminContact) => ({
           id: contact.id,
           name: contact.name,
@@ -68,7 +62,6 @@ const ContactsManagement = () => {
         contact.id === id ? { ...contact, status: newStatus } : contact
       ));
       toast.success(`Contact status updated to ${newStatus} successfully!`);
-      // Trigger dashboard refresh to show new activity
       console.log('Triggering dashboard refresh after contact status update');
       triggerActivityRefresh();
     } catch (err) {
@@ -83,7 +76,6 @@ const ContactsManagement = () => {
       await adminAPI.deleteContact(id);
       setContacts(contacts.filter(contact => contact.id !== id));
       toast.success('Contact deleted successfully!');
-      // Trigger dashboard refresh to show new activity
       console.log('Triggering dashboard refresh after contact deletion');
       if (typeof triggerActivityRefresh === 'function') {
         triggerActivityRefresh();

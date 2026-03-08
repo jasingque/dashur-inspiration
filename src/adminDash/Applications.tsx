@@ -27,12 +27,10 @@ const ApplicationsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // Fetch applications from API
   useEffect(() => {
     const fetchApplications = async () => {
       try {
         const data = await adminAPI.getApplications();
-        // Transform backend data to frontend format
         const transformedData: Application[] = data.map((app: AdminApplication) => {
           console.log('Full application object:', app);
           console.log('Position field:', app.position);
@@ -45,7 +43,7 @@ const ApplicationsManagement = () => {
             name: `${app.first_name} ${app.last_name}`,
             email: app.email,
             position: app.position_title || `Position ID: ${app.position?.substring(0, 8)}...`,
-            date: app.applied_at ? app.applied_at.split('T')[0] : '', // Date only, no time
+            date: app.applied_at ? app.applied_at.split('T')[0] : '', 
             status: app.status as Application['status'],
             resume: app.resume
           };

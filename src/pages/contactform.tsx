@@ -42,7 +42,6 @@ export const Contact: React.FC = () => {
       const formData = new FormData(form);
       
       try {
-        // Client-side validation
         const firstName = formData.get('first_name') as string;
         const lastName = formData.get('last_name') as string;
         const email = formData.get('email') as string;
@@ -70,8 +69,6 @@ export const Contact: React.FC = () => {
           return;
         }
 
-        // Backend comment: contactAPI.submitContact expects ContactData with first_name, last_name, email, subject, message
-        // Backend requires: first_name, last_name, email, subject, message
         const contactData = {
           first_name: firstName.trim(),
           last_name: lastName.trim(),

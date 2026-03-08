@@ -32,7 +32,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
       return;
     }
 
-    // Name validation - match backend requirements
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(firstName)) {
       setError('First name must contain only letters and be at least 2 characters long');
@@ -50,7 +49,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
       return;
     }
 
-    // Password validation
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_\-+=])/;
     if (!passwordRegex.test(password)) {
       setError('Password must contain at least 8 characters, one uppercase, one lowercase, one digit, and one special character (@$!%*?&_-+=)');
@@ -73,7 +71,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
         last_name: lastName,
       });
       
-      // Registration successful - show success message and switch to login
       setSuccess('Registration successful! You can now log in.');
       if (onSwitchToLogin) {
         setTimeout(() => onSwitchToLogin(), 1500);
@@ -84,12 +81,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
       if (err instanceof Error) {
         errorMessage = err.message;
       } else if (typeof err === 'object' && err !== null) {
-        // Handle API validation errors
         const errorObj = err as { response?: { data?: { message?: string | Record<string, string[]>; errors?: string | Record<string, string[]> } } };
         
         if (errorObj.response?.data?.message) {
           if (typeof errorObj.response.data.message === 'object') {
-            // Handle field-specific errors
             const errors = errorObj.response.data.message;
             errorMessage = Object.entries(errors)
               .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
@@ -98,7 +93,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
             errorMessage = errorObj.response.data.message;
           }
         } else if (errorObj.response?.data?.errors) {
-          // Handle alternative error format
           const errors = errorObj.response.data.errors;
           if (typeof errors === 'object') {
             errorMessage = Object.entries(errors)
@@ -109,7 +103,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin }) =
           }
         }
         
-        // If we still have a generic error, provide helpful hints
         if (errorMessage === 'Registration failed. Please try again.') {
           errorMessage = 'Registration failed. Please ensure:\n• Names are at least 2 characters and letters only\n• Email is valid\n• Password has 8+ chars with uppercase, lowercase, number, and special character (@$!%*?&_-+=)';
         }

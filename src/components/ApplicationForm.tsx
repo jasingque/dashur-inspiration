@@ -31,7 +31,6 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle, positionId }:
     const form = e.target as HTMLFormElement;
     
     try {
-      // Use job title directly since positions API requires authentication
       const positionTitle = jobTitle || 'Software Developer';
       
       const resumeFile = (form.elements.namedItem('resume') as HTMLInputElement).files?.[0];
@@ -41,19 +40,17 @@ export const ApplicationForm = ({ onSubmit, isSubmitted, jobTitle, positionId }:
         return;
       }
 
-      // Backend comment: careersAPI.applyForJob expects ApplicationData with position as UUID
-      // Backend requires: position (UUID), first_name, last_name, email, phone, cover_letter, resume (File)
       await careersAPI.applyForJob({
-        position: positionId || positionTitle, // Use UUID if available, fallback to title
+        position: positionId || positionTitle,
         first_name: (form.elements.namedItem('first_name') as HTMLInputElement).value,
         last_name: (form.elements.namedItem('last_name') as HTMLInputElement).value,
         email: (form.elements.namedItem('email') as HTMLInputElement).value,
-        phone: '', // Optional field
-        cover_letter: '', // Optional field
+        phone: '',
+        cover_letter: '',
         resume: resumeFile
       });
 
-      setSelectedFile(null); // Reset file selection
+      setSelectedFile(null);
       onSubmit(e);
     } catch (err) {
       setError('Failed to submit application. Please try again.');
