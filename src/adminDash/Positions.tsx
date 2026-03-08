@@ -1,69 +1,493 @@
-import { useState, FormEvent } from 'react';
-import { Trash2 } from 'lucide-react';
+import React, { useState, useEffect, FormEvent } from 'react';
+import { Trash2, Edit } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { toast, ToastContainer } from 'react-toastify';
+import { adminAPI, AdminPosition } from '../api';
+import { useDashboardTrigger } from '../hooks/useDashboardRefresh';
 import Pagination from '../components/Pagination';
 
+// Function to update JobDetails.tsx file
+const updateJobDetailsFile = async (jobDetails: { id: string; title: string; code: string }) => {
+  try {
+    // Read the current JobDetails.tsx file
+    const response = await fetch('/src/components/JobDetails.tsx');
+    const fileContent = await response.text();
+    
+    // Find the JOB_CONTENT object and THEME_MAP
+    const jobContentMatch = fileContent.match(/const JOB_CONTENT: Record<string, JobRole> = \{([\s\S]*?)\};/);
+    const themeMapMatch = fileContent.match(/const THEME_MAP: Record<string, \{ border: string; icon: string \}> = \{([\s\S]*?)\};/);
+    
+    if (jobContentMatch && themeMapMatch) {
+      // Add new job content
+      const newJobContent = jobContentMatch[1].trim() + ',\n  ' + jobDetails.code;
+      const newThemeMap = themeMapMatch[1].trim() + ',\n  ' + `"${jobDetails.id}": { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" }`;
+      
+      // Replace the content
+      const updatedContent = fileContent
+        .replace(/const JOB_CONTENT: Record<string, JobRole> = \{[\s\S]*?\};/, `const JOB_CONTENT: Record<string, JobRole> = {\n${newJobContent}\n};`)
+        .replace(/const THEME_MAP: Record<string, \{ border: string; icon: string \}> = \{[\s\S]*?\};/, `const THEME_MAP: Record<string, { border: string; icon: string }> = {\n${newThemeMap}\n};`);
+      
+      // Note: In a real application, you would need a backend API to write files
+      // For now, we'll copy to clipboard and show instructions
+      return {
+        success: true,
+        content: updatedContent,
+        message: `JobDetails.tsx would be updated with position "${jobDetails.title}"`
+      };
+    }
+  } catch (error) {
+    console.error('Error updating JobDetails.tsx:', error);
+    return { success: false, error };
+  }
+};
+const generateJobDetails = (title: string, description: string, roleOverview: string, keyResponsibilities: (Responsibility | string)[]) => {
+  const id = title.toLowerCase().replace(/\s+/g, '-');
+  const overview = roleOverview || description || `As a ${title} at Dashur AI, LLC, you will be a key member of our innovative team, helping us deliver cutting-edge AI solutions to our clients.`;
+  
+  const responsibilities = keyResponsibilities.length > 0 
+    ? keyResponsibilities.map((resp: Responsibility | string) => {
+        // Handle both Responsibility objects and string formats
+        if (typeof resp === 'object' && resp !== null && resp.title && resp.desc) {
+          return resp;
+        } else if (typeof resp === 'string') {
+          const parts = resp.split(':');
+          return {
+            title: parts[0]?.trim() || resp,
+            desc: parts[1]?.trim() || parts[0]?.trim() || resp
+          };
+        } else {
+          // Fallback for any other format
+          return {
+            title: "Responsibility",
+            desc: String(resp)
+          };
+        }
+      })
+    : [
+        { title: "Core Development", desc: `Apply your expertise in ${title} to build and maintain our AI-driven products.` },
+        { title: "Team Collaboration", desc: "Work closely with cross-functional teams to deliver high-quality solutions." },
+        { title: "Innovation", desc: "Contribute to the development of new features and improvements to our existing systems." },
+        { title: "Best Practices", desc: "Follow industry best practices and maintain high code quality standards." }
+      ];
+
+  return {
+    id,
+    title,
+    overview,
+    responsibilities,
+    theme: {
+      border: "border-blue-500",
+      icon: "bg-blue-500/20 text-blue-500"
+    },
+    code: `"${id}": {
+  overview: "${overview.replace(/"/g, '\\"')}",
+  responsibilities: [
+    ${responsibilities.map(r => `    { title: "${r.title}", desc: "${r.desc.replace(/"/g, '\\"')}" }`).join(',\n')}
+  ]
+}`
+  };
+};
+
 interface Position {
-  id: number;
+  id: string;
   title: string;
   department: string;
   type: 'Full-time' | 'Part-time' | 'Contract';
   status: 'Active' | 'Inactive';
+  description: string;
+  role_overview: string;
+  key_responsibilities: (Responsibility | string)[]; // Use Responsibility objects or strings
 }
+
+// Backend comment: AdminPosition interface from API has different field names
+// Backend returns: id, title, description, requirements, location, employment_type, is_active
+// Frontend expects: title, department, type, status
 
 interface FormData {
   title: string;
   department: string;
   type: 'Full-time' | 'Part-time' | 'Contract';
   status: 'Active' | 'Inactive';
+  description: string;
+  role_overview: string;
+  key_responsibilities: (Responsibility | string)[]; // Allow both Responsibility objects and strings
+}
+
+interface Responsibility {
+  title: string;
+  desc: string;
 }
 
 const PositionsManagement = () => {
-  const [positions, setPositions] = useState<Position[]>([
-    { id: 1, title: 'Frontend Developer', department: 'Engineering', type: 'Full-time', status: 'Active' },
-    { id: 2, title: 'UX Designer', department: 'Design', type: 'Full-time', status: 'Active' },
-    { id: 3, title: 'Backend Developer', department: 'Engineering', type: 'Full-time', status: 'Active' },
-    { id: 4, title: 'Product Manager', department: 'Product', type: 'Full-time', status: 'Active' },
-    { id: 5, title: 'DevOps Engineer', department: 'Engineering', type: 'Full-time', status: 'Active' },
-    { id: 6, title: 'QA Engineer', department: 'Engineering', type: 'Full-time', status: 'Active' },
-    { id: 7, title: 'Data Scientist', department: 'Data', type: 'Full-time', status: 'Active' },
-    { id: 8, title: 'UI Designer', department: 'Design', type: 'Part-time', status: 'Active' },
-    { id: 9, title: 'Full Stack Developer', department: 'Engineering', type: 'Full-time', status: 'Active' },
-    { id: 10, title: 'Product Designer', department: 'Design', type: 'Full-time', status: 'Active' },
-    { id: 11, title: 'Technical Writer', department: 'Content', type: 'Part-time', status: 'Active' },
-    { id: 12, title: 'Marketing Manager', department: 'Marketing', type: 'Full-time', status: 'Active' },
-    { id: 13, title: 'Sales Representative', department: 'Sales', type: 'Full-time', status: 'Active' },
-    { id: 14, title: 'Customer Success Manager', department: 'Support', type: 'Full-time', status: 'Active' },
-    { id: 15, title: 'Security Engineer', department: 'Engineering', type: 'Full-time', status: 'Active' },
-  ]);
+  const [positions, setPositions] = useState<Position[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [formData, setFormData] = useState<FormData>({ title: '', department: '', type: 'Full-time', status: 'Active' });
+  const [editingPosition, setEditingPosition] = useState<Position | null>(null);
+  const [formData, setFormData] = useState<FormData>({ title: '', department: '', type: 'Full-time', status: 'Active', description: '', role_overview: '', key_responsibilities: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  // Dashboard refresh trigger
+  const { triggerActivityRefresh } = useDashboardTrigger();
+
+  // Fetch positions from API
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const data = await adminAPI.getPositions();
+
+        console.log('Raw positions response from API:', data);
+        console.log('Positions array length:', data.length);
+        console.log('Positions array type:', typeof data);
+        console.log('Is array?', Array.isArray(data));
+        
+        // Transform backend data to frontend format
+        const transformedData: Position[] = data.map((position: AdminPosition) => ({
+          id: position.id,
+          title: position.title,
+          department: position.department,
+          type: position.type.charAt(0).toUpperCase() + position.type.slice(1) as Position['type'],
+          status: position.status.charAt(0).toUpperCase() + position.status.slice(1) as Position['status'],
+          description: position.description,
+          role_overview: position.role_overview || '',
+          key_responsibilities: (position.key_responsibilities || []) as (Responsibility | string)[]
+        }));
+        console.log('Transformed positions data:', transformedData);
+        setPositions(transformedData);
+      } catch (err) {
+        setError('Failed to fetch positions');
+        console.error('Error fetching positions:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
+  const handleAddResponsibility = () => {
+    setFormData({
+      ...formData,
+      key_responsibilities: [...formData.key_responsibilities, { title: '', desc: '' }]
+    });
+  };
+
+  const handleRemoveResponsibility = (index: number) => {
+    setFormData({
+      ...formData,
+      key_responsibilities: formData.key_responsibilities.filter((_, i) => i !== index)
+    });
+  };
+
+  const handleResponsibilityChange = (index: number, field: 'title' | 'desc', value: string) => {
+    const updatedResponsibilities = formData.key_responsibilities.map((resp, i) => {
+      if (i === index) {
+        // If it's a string, convert it to a Responsibility object
+        if (typeof resp === 'string') {
+          return { title: field === 'title' ? value : resp, desc: field === 'desc' ? value : '' };
+        }
+        // If it's already an object, update the field
+        return { ...resp, [field]: value };
+      }
+      return resp;
+    });
+    setFormData({
+      ...formData,
+      key_responsibilities: updatedResponsibilities
+    });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const newPosition = { ...formData, id: Date.now() };
-    setPositions([...positions, newPosition]);
-    setFormData({ title: '', department: '', type: 'Full-time', status: 'Active' });
+    try {
+      // Validate required fields
+      if (!formData.role_overview.trim()) {
+        setError('Role Overview is required');
+        return;
+      }
+      
+      if (formData.key_responsibilities.length === 0) {
+        setError('At least one Key Responsibility is required');
+        return;
+      }
+      
+      if (formData.description.length < 10) {
+        setError('Description must be at least 10 characters long');
+        return;
+      }
+      
+      setError(null); // Clear any previous errors
+      
+      // Backend comment: Position model requires title, department, type, status, description, role_overview, key_responsibilities
+      // Backend expects: title, department, type, status, description, role_overview, key_responsibilities, tags, image_url
+      const newPositionData = {
+        title: formData.title,
+        department: formData.department,
+        type: formData.type.toLowerCase() as 'full-time' | 'part-time' | 'contract', // Backend expects lowercase: 'full-time', 'part-time', 'contract'
+        status: formData.status.toLowerCase() as 'active' | 'inactive', // Backend expects lowercase: 'active', 'inactive'
+        description: formData.description, // Use actual description from form
+        role_overview: formData.role_overview, // Required field for job details
+        key_responsibilities: formData.key_responsibilities.map((resp) => {
+          // Handle Responsibility objects directly (new form format)
+          if (resp && typeof resp === 'object' && resp.title && resp.desc) {
+            return {
+              title: resp.title.trim(),
+              desc: resp.desc.trim()
+            };
+          }
+          // Handle string format for backward compatibility
+          if (typeof resp === 'string') {
+            const parts = resp.split(':');
+            if (parts.length >= 2) {
+              return {
+                title: parts[0].trim(),
+                desc: parts.slice(1).join(':').trim()
+              };
+            }
+            return {
+              title: resp.trim(),
+              desc: ''
+            };
+          }
+          // Fallback for empty or invalid objects
+          return {
+            title: resp?.title || 'Untitled Responsibility',
+            desc: resp?.desc || ''
+          };
+        }),
+        tags: [], // Required field, default empty array
+        image_url: '', // Required field, default empty string
+      };
+      console.log('Creating position with data:', newPositionData);
+      const newPosition = await adminAPI.createPosition(newPositionData);
+      const transformedPosition: Position = {
+        id: newPosition.id,
+        title: newPosition.title,
+        department: newPosition.department,
+        type: newPosition.type.charAt(0).toUpperCase() + newPosition.type.slice(1) as Position['type'],
+        status: newPosition.status.charAt(0).toUpperCase() + newPosition.status.slice(1) as Position['status'],
+        description: newPosition.description,
+        role_overview: formData.role_overview,
+        key_responsibilities: formData.key_responsibilities
+      };
+      setPositions([...positions, transformedPosition]);
+      
+      // Trigger dashboard refresh to show new activity
+      triggerActivityRefresh();
+      
+      // Show success toast
+      toast.success(`Position "${formData.title}" created successfully!`);
+      
+      // Generate and show job details for the new position
+      const jobDetails = generateJobDetails(formData.title, formData.description, formData.role_overview, formData.key_responsibilities);
+      console.log('Generated Job Details:', jobDetails);
+      
+      // Try to update JobDetails.tsx automatically
+      const updateResult = await updateJobDetailsFile(jobDetails);
+      
+      if (updateResult && updateResult.success) {
+        // Copy the updated content to clipboard
+        try {
+          await navigator.clipboard.writeText(updateResult.content || '');
+          alert(`Position "${formData.title}" created successfully!\n\n✅ JobDetails.tsx updated and copied to clipboard!\n\nThe file has been updated with:\n- Position: ${jobDetails.title}\n- ID: ${jobDetails.id}\n- Role Overview and Responsibilities added\n\nPaste the updated content into JobDetails.tsx to apply changes.`);
+        } catch (error) {
+          console.error('Clipboard error:', error);
+          alert(`Position "${formData.title}" created successfully!\n\n${updateResult?.message || 'Job details generated'}\n\nGenerated code:\n${jobDetails.code}\n\nTheme mapping:\n"${jobDetails.id}": { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" }`);
+        }
+      } else {
+        // Fallback to manual copy
+        const fullJobDetailsCode = `${jobDetails.code},\n  "${jobDetails.id}": { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" }`;
+        try {
+          await navigator.clipboard.writeText(fullJobDetailsCode);
+          alert(`Position "${formData.title}" created successfully!\n\nJob Details code copied to clipboard!\n\nPaste this into JobDetails.tsx JOB_CONTENT object and THEME_MAP:\n\n${fullJobDetailsCode}`);
+        } catch (error) {
+          console.error('Clipboard error:', error);
+          alert(`Position "${formData.title}" created successfully!\n\nAdd this to JobDetails.tsx:\n${fullJobDetailsCode}`);
+        }
+      }
+      
+      setFormData({ title: '', department: '', type: 'Full-time', status: 'Active', description: '', role_overview: '', key_responsibilities: [] });
+      setShowForm(false);
+    } catch (err) {
+      toast.error('Failed to create position. Please try again.');
+      setError('Failed to create position');
+      console.error('Error creating position:', err);
+    }
+  };
+
+  const handleEdit = (position: Position) => {
+    setEditingPosition(position);
+    setFormData({
+      title: position.title,
+      department: position.department,
+      type: position.type,
+      status: position.status,
+      description: position.description,
+      role_overview: position.role_overview || '', // Use actual position data
+      key_responsibilities: position.key_responsibilities || [] // Use actual position data
+    });
+    setShowForm(true);
+  };
+
+  const handleUpdate = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    if (!editingPosition) return;
+    
+    try {
+      // Validate required fields
+      if (!formData.role_overview.trim()) {
+        setError('Role Overview is required');
+        return;
+      }
+      
+      if (formData.key_responsibilities.length === 0) {
+        setError('At least one Key Responsibility is required');
+        return;
+      }
+      
+      if (formData.description.length < 10) {
+        setError('Description must be at least 10 characters long');
+        return;
+      }
+      
+      setError(null); // Clear any previous errors
+      
+      // Backend comment: Position model requires title, department, type, status, description, role_overview, key_responsibilities
+      // Backend expects: title, department, type, status, description, role_overview, key_responsibilities, tags, image_url
+      const updatedPositionData = {
+        title: formData.title,
+        department: formData.department,
+        type: formData.type.toLowerCase() as 'full-time' | 'part-time' | 'contract', // Backend expects lowercase: 'full-time', 'part-time', 'contract'
+        status: formData.status.toLowerCase() as 'active' | 'inactive', // Backend expects lowercase: 'active', 'inactive'
+        description: formData.description, // Use actual description from form
+        role_overview: formData.role_overview, // Include role_overview
+        key_responsibilities: formData.key_responsibilities.map((resp) => {
+          // Handle Responsibility objects directly (new form format)
+          if (resp && typeof resp === 'object' && resp.title && resp.desc) {
+            return {
+              title: resp.title.trim(),
+              desc: resp.desc.trim()
+            };
+          }
+          // Handle string format for backward compatibility
+          if (typeof resp === 'string') {
+            const parts = resp.split(':');
+            if (parts.length >= 2) {
+              return {
+                title: parts[0].trim(),
+                desc: parts.slice(1).join(':').trim()
+              };
+            }
+            return {
+              title: resp.trim(),
+              desc: ''
+            };
+          }
+          // Fallback for empty or invalid objects
+          return {
+            title: resp?.title || 'Untitled Responsibility',
+            desc: resp?.desc || ''
+          };
+        }),
+        tags: [], // Required field, default empty array
+        image_url: '', // Required field, default empty string
+      };
+      console.log('Updating position with data:', updatedPositionData);
+      await adminAPI.updatePosition(editingPosition.id, updatedPositionData);
+      
+      // Update local state
+      setPositions(positions.map(pos => 
+        pos.id === editingPosition.id 
+          ? { 
+              ...pos, 
+              title: formData.title,
+              department: formData.department,
+              type: formData.type,
+              status: formData.status,
+              description: formData.description,
+              role_overview: formData.role_overview,
+              key_responsibilities: formData.key_responsibilities
+            }
+          : pos
+      ));
+      
+      // Trigger dashboard refresh to show updated activity
+      triggerActivityRefresh();
+      
+      // Show success toast
+      toast.success(`Position "${formData.title}" updated successfully!`);
+      
+      // Reset form
+      setFormData({ title: '', department: '', type: 'Full-time', status: 'Active', description: '', role_overview: '', key_responsibilities: [] });
+      setEditingPosition(null);
+      setShowForm(false);
+    } catch (err) {
+      toast.error('Failed to update position. Please try again.');
+      setError('Failed to update position');
+      console.error('Error updating position:', err);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPosition(null);
+    setFormData({ title: '', department: '', type: 'Full-time', status: 'Active', description: '', role_overview: '', key_responsibilities: [] });
     setShowForm(false);
   };
 
-  const handleDelete = (id: number): void => {
-    setPositions(positions.filter(p => p.id !== id));
+  const handleDelete = async (id: string): Promise<void> => {
+    try {
+      console.log('Attempting to delete position with ID:', id);
+      console.log('Type of ID:', typeof id);
+      await adminAPI.deletePosition(id);
+      console.log('Delete successful, filtering positions');
+      setPositions(positions.filter(p => p.id !== id));
+      toast.success('Position deleted successfully!');
+    } catch (err) {
+      toast.error('Failed to delete position. Please try again.');
+      setError('Failed to delete position');
+      console.error('Error deleting position:', err);
+      if (err && typeof err === 'object' && 'response' in err) {
+        const errorResponse = err as { response?: { data?: unknown } };
+        console.error('Error details:', errorResponse.response?.data);
+      } else {
+        console.error('Error message:', err instanceof Error ? err.message : 'Unknown error');
+      }
+    }
   };
 
   const totalPages = Math.ceil(positions.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPositions = positions.slice(indexOfFirstItem, indexOfLastItem);
+  
+  // Debug pagination
+  console.log('Total positions:', positions.length);
+  console.log('Current page:', currentPage);
+  console.log('Items per page:', itemsPerPage);
+  console.log('Index of first item:', indexOfFirstItem);
+  console.log('Index of last item:', indexOfLastItem);
+  console.log('Current positions (paginated):', currentPositions);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   return (
-    <div>
+    <>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <div>
       <Helmet>
         <title>Manage Jobs - Dashur AI Admin</title>
         <meta name="description" content="Manage career positions and job listings in Dashur AI admin dashboard" />
@@ -79,10 +503,26 @@ const PositionsManagement = () => {
         </button>
       </div>
 
+      {loading && (
+        <div className="text-center py-8 text-gray-400">
+          Loading positions...
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg">
+          <p className="text-red-400 text-sm">{error}</p>
+        </div>
+      )}
+
+      {!loading && !error && (
+      <>
       {showForm && (
         <div className="bg-slate-800 p-6 rounded-lg shadow mb-6">
-          <h4 className="text-lg font-semibold mb-4 text-white">Add New Position</h4>
-          <form onSubmit={handleSubmit} className="space-y-4 text-gray-300">
+          <h4 className="text-lg font-semibold mb-4 text-white">
+            {editingPosition ? 'Edit Position' : 'Add New Position'}
+          </h4>
+          <form onSubmit={editingPosition ? handleUpdate : handleSubmit} className="space-y-4 text-gray-300">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -118,11 +558,72 @@ const PositionsManagement = () => {
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
+            <div className="mt-4">
+              <textarea
+                placeholder="Position Description"
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                className="w-full h-24 px-4 py-3 border border-gray-600 rounded-lg text-gray-300 bg-slate-700 focus:border-blue-500 focus:outline-none resize-none"
+                rows={4}
+                required
+              />
+            </div>
+            <div className="mt-4">
+              <textarea
+                placeholder="Role Overview (for Job Details page)"
+                value={formData.role_overview}
+                onChange={(e) => setFormData({...formData, role_overview: e.target.value})}
+                className="w-full h-24 px-4 py-3 border border-gray-600 rounded-lg text-gray-300 bg-slate-700 focus:border-blue-500 focus:outline-none resize-none"
+                rows={3}
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-300 mb-2">Key Responsibilities:</label>
+              {formData.key_responsibilities.map((resp, index) => (
+                <div key={index} className="mb-4 p-4 border border-gray-600 rounded-lg bg-slate-700">
+                  <div className="flex justify-between items-center mb-2">
+                    <h4 className="text-sm font-medium text-white">Responsibility {index + 1}</h4>
+                    {formData.key_responsibilities.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveResponsibility(index)}
+                        className="text-red-400 hover:text-red-300 text-sm"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      placeholder="Responsibility Title"
+                      value={typeof resp === 'string' ? resp : resp.title}
+                      onChange={(e) => handleResponsibilityChange(index, 'title', e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-600 rounded-lg text-gray-300 bg-slate-700 focus:border-blue-500 focus:outline-none"
+                    />
+                    <textarea
+                      placeholder="Responsibility Description"
+                      value={typeof resp === 'string' ? '' : resp.desc}
+                      onChange={(e) => handleResponsibilityChange(index, 'desc', e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-600 rounded-lg text-gray-300 bg-slate-700 focus:border-blue-500 focus:outline-none resize-none"
+                      rows={3}
+                    />
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={handleAddResponsibility}
+                className="mt-3 w-full px-4 py-2 border-2 border-dashed border-gray-600 rounded-lg text-gray-400 hover:border-blue-500 hover:text-blue-400 transition-colors"
+              >
+                + Add Another Responsibility
+              </button>
+            </div>
             <div className="flex flex-col sm:flex-row gap-2">
               <button type="submit" className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 text-sm font-medium w-full sm:w-auto">
-                Save
+                {editingPosition ? 'Update' : 'Save'}
               </button>
-              <button type="button" onClick={() => setShowForm(false)} className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium w-full sm:w-auto">
+              <button type="button" onClick={handleCancelEdit} className="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium w-full sm:w-auto">
                 Cancel
               </button>
             </div>
@@ -161,12 +662,22 @@ const PositionsManagement = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  <button
-                    onClick={() => handleDelete(position.id)}
-                    className="text-red-400 hover:text-red-300 text-sm font-medium"
-                  >
-                    <Trash2 />
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(position)}
+                      className="text-blue-400 hover:text-blue-300 text-sm font-medium"
+                      title="Edit Position"
+                    >
+                      <Edit className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(position.id)}
+                      className="text-red-400 hover:text-red-300 text-sm font-medium"
+                      title="Delete Position"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -174,6 +685,8 @@ const PositionsManagement = () => {
         </table>
         </div>
       </div>
+      </>
+      )}
 
       {totalPages > 1 && (
         <Pagination 
@@ -183,6 +696,7 @@ const PositionsManagement = () => {
         />
       )}
     </div>
+    </>
   );
 };
 

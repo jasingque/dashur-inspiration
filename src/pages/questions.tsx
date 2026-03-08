@@ -57,7 +57,7 @@ export const QUESTIONS = () => {
           </span>
         </h2>
       </div>
-      <div className="relative z-0 w-full max-w-280 mx-auto h-750 overflow-hidden pb-40">
+      <div className="relative z-0 w-full max-w-280 mx-auto h-[750vh] overflow-hidden pb-40">
         <FocusCard 
           text="You can't deliver 24/7 personalized service without automation." 
           className="top-[8%] left-4 md:left-[10%]" 

@@ -1,5 +1,9 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { adminAPI } from '../api';
 
 // --- Types ---
 interface Responsibility {
@@ -7,83 +11,179 @@ interface Responsibility {
   desc: string;
 }
 
-interface JobRole {
-  overview: string;
-  responsibilities: Responsibility[];
+interface Position {
+  id: string;
+  title: string;
+  department: string;
+  type: 'Full-time' | 'Part-time' | 'Contract';
+  status: 'Active' | 'Inactive';
+  description: string;
+  role_overview: string;
+  key_responsibilities: Responsibility[];
 }
-
-// --- Data ---
-const JOB_CONTENT: Record<string, JobRole> = {
-  "software-developer": {
-    overview: "As a Software Developer at Dashur AI, LLC, you will be a key architect in our mission to deliver elite AI-driven solutions. You are building the backbone of a regional leader.",
-    responsibilities: [
-      { title: "Full-Cycle Development", desc: "Design, test, and deploy software using Java, C++, PHP, and Python." },
-      { title: "System Security", desc: "Develop and monitor proactive security protocols to protect sensitive data." },
-      { title: "Architecture Optimization", desc: "Analyze existing code for weaknesses and present strategic plans." },
-      { title: "Collaborative Leadership", desc: "Align with clients on requirements while coaching junior team members." }
-    ]
-  },
-  "qa-engineer": {
-    overview: "As a QA Engineer at Dashur AI, LLC, you are the final gatekeeper of excellence. Your mission is to ensure our AI-driven products are seamless, secure, and superior.",
-    responsibilities: [
-      { title: "Testing Suites", desc: "Design and execute rigorous test suites to identify defects and bottlenecks." },
-      { title: "Bug Analysis", desc: "Document test results with precision and collaborate with devs to resolve errors." },
-      { title: "Product Optimization", desc: "Recommend UI/UX improvements to enhance software efficiency." },
-      { title: "Strategic Reporting", desc: "Present detailed analysis of software health and maintain documentation." }
-    ]
-  },
-  "mobile-developer": {
-    overview: "As a Mobile Developer, you will craft high-performance iOS and Android applications that bring Dashur AI's capabilities to the palms of our users' hands.",
-    responsibilities: [
-      { title: "Cross-Platform Dev", desc: "Build and maintain mobile applications using React Native or Flutter." },
-      { title: "Performance Tuning", desc: "Optimize app responsiveness and battery usage for a seamless experience." },
-      { title: "API Integration", desc: "Seamlessly connect mobile frontends with complex AI backend services." },
-      { title: "Store Deployment", desc: "Manage the end-to-end release process for App Store and Google Play." }
-    ]
-  },
-  "ios-engineer": {
-    overview: "As an iOS Engineer at Dashur AI, LLC, you will be the primary architect of our premium mobile experience. We are looking for a specialist who masters the balance between elegant Apple design and powerful backend integration. From rapid prototyping to deploying secure, encrypted applications, you will ensure our iOS presence is fast, fluid, and visually stunning.",
-    responsibilities: [
-      { title: "Swift Excellence", desc: "Develop robust and scalable native applications using Swift and SwiftUI." },
-      { title: "UI/UX Fidelity", desc: "Implement pixel-perfect designs and fluid animations tailored for iOS." },
-      { title: "Core ML Integration", desc: "Leverage Apple’s on-device machine learning to enhance AI performance." },
-      { title: "Code Review", desc: "Maintain high code quality through rigorous peer reviews and documentation." }
-    ]
-  },
-  "devops-engineer": {
-    overview: "As a DevOps Engineer, you are the bridge between code and cloud. You ensure our infrastructure is scalable, automated, and indestructible.",
-    responsibilities: [
-      { title: "CI/CD Automation", desc: "Build and maintain automated pipelines for seamless software delivery." },
-      { title: "Cloud Infrastructure", desc: "Manage AWS/Azure environments using Infrastructure as Code (Terraform)." },
-      { title: "Monitoring & Alerting", desc: "Implement proactive monitoring to ensure 99.9% system uptime." },
-      { title: "Containerization", desc: "Scale services efficiently using Docker and Kubernetes orchestration." }
-    ]
-  }
-};
-
-// --- Styling Map ---
-const THEME_MAP: Record<string, { border: string; icon: string }> = {
-  "software-developer": { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" },
-  "qa-engineer": { border: "border-emerald-500", icon: "bg-emerald-500/20 text-emerald-500" },
-  "mobile-developer": { border: "border-purple-500", icon: "bg-purple-500/20 text-purple-500" },
-  "ios-engineer": { border: "border-sky-400", icon: "bg-sky-400/20 text-sky-400" },
-  "devops-engineer": { border: "border-orange-500", icon: "bg-orange-500/20 text-orange-500" },
-  "default": { border: "border-slate-500", icon: "bg-slate-500/20 text-slate-500" }
-};
 
 export const JobDetails = ({ id }: { id?: string }) => {
   const navigate = useNavigate();
-  const content = (id && JOB_CONTENT[id]) ? JOB_CONTENT[id] : JOB_CONTENT["software-developer"];
-  const theme = (id && THEME_MAP[id]) ? THEME_MAP[id] : THEME_MAP["default"];
+  const [position, setPosition] = useState<Position | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch position data from admin API
+  useEffect(() => {
+    const fetchPosition = async () => {
+      if (!id) {
+        setError('No position ID provided');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        console.log('Fetching position with ID/slug:', id);
+        
+        // Since URLs use slugs instead of UUIDs, we need to search through positions
+        const positions = await adminAPI.getPositions();
+        console.log('All positions from API:', positions);
+        console.log('Position IDs from API:', positions.map((pos) => ({ id: pos.id, title: pos.title })));
+        
+        // Try multiple matching strategies
+        let foundPosition = positions.find((pos) => pos.id === id);
+        console.log('Direct ID match result:', foundPosition);
+        
+        // If not found, try string comparison
+        if (!foundPosition) {
+          foundPosition = positions.find((pos) => String(pos.id) === String(id));
+          console.log('String ID match result:', foundPosition);
+        }
+        
+        // If still not found, try case-insensitive title match (fallback)
+        if (!foundPosition && id) {
+          foundPosition = positions.find((pos) => 
+            pos.title.toLowerCase().replace(/\s+/g, '-') === id.toLowerCase()
+          );
+          console.log('Title slug match result:', foundPosition);
+        }
+        
+        // Try partial title match as another fallback
+        if (!foundPosition && id) {
+          foundPosition = positions.find((pos) => 
+            pos.title.toLowerCase().includes(id.toLowerCase()) ||
+            id.toLowerCase().includes(pos.title.toLowerCase().replace(/\s+/g, '-'))
+          );
+          console.log('Partial title match result:', foundPosition);
+        }
+        
+        console.log('Final found position:', foundPosition);
+        
+        if (foundPosition) {
+          // Transform the position data to match our interface
+          const transformedPosition: Position = {
+            id: foundPosition.id,
+            title: foundPosition.title,
+            department: foundPosition.department,
+            type: foundPosition.type.charAt(0).toUpperCase() + foundPosition.type.slice(1) as Position['type'],
+            status: foundPosition.status.charAt(0).toUpperCase() + foundPosition.status.slice(1) as Position['status'],
+            description: foundPosition.description,
+            role_overview: foundPosition.role_overview || 'No role overview available.',
+            key_responsibilities: foundPosition.key_responsibilities || []
+          };
+          console.log('Transformed position:', transformedPosition);
+          setPosition(transformedPosition);
+        } else {
+          setError(`Position not found (ID/slug: ${id}). Available positions: ${positions.map(p => p.title).join(', ')}`);
+        }
+      } catch (err) {
+        setError('Failed to load position details');
+        console.error('Error fetching position:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosition();
+  }, [id]);
+
+  // Fallback content for when position data is not available
+  const fallbackContent = {
+    overview: 'Join our innovative team and help shape the future of AI.',
+    responsibilities: [
+      { title: 'Full-Cycle Development', desc: 'Design, test, and deploy software using modern technologies.' },
+      { title: 'System Security', desc: 'Develop and monitor proactive security protocols to protect sensitive data.' },
+      { title: 'Architecture Optimization', desc: 'Analyze existing code for weaknesses and present strategic plans.' },
+      { title: 'Collaborative Leadership', desc: 'Align with clients on requirements while coaching junior team members.' }
+    ]
+  };
+
+  // Use position data if available, otherwise use fallback
+  const content = position ? {
+    overview: position.role_overview,
+    responsibilities: position.key_responsibilities
+  } : fallbackContent;
+
+  // Theme styling based on position type
+  const themeMap: Record<string, { border: string; icon: string }> = {
+    'Full-time': { border: "border-blue-500", icon: "bg-blue-500/20 text-blue-500" },
+    'Part-time': { border: "border-emerald-500", icon: "bg-emerald-500/20 text-emerald-500" },
+    'Contract': { border: "border-purple-500", icon: "bg-purple-500/20 text-purple-500" },
+    'default': { border: "border-slate-500", icon: "bg-slate-500/20 text-slate-500" }
+  };
+
+  const theme = position ? themeMap[position.type] || themeMap['default'] : themeMap['default'];
+
+  if (loading) {
+    return (
+      <motion.section 
+        key={id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="space-y-12"
+      >
+        <div className="text-center text-white">
+          <div className="animate-pulse mb-8">
+            <div className="w-8 h-8 border-2 border-blue-500 rounded-full mx-auto mb-4"></div>
+          </div>
+          <p className="text-xl text-gray-400 mb-4">Loading position details...</p>
+        </div>
+      </motion.section>
+    );
+  }
+
+  if (error) {
+    return (
+      <motion.section 
+        key={id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="space-y-12"
+      >
+        <div className="text-center text-white">
+          <p className="text-xl text-red-400 mb-4">Error loading position details</p>
+          <p className="text-sm text-gray-400">{error}</p>
+        </div>
+      </motion.section>
+    );
+  }
 
   return (
-    <motion.section 
+    <>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <motion.section 
       key={id}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="space-y-12"
     >
-
       <button 
         onClick={() => navigate(-1)} 
         className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest group"
@@ -110,24 +210,25 @@ export const JobDetails = ({ id }: { id?: string }) => {
         <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
           <span className={`${theme.icon} p-2 rounded-lg`}>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m0 6-2m0 6 2 4-4m0 6-2" />
             </svg>
           </span>
           Key Responsibilities
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {content.responsibilities.map((item, i) => (
+          {content.responsibilities.map((resp: Responsibility, index: number) => (
             <div 
-              key={i}
+              key={index}
               className="group bg-white/5 p-6 rounded-2xl border border-white/10 transition-all hover:bg-white/10"
             >
-              <h4 className="text-white font-bold mb-2">{item.title}</h4>
-              <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              <h4 className="text-white font-bold mb-2">{resp.title}</h4>
+              <p className="text-slate-400 text-sm leading-relaxed">{resp.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </motion.section>
+    </>
   );
 };

@@ -1,5 +1,14 @@
-import React from 'react';
-import { BriefcaseBusiness, NotepadText, Check, Mail } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BriefcaseBusiness, NotepadText, Check, Mail, RefreshCw, Clock, FileText } from 'lucide-react';
+import { adminAPI, Activity } from '../api';
+import { useDashboardRefresh } from '../hooks/useDashboardRefresh';
+
+const initialStats = [
+    { label: 'Total Positions', value: '0', icon: <BriefcaseBusiness />, color: 'bg-blue-500' },
+    { label: 'Applications', value: '0', icon: <NotepadText />, color: 'bg-green-500' },
+    { label: 'Contact Messages', value: '0', icon: <Mail />, color: 'bg-purple-500' },
+    { label: 'Active Jobs', value: '0', icon: <Check />, color: 'bg-orange-500' },
+]
 
 interface Stat {
   label: string;
@@ -8,30 +17,98 @@ interface Stat {
   color: string;
 }
 
-interface Activity {
-  type: 'application' | 'contact' | 'position';
-  message: string;
-  time: string;
-}
-
 const DashboardHome = () => {
-  const stats: Stat[] = [
-    { label: 'Total Positions', value: '12', icon: <BriefcaseBusiness />, color: 'bg-blue-500' },
-    { label: 'Applications', value: '48', icon: <NotepadText />, color: 'bg-green-500' },
-    { label: 'Contact Messages', value: '23', icon: <Mail />, color: 'bg-purple-500' },
-    { label: 'Active Jobs', value: '8', icon: <Check />, color: 'bg-orange-500' },
-  ];
+  const [stats, setStats] = useState<Stat[]>(initialStats);
+  const [recentActivity, setRecentActivity] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activityFilter, setActivityFilter] = useState<'all' | 'application' | 'contact' | 'position'>('all');
 
-  const recentActivity: Activity[] = [
-    { type: 'application', message: 'New application for Frontend Developer', time: '2 hours ago' },
-    { type: 'contact', message: 'New contact form submission', time: '4 hours ago' },
-    { type: 'position', message: 'New position added: UX Designer', time: '1 day ago' },
-    { type: 'application', message: 'Application reviewed: Senior React Developer', time: '2 days ago' },
-    { type: 'contact', message: 'Response sent to inquiry about partnerships', time: '3 days ago' },
-    { type: 'position', message: 'Position closed: Junior Developer', time: '4 days ago' },
-    { type: 'application', message: 'Interview scheduled: Backend Engineer', time: '5 days ago' },
-    { type: 'contact', message: 'New subscription request received', time: '1 week ago' },
-  ];
+  // Listen for dashboard refresh events
+  useDashboardRefresh(() => {
+    console.log('Dashboard refresh event received - triggering refreshRecentActivity');
+    refreshRecentActivity();
+  });
+
+  // Refresh recent activity
+  const refreshRecentActivity = async () => {
+    try {
+      setLoading(true);
+      console.log('Refreshing recent activity...');
+      const activity = await adminAPI.getRecentActivity();
+      console.log('Refreshed activity data:', activity);
+      setRecentActivity(activity);
+    } catch (err) {
+      console.error('Error refreshing recent activity:', err);
+      setRecentActivity([]); // Set empty array on error to prevent infinite loading
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch dashboard stats from API
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch dashboard stats
+        const stats = await adminAPI.getDashboardStats();
+        console.log('Dashboard stats:', stats);
+
+        setStats([
+          { label: 'Total Positions', value: stats.total_positions.toString(), icon: <BriefcaseBusiness />, color: 'bg-blue-500' },
+          { label: 'Applications', value: stats.total_applications.toString(), icon: <NotepadText />, color: 'bg-green-500' },
+          { label: 'Contact Messages', value: stats.total_contacts.toString(), icon: <Mail />, color: 'bg-purple-500' },
+          { label: 'Active Jobs', value: stats.active_positions.toString(), icon: <Check />, color: 'bg-orange-500' },
+        ]);
+
+        // Fetch recent activity
+        try {
+          const recentActivity = await adminAPI.getRecentActivity();
+          console.log('Recent activity data:', recentActivity);
+          setRecentActivity(recentActivity);
+        } catch (activityErr) {
+          console.error('Error fetching recent activity:', activityErr);
+          setRecentActivity([]); // Set empty array on error
+        }
+        
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  // Filter activities based on selected filter
+  const filteredActivities = Array.isArray(recentActivity) ? recentActivity.filter(activity => {
+    // Map backend types to frontend filter types
+    const mappedType = activity.type === 'contact_form' ? 'contact' : activity.type;
+    return activityFilter === 'all' || mappedType === activityFilter;
+  }) : [];
+
+  // Helper function to format time
+  const formatTime = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+    
+    if (diffMins < 1) return 'Just now';
+    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+    return date.toLocaleDateString();
+  };
+
+  // Helper function to get activity display type
+  const getActivityDisplayType = (type: string) => {
+    return type === 'contact_form' ? 'contact' : type;
+  };
 
   return (
     <div>
@@ -53,21 +130,71 @@ const DashboardHome = () => {
       </div>
 
       <div className="bg-slate-800 rounded-lg shadow p-6">
-        <h4 className="text-lg sm:text-xl font-semibold mb-4 text-white">Recent Activity</h4>
-        <div className="space-y-3">
-          {recentActivity.map((activity, index) => (
-            <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2 sm:py-3 border-b gap-2">
-              <div className="flex items-center gap-3">
-                <div className={`w-2 h-2 rounded-full shrink-0 ${
-                  activity.type === 'application' ? 'bg-green-500' :
-                  activity.type === 'contact' ? 'bg-purple-500' :
-                  'bg-blue-500'
-                }`}></div>
-                <span className="text-gray-300 text-sm sm:text-base">{activity.message}</span>
-              </div>
-              <span className="text-xs sm:text-sm text-gray-400">{activity.time}</span>
-            </div>
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-lg sm:text-xl font-semibold text-white">Recent Activity</h4>
+          <button
+            onClick={refreshRecentActivity}
+            disabled={loading}
+            className="flex items-center gap-2 px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className="w-4 h-4" />
+            <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
+          </button>
+        </div>
+        
+        {/* Activity Filter */}
+        <div className="flex gap-2 mb-4">
+          {['all', 'application', 'contact', 'position'].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActivityFilter(filter as typeof activityFilter)}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activityFilter === filter
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+              }`}
+            >
+              {filter.charAt(0).toUpperCase() + filter.slice(1)}
+            </button>
           ))}
+        </div>
+
+        {/* Activity List */}
+        <div className="space-y-3">
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-400"></div>
+            </div>
+          ) : filteredActivities.length > 0 ? (
+            filteredActivities.map((activity, index) => {
+              const displayType = getActivityDisplayType(activity.type);
+              return (
+                <div key={activity.id || index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-2 sm:py-3 border-b gap-2">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full shrink-0 ${
+                      displayType === 'application' ? 'bg-green-500' :
+                      displayType === 'contact' ? 'bg-purple-500' :
+                      'bg-blue-500'
+                    }`}></div>
+                    <div className="flex-1">
+                      <p className="text-white text-sm font-medium">{activity.description}</p>
+                      <p className="text-gray-400 text-xs">{formatTime(activity.created_at)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-400 text-xs">
+                    <Clock className="w-4 h-4" />
+                    {formatTime(activity.created_at)}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-center py-8 text-gray-400">
+              <FileText className="w-8 h-8 mx-auto mb-2" />
+              <p className="text-sm">No recent activity found</p>
+              <p className="text-xs text-gray-500">Try refreshing to see the latest activity</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

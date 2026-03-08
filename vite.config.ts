@@ -54,7 +54,9 @@ export default defineConfig({
             if (id.includes('react-helmet')) {
               return 'helmet-vendor';
             }
-            return 'vendor';
+            // Avoid circular dependency by not creating a separate vendor chunk
+            // for modules that don't fit into other categories
+            return null;
           }
         },
         assetFileNames: (assetInfo) => {
