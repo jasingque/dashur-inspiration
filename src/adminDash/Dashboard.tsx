@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('isAdminAuthenticated');
     if (!isAuthenticated) {
-      navigate('/admin/login');
+      navigate('/login');
     }
   }, [navigate]);
 
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
     localStorage.removeItem('isAdminAuthenticated');
     localStorage.removeItem('adminEmail');
     localStorage.removeItem('adminUsername');
-    navigate('/admin/login');
+    navigate('/admin-auth');
   };
 
   const menuItems: MenuItem[] = [

@@ -25,7 +25,7 @@ const ContactsManagement = lazy(() => import("./adminDash/Contacts"));
 const AppContent = () => {
   const location = useLocation();
   const isAuthPage = location.pathname === '/auth';
-  const isAdminPage = location.pathname.startsWith('/admin');
+  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname === '/login';
 
   return (
     <div className="text-black text-xs not-italic normal-nums font-normal accent-auto bg-slate-950 box-border caret-transparent block tracking-[normal] leading-[normal] list-outside list-disc pointer-events-auto text-start indent-0 normal-case visible border-separate font-sans_serif h-full">
@@ -48,7 +48,7 @@ const AppContent = () => {
             <Route path="/auth" element={<AuthPage />} />
             
             {/* Admin Dashboard Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />}>
               <Route index element={<DashboardHome />} />
               <Route path="positions" element={<PositionsManagement />} />
